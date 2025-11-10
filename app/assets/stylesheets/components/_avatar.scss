@@ -18,3 +18,9 @@
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   border: white 1px solid;
 }
+
+.readonly-select {
+  pointer-events: none;
+  opacity: 0.85;
+  background-color: #f8f8f8;
+}

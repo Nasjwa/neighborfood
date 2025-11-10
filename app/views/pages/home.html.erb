@@ -6,7 +6,7 @@
       <span class="nf-loc-dot" aria-hidden="true"></span>
       Use my location
     </button>
-    <%= link_to("Change", profile_path, class: "nf-loc-change") if user_signed_in? %>
+    <%= link_to("Change", root_path, class: "nf-loc-change") if user_signed_in? %>
   </div>
 
   <!-- Tag chips -->
@@ -84,7 +84,7 @@
       <span>Search</span>
     <% end %>
     <% if user_signed_in? %>
-      <%= link_to profile_path, class: "nf-tab" do %>
+      <%= link_to root_path, class: "nf-tab" do %>
         <span class="nf-tab-ico">👤</span>
         <span>Profile</span>
       <% end %>
