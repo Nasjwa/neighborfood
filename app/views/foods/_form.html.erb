@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :kind_of_food %>
-    <%= form.text_field :kind_of_food %>
+    <%= form.select :kind_of_food, [['Cooked meal'], ['Groceries']], { include_blank: 'Select kind' }, class: 'form-control' %>
   </div>
 
   <div class="field">
