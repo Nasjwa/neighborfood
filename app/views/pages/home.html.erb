@@ -1,2 +1,98 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="nf-home">
+
+  <!-- Location bar -->
+  <div class="nf-location">
+    <button class="nf-loc-btn" type="button">
+      <span class="nf-loc-dot" aria-hidden="true"></span>
+      Use my location
+    </button>
+    <%= link_to("Change", profile_path, class: "nf-loc-change") if user_signed_in? %>
+  </div>
+
+  <!-- Tag chips -->
+  <div class="nf-chip-row">
+    <% Array(@tags).first(6).each do |tag| %>
+      <%= link_to tag, foods_path(q: tag), class: "nf-chip" %>
+    <% end %>
+  </div>
+
+  <!-- Section: Near you -->
+  <section class="nf-section">
+    <div class="nf-section-head">
+      <h2>Near you</h2>
+      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+    </div>
+    <div class="nf-grid">
+      <% if defined?(@nearby) && @nearby.present? %>
+        <% @nearby.each do |food| %>
+          <%= render "foods/card", food: food %>
+        <% end %>
+      <% else %>
+        <% 6.times do %>
+          <%= render "foods/card", food: nil %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Section: Cooked meals -->
+  <section class="nf-section">
+    <div class="nf-section-head">
+      <h2>Cooked meals</h2>
+      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+    </div>
+    <div class="nf-grid">
+      <% if defined?(@cooked) && @cooked.present? %>
+        <% @cooked.limit(4).each do |food| %>
+          <%= render "foods/card", food: food %>
+        <% end %>
+      <% else %>
+        <% 4.times do %>
+          <%= render "foods/card", food: nil %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Section: Groceries -->
+  <section class="nf-section">
+    <div class="nf-section-head">
+      <h2>Groceries</h2>
+      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+    </div>
+    <div class="nf-grid">
+      <% if defined?(@groceries) && @groceries.present? %>
+        <% @groceries.limit(4).each do |food| %>
+          <%= render "foods/card", food: food %>
+        <% end %>
+      <% else %>
+        <% 4.times do %>
+          <%= render "foods/card", food: nil %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Bottom tab bar (mobile) -->
+  <nav class="nf-tabbar" aria-label="Bottom navigation">
+    <%= link_to foods_path, class: "nf-tab" do %>
+      <span class="nf-tab-ico">🍲</span>
+      <span>Discover</span>
+    <% end %>
+    <%= link_to foods_path, class: "nf-tab" do %>
+      <span class="nf-tab-ico">🔎</span>
+      <span>Search</span>
+    <% end %>
+    <% if user_signed_in? %>
+      <%= link_to profile_path, class: "nf-tab" do %>
+        <span class="nf-tab-ico">👤</span>
+        <span>Profile</span>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "nf-tab" do %>
+        <span class="nf-tab-ico">👤</span>
+        <span>Sign in</span>
+      <% end %>
+    <% end %>
+  </nav>
+</div>
