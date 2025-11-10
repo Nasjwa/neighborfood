@@ -11,8 +11,11 @@ Rails.application.routes.draw do
   # root "posts#index"
 
 
-  resources :foods, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :foods, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    resources :claims, only: [:new, :create]
+  end
 
+  resources :claims, only: [:index, :show, :edit, :update, :destroy]
 
   resources :users, only: [:show]
 
