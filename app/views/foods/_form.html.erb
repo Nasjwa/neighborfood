@@ -1,0 +1,57 @@
+<%= form_with(model: food, local: true) do |form| %>
+  <% if food.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(food.errors.count, "error") %> prohibited this food from being saved:</h2>
+
+      <ul>
+        <% food.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kind_of_food %>
+    <%= form.text_field :kind_of_food %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+  </div>
+
+<!-- >
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+-->
+
+  <div>
+    <label>Upload photos</label>
+    <%= form.file_field :photos, multiple: true, direct_upload: true, class: "food-input" %>
+
+    <% if food.photos.attached? %>
+      <div class="food-photo-preview">
+        <% food.photos.each do |photo| %>
+          <%= image_tag url_for(photo), alt: food.title %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Save Food", class: "btn btn-primary" %>
+  </div>
+<% end %>
