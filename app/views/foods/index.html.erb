@@ -1,18 +1,23 @@
-<h1>Test</h1>
-<p>This is a test page for foods index.</p>
-
-<div class="mb-4">
-    <%= link_to "Add a new food", new_food_path, class: "btn btn-primary" %>
+<div class="container" >
+  <div class="row mt-4 gx-3 gy-4">
+    <% @foods.each do |food| %>
+      <div class="col-md-4">
+        <div class="card h-100 p-3">
+          <% if food.photos.attached? %>
+          <%= image_tag url_for(food.photos.first), alt: food.title, class: "card-img-top" %>
+          <% end %>
+          <div class="mt-2">
+            <h2 class="text-decoration-none "><%= link_to food.title, food_path(food) %></h2>
+            <p><%= food.description %></p>
+            <p>Quantity: <%= food.quantity %></p>
+            <p>Location: <%= food.user&.post_code || 'Unknown' %></p>
+            <p>Posted by: <%= food.user&.first_name || 'Unknown' %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+      <div class="mb-4">
+          <%= link_to "Add a new food", new_food_path, class: "btn btn-primary" %>
+      </div>
 </div>
-
-<ul>
-  <% @foods.each do |food| %>
-    <li>
-      <h2><%= link_to food.title, food_path(food) %></h2>
-      <p><%= food.description %></p>
-      <p>Quantity: <%= food.quantity %></p>
-      <p>Location: <%= food.user.post_code %></p>
-      <p>Posted by: <%= food.user.name %></p>
-    </li>
-  <% end %>
-</ul>
