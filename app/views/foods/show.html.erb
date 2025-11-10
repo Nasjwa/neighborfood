@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="food-photos">
+    <% if @food.photos.attached? %>
+      <% @food.photos.each do |photo| %>
+        <%= image_tag(photo.variant(resize_to_limit: [600, 600]).processed, alt: @food.title, class: "img-fluid") %>
+      <% end %>
+    <% else %>
+      <p>No photos available</p>
+    <% end %>
+  </div>
+  <h1><%= @food.title %></h1>
+  <p><%= @food.description %></p>
+  <p>Kind of food: <%= @food.kind_of_food %></p>
+  <p>Quantity: <%= @food.quantity %></p>
+  <p>Posted by: <%= @food.user.first_name %> <%= @food.user.last_name %></p>
+
+  <%= link_to "Back to Foods", foods_path, class: "btn btn-secondary mt-3" %>
+
+</div>
