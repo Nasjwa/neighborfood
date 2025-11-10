@@ -1,9 +1,8 @@
-<!-- app/views/shared/_navbar.html.erb -->
 <nav class="nf-navbar" aria-label="Primary">
   <div class="nf-container">
-
-    <!-- Brand (link) -->
+    <!-- Brand -->
     <%= link_to root_path, class: "nf-brand" do %>
+      <!-- inline placeholder logo (green leaf circle) -->
       <svg class="nf-logo" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
         <defs>
           <linearGradient id="nf-g" x1="0" y1="0" x2="1" y2="1">
@@ -17,6 +16,9 @@
       <span class="nf-wordmark">NeighborFood</span>
     <% end %>
 
+
+    <!-- Mobile toggle -->
+    <button class="nf-menu-toggle"
     <!-- Mobile toggle (NOTE: this is a sibling of the brand, not inside it) -->
     <button type="button"
             class="nf-menu-toggle"
@@ -34,14 +36,17 @@
       <li><%= link_to "Browse", foods_path, class: "nf-link" %></li>
 
       <% if user_signed_in? %>
-        <li class="nf-cta"><%= link_to "Post Food", new_food_path, class: "nf-button" %></li>
+        <li class="nf-cta">
+          <%= link_to "Post Food", new_food_path, class: "nf-button" %>
+        </li>
         <li><%= link_to "My Listings", user_path(current_user), class: "nf-link" %></li>
         <li><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "nf-link" %></li>
       <% else %>
         <li><%= link_to "Sign in", new_user_session_path, class: "nf-link" %></li>
-        <li class="nf-cta"><%= link_to "Sign up", new_user_registration_path, class: "nf-button nf-button--outline" %></li>
+        <li class="nf-cta">
+          <%= link_to "Sign up", new_user_registration_path, class: "nf-button nf-button--outline" %>
+        </li>
       <% end %>
     </ul>
-
   </div>
 </nav>
