@@ -3,3 +3,27 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
+
+// === NeighborFood Navbar Toggle ===
+document.addEventListener("turbo:load", () => {
+  const toggle = document.querySelector('[data-action="toggle-menu"]');
+  const menu   = document.querySelector('[data-target="menu"]');
+
+  if (!toggle || !menu) return;
+
+  // Open / close mobile menu
+  const setOpen = (open) => {
+    toggle.setAttribute("aria-expanded", String(open));
+    menu.classList.toggle("is-open", open);
+  };
+
+  toggle.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") !== "true";
+    setOpen(open);
+  });
+
+  // Optional: close menu when clicking a link (for mobile)
+  menu.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => setOpen(false));
+  });
+});
