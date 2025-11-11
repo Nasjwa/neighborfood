@@ -11,8 +11,8 @@
 
   <!-- Tag chips -->
   <div class="nf-chip-row">
-    <% Array(@tags).first(6).each do |tag| %>
-      <%= link_to tag, foods_path(q: tag), class: "nf-chip" %>
+    <% Array(@tags).each do |tag| %>
+      <%= link_to tag.name, foods_path(q: tag), class: "nf-chip" %>
     <% end %>
   </div>
 

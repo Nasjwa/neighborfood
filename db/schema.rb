@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_08_213206) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_11_154644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_08_213206) do
     t.index ["user_id"], name: "index_claims_on_user_id"
   end
 
+  create_table "food_tags", force: :cascade do |t|
+    t.bigint "food_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_food_tags_on_food_id"
+    t.index ["tag_id"], name: "index_food_tags_on_tag_id"
+  end
+
   create_table "foods", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -69,14 +78,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_08_213206) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.bigint "food_id", null: false
-    t.boolean "vegan"
-    t.boolean "vegetarian"
-    t.boolean "gluten_free"
-    t.boolean "nuts_free"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["food_id"], name: "index_tags_on_food_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,6 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_08_213206) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "claims", "foods"
   add_foreign_key "claims", "users"
+  add_foreign_key "food_tags", "foods"
+  add_foreign_key "food_tags", "tags"
   add_foreign_key "foods", "users"
-  add_foreign_key "tags", "foods"
 end
