@@ -22,14 +22,92 @@
   </div>
 
   <div class="field">
-    <%= form.label :kind_of_food %>
-    <%= form.select :kind_of_food, [['Cooked meal'], ['Groceries']], { include_blank: 'Select kind' }, class: 'form-control' %>
+    <%= form.select :kind_of_food,
+      Food.kind_of_foods.keys.map { |k| [k.humanize, k] },
+      include_blank: 'Select kind',
+      class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :quantity %>
     <%= form.number_field :quantity %>
   </div>
+
+  <div class="field">
+    <%= form.label :collection_time, "Collection time" %>
+    <div class="d-flex gap-2">
+      <div>
+        <%= form.label :start_time, "From", class: "sr-only" %>
+        <%= form.time_field :start_time, class: "form-control", step: 60, placeholder: "HH:MM" %>
+      </div>
+      <div>
+        <%= form.label :end_time, "To", class: "sr-only" %>
+        <%= form.time_field :end_time, class: "form-control", step: 60, placeholder: "HH:MM" %>
+      </div>
+    </div>
+  </div>
+
+  <div id="cooking-date-field" style="<%= food.kind_of_food.to_s.downcase.include?('cooked') ? '' : 'display:none;' %>">
+    <%= form.label :cooking_date, "Cooking date" %>
+    <%= form.date_field :cooking_date, class: "form-control", readonly: !food.kind_of_food.to_s.downcase.include?('cooked') %>
+  </div>
+
+  <div id="expire-date-field" style="<%= food.kind_of_food.to_s.downcase.include?('cooked') ? 'display:none;' : '' %>">
+    <%= form.label :expire_date, "Expire date" %>
+    <%= form.date_field :expire_date, class: "form-control", readonly: food.kind_of_food.to_s.downcase.include?('cooked') %>
+  </div>
+
+  <script>
+    (function () {
+      function initToggleDates() {
+        const kindSelect = document.getElementById('food_kind_of_food');
+        if (!kindSelect) return;
+
+        const cookEl = document.getElementById('cooking-date-field');
+        const expireEl = document.getElementById('expire-date-field');
+
+        function setContainerVisible(container, visible) {
+          if (!container) return;
+          container.style.display = visible ? '' : 'none';
+
+          // update all form controls inside the container
+          container.querySelectorAll('input, textarea, select').forEach(el => {
+            // keep values submittable — avoid using `el.disabled = true`
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+              el.readOnly = !visible; // readonly still submits
+            } else if (el.tagName === 'SELECT') {
+              // selects have no readonly — make non-editable visually but keep it enabled so it submits
+              if (!visible) {
+                el.classList.add('readonly-select');      // CSS to block pointer events
+                el.setAttribute('aria-disabled', 'true');
+                el.tabIndex = -1;
+              } else {
+                el.classList.remove('readonly-select');
+                el.removeAttribute('aria-disabled');
+                el.tabIndex = 0;
+              }
+            }
+          });
+        }
+
+        function toggleDates() {
+          const value = (kindSelect.value || '').toLowerCase();
+          const si = kindSelect.selectedIndex;
+          const text = (si >= 0 && kindSelect.options[si]) ? kindSelect.options[si].text.toLowerCase() : '';
+          const isCooked = value.includes('cooked') || text.includes('cooked');
+
+          setContainerVisible(cookEl, isCooked);
+          setContainerVisible(expireEl, !isCooked);
+        }
+
+        kindSelect.addEventListener('change', toggleDates);
+        toggleDates();
+      }
+
+      document.addEventListener('turbo:load', initToggleDates);
+      document.addEventListener('DOMContentLoaded', initToggleDates);
+    })();
+  </script>
 
 <!-- >
   <div class="field">

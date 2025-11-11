@@ -12,8 +12,14 @@
   <p><%= @food.description %></p>
   <p>Kind of food: <%= @food.kind_of_food %></p>
   <p>Quantity: <%= @food.quantity %></p>
-  <p>Posted by: <%= @food.user.first_name %> <%= @food.user.last_name %></p>
+  <p>Collection time: <%= @food.start_time.strftime("%H:%M") if @food.start_time %> - <%= @food.end_time.strftime("%H:%M") if @food.end_time %></p>
+  <% if @food.kind_of_food == "groceries" %>
+    <p>Expire date: <%= @food.expire_date.strftime("%Y-%m-%d") if @food.expire_date %></p>
+  <% else %>
+    <p>Cooking date: <%= @food.cooking_date.strftime("%Y-%m-%d") if @food.cooking_date %></p>
+  <% end %>
+  <p>Posted by: <%= @food.user.first_name %> </p>
 
-  <%= link_to "Back to Foods", foods_path, class: "btn btn-secondary mt-3" %>
+  <%= link_to "Back to Foods", foods_path, class: "nf-button mt-3" %>
 
 </div>

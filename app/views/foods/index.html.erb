@@ -4,7 +4,8 @@
       <div class="col-md-4">
         <div class="card h-100 p-3">
           <% if food.photos.attached? %>
-          <%= image_tag url_for(food.photos.first), alt: food.title, class: "card-img-top" %>
+          <%= image_tag url_for(food.photos.first.variant(resize_to_fill: [400, 250])) ,
+                alt: food.title, class: "card-img" %>
           <% end %>
           <div class="mt-2">
             <h2 class="text-decoration-none "><%= link_to food.title, food_path(food) %></h2>
