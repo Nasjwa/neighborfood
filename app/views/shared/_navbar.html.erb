@@ -16,6 +16,17 @@
       <span class="nf-wordmark">NeighborFood</span>
     <% end %>
 
+    <!-- Search (center) -->
+    <%= form_with url: foods_path, method: :get, local: true, html: { class: "nav-search", role: "search" } do %>
+      <%= text_field_tag :query,
+            params[:query],
+            class: "search-input",
+            placeholder: "Type here to search...",
+            aria: { label: "Search" }
+        %>
+      <%= submit_tag "Search", class: "nf-button border-0" %>
+    <% end %>
+
 
     <!-- Mobile toggle -->
     <button class="nf-menu-toggle"
