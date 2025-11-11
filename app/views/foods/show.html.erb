@@ -10,7 +10,8 @@
   </div>
   <h1><%= @food.title %></h1>
   <p><%= @food.description %></p>
-  <p>Kind of food: <%= @food.kind_of_food %></p>
+  <p>Kind of food: <%= @food.kind_of_food.humanize %></p>
+  <p>Tags: <%= @food.tags.map(&:name).join(", ") %></p>
   <p>Quantity: <%= @food.quantity %></p>
   <p>Collection time: <%= @food.start_time.strftime("%H:%M") if @food.start_time %> - <%= @food.end_time.strftime("%H:%M") if @food.end_time %></p>
   <% if @food.kind_of_food == "groceries" %>
@@ -19,6 +20,7 @@
     <p>Cooking date: <%= @food.cooking_date.strftime("%Y-%m-%d") if @food.cooking_date %></p>
   <% end %>
   <p>Posted by: <%= @food.user.first_name %> </p>
+  <p>Address: <%= @food.user.address %> </p>
 
   <%= link_to "Back to Foods", foods_path, class: "nf-button mt-3" %>
 
