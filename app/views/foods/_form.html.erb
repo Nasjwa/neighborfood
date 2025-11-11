@@ -11,29 +11,41 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field mb-3 ">
     <%= form.label :title %>
     <%= form.text_field :title %>
   </div>
 
-  <div class="field">
+  <div class="field mb-3">
     <%= form.label :description %>
     <%= form.text_area :description %>
   </div>
 
-  <div class="field">
+  <div class="field mb-3">
     <%= form.select :kind_of_food,
       Food.kind_of_foods.keys.map { |k| [k.humanize, k] },
       include_blank: 'Select kind',
       class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="field mb-3">
     <%= form.label :quantity %>
     <%= form.number_field :quantity %>
   </div>
 
-  <div class="field">
+  <div class="field mb-3">
+    <%= form.label :tags, "Tags" %>
+    <div class="tag-checkboxes">
+      <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
+        <div class="form-check">
+          <%= b.check_box(class: "form-check-input") %>
+          <%= b.label(class: "form-check-label") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="field mb-3">
     <%= form.label :collection_time, "Collection time" %>
     <div class="d-flex gap-2">
       <div>
@@ -116,7 +128,7 @@
   </div>
 -->
 
-  <div>
+  <div class="field mb-3 mt-3">
     <label>Upload photos</label>
     <%= form.file_field :photos, multiple: true, direct_upload: true, class: "food-input" %>
 
@@ -129,7 +141,7 @@
     <% end %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "Save Food", class: "btn btn-primary" %>
+  <div class="actions mt-3 ">
+    <%= form.submit "Save Food", class: "nf-button border-0" %>
   </div>
 <% end %>

@@ -13,10 +13,13 @@ Rails.application.routes.draw do
 
   resources :foods, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :claims, only: [:new, :create]
+    resources :reviews, only: [:new, :create]
+    resources :tags, only: [:index]
   end
 
   resources :claims, only: [:index, :show, :edit, :update, :destroy]
 
   resources :users, only: [:show]
+  get "user/:id/foods", to: "users#user_foods", as: :user_foods
 
 end
