@@ -3,6 +3,16 @@ class FoodsController < ApplicationController
 
   def index
     @foods = Food.all
+    if params[:query].present?
+      sql_subquery = <<~SQL
+        foods.title @@ :query
+        OR foods.description @@ :query
+        OR users.post_code @@ :query
+        OR users.first_name @@ :query
+      SQL
+      @foods = @foods.joins(:user).where(sql_subquery, query: params[:query])
+    end
+
   end
 
   def show
