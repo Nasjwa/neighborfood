@@ -78,3 +78,5 @@ gem "devise"
 gem "faker"
 
 gem "http"
+
+gem "cloudinary"
