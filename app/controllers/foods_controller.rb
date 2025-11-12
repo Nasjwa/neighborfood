@@ -3,6 +3,11 @@ class FoodsController < ApplicationController
 
   def index
     @foods = Food.all
+    @tags = Tag.all
+    @nearby    = Food.limit(6)
+    @cooked = Food.where(kind_of_food: 0).includes(:tags).order(created_at: :desc)
+    @groceries = Food.where(kind_of_food: 1).includes(:tags).order(created_at: :desc)
+    
     if params[:query].present?
       sql_subquery = <<~SQL
         foods.title @@ :query
@@ -12,7 +17,6 @@ class FoodsController < ApplicationController
       SQL
       @foods = @foods.joins(:user).where(sql_subquery, query: params[:query])
     end
-
   end
 
   def show

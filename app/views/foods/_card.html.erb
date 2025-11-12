@@ -1,8 +1,8 @@
 <% if local_assigns[:food].present? %>
   <article class="nf-card">
     <%= link_to food_path(food), class: "nf-card-media" do %>
-      <% if food.respond_to?(:photo) && food.photo.attached? %>
-        <%= image_tag food.photo, alt: food.title %>
+      <% if food.photos.attached? %>
+                <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
       <% else %>
         <div class="nf-card-ph"></div>
       <% end %>
