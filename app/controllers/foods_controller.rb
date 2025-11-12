@@ -25,6 +25,7 @@ class FoodsController < ApplicationController
   end
 
   def create
+    # include tag_ids in the mass-assignment, but still skip photos (we attach them after save)
     @food = current_user.foods.build(food_params.except(:photos))
 
     if @food.save
@@ -51,6 +52,6 @@ class FoodsController < ApplicationController
   private
 
   def food_params
-    params.require(:food).permit(:title, :description, :start_time, :end_time, :quantity, :kind_of_food, :cooking_date, :expire_date, photos: [])
+    params.require(:food).permit(:title, :description, :start_time, :end_time, :quantity, :kind_of_food, :cooking_date, :expire_date, tag_ids: [], photos: [])
   end
 end
