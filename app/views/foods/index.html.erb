@@ -1,24 +1,98 @@
-<div class="container" >
-  <div class="row mt-4 gx-3 gy-4">
-    <% @foods.each do |food| %>
-      <div class="col-md-4">
-        <div class="card h-100 p-3">
-          <% if food.photos.attached? %>
-          <%= image_tag url_for(food.photos.first.variant(resize_to_fill: [400, 250])) ,
-                alt: food.title, class: "card-img" %>
-          <% end %>
-          <div class="mt-2">
-            <h2 class="text-decoration-none "><%= link_to food.title, food_path(food) %></h2>
-            <p><%= food.description %></p>
-            <p>Quantity: <%= food.quantity %></p>
-            <p>Location: <%= food.user&.post_code || 'Unknown' %></p>
-            <p>Posted by: <%= food.user&.first_name || 'Unknown' %></p>
-          </div>
-        </div>
-      </div>
+<div class="nf-home">
+
+  <!-- Location bar -->
+  <div class="nf-location">
+    <button class="nf-loc-btn" type="button">
+      <span class="nf-loc-dot" aria-hidden="true"></span>
+      Use my location
+    </button>
+    <%= link_to("Change", root_path, class: "nf-loc-change") if user_signed_in? %>
+  </div>
+
+  <!-- Tag chips -->
+  <div class="nf-chip-row">
+    <% Array(@tags).each do |tag| %>
+      <%= link_to tag.name, foods_path(q: tag), class: "nf-chip" %>
     <% end %>
   </div>
-      <div class="mb-4">
-          <%= link_to "Add a new food", new_food_path, class: "btn btn-primary" %>
-      </div>
+
+  <!-- Section: Near you -->
+  <section class="nf-section">
+    <div class="nf-section-head">
+      <h2>Near you</h2>
+      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+    </div>
+    <div class="nf-grid">
+      <% if defined?(@nearby) && @nearby.present? %>
+        <% @nearby.each do |food| %>
+          <%= render "foods/card", food: food %>
+        <% end %>
+      <% else %>
+        <% 6.times do %>
+          <%= render "foods/card", food: nil %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Section: Cooked meals -->
+  <section class="nf-section">
+    <div class="nf-section-head">
+      <h2>Cooked meals</h2>
+      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+    </div>
+    <div class="nf-grid">
+      <% if defined?(@cooked) && @cooked.present? %>
+        <% @cooked.limit(4).each do |food| %>
+          <%= render "foods/card", food: food %>
+        <% end %>
+      <% else %>
+        <% 4.times do %>
+          <%= render "foods/card", food: nil %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Section: Groceries -->
+  <section class="nf-section">
+    <div class="nf-section-head">
+      <h2>Groceries</h2>
+      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+    </div>
+    <div class="nf-grid">
+      <% if defined?(@groceries) && @groceries.present? %>
+        <% @groceries.limit(4).each do |food| %>
+          <%= render "foods/card", food: food %>
+        <% end %>
+      <% else %>
+        <% 4.times do %>
+          <%= render "foods/card", food: nil %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Bottom tab bar (mobile) -->
+  <nav class="nf-tabbar" aria-label="Bottom navigation">
+    <%= link_to foods_path, class: "nf-tab" do %>
+      <span class="nf-tab-ico">🍲</span>
+      <span>Discover</span>
+    <% end %>
+    <%= link_to foods_path, class: "nf-tab" do %>
+      <span class="nf-tab-ico">🔎</span>
+      <span>Search</span>
+    <% end %>
+    <% if user_signed_in? %>
+      <%= link_to root_path, class: "nf-tab" do %>
+        <span class="nf-tab-ico">👤</span>
+        <span>Profile</span>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "nf-tab" do %>
+        <span class="nf-tab-ico">👤</span>
+        <span>Sign in</span>
+      <% end %>
+    <% end %>
+  </nav>
 </div>
