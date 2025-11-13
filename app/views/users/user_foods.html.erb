@@ -1,0 +1,14 @@
+<div class="container">
+  <h1 class="mb-4">Your shared foods</h1>
+
+  <div class="mb-4">
+    <%= link_to "Share more", new_food_path, class: "nf-button border-0" %>
+  </div>
+
+  <div class="nf-grid">
+    <% @user_foods.each do |food| %>
+      <%= render "foods/card", food: food %>
+    <% end %>
+  </div>
+
+</div>

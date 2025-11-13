@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: extra_attrs)
     devise_parameter_sanitizer.permit(:account_update, keys: extra_attrs)
   end
+
+  def after_sign_in_path_for(resource)
+    params[:return_to].presence ||
+      stored_location_for(resource) ||
+      root_path
+  end
 end
