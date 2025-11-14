@@ -4,17 +4,7 @@
     <!-- Row 1: brand only -->
     <div class="nf-toprow">
       <%= link_to root_path, class: "nf-brand" do %>
-        <!-- inline placeholder logo (green leaf circle) -->
-        <svg class="nf-logo" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
-          <defs>
-            <linearGradient id="nf-g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#7CC96F"/>
-              <stop offset="100%" stop-color="#2E7D32"/>
-            </linearGradient>
-          </defs>
-          <circle cx="16" cy="16" r="14" fill="url(#nf-g)"/>
-          <path d="M9 20c5-2 9-5 12-10" fill="none" stroke="#F0F9F0" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+        <%= image_tag "neighborfood-logo.jpg", class: "nf-logo", alt: "NeighborFood logo" %>
         <span class="nf-wordmark">NeighborFood</span>
       <% end %>
     </div>
