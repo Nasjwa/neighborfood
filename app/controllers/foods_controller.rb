@@ -7,7 +7,7 @@ class FoodsController < ApplicationController
     @nearby    = Food.limit(6)
     @cooked = Food.where(kind_of_food: 0).includes(:tags).order(created_at: :desc)
     @groceries = Food.where(kind_of_food: 1).includes(:tags).order(created_at: :desc)
-    
+
     if params[:query].present?
       sql_subquery = <<~SQL
         foods.title @@ :query
@@ -17,6 +17,19 @@ class FoodsController < ApplicationController
       SQL
       @foods = @foods.joins(:user).where(sql_subquery, query: params[:query])
     end
+
+    @foods = Food.joins(:user).where.not(users: { latitude: nil, longitude: nil })
+
+    @markers = @foods.map do |food|
+      next unless food.user&.latitude && food.user&.longitude
+
+      {
+        lat: food.user.latitude,
+        lng: food.user.longitude,                    # use lng if your JS expects it
+        info_window_html: render_to_string(partial: "info_window", locals: { food: food }),
+        marker_html: render_to_string(partial: "marker", locals: { food: food })
+      }
+    end.compact
   end
 
   def show
@@ -58,4 +71,5 @@ class FoodsController < ApplicationController
   def food_params
     params.require(:food).permit(:title, :description, :start_time, :end_time, :quantity, :kind_of_food, :cooking_date, :expire_date, tag_ids: [], photos: [])
   end
+
 end
