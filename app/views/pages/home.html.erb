@@ -17,57 +17,72 @@
   </div>
 
   <!-- Section: Near you -->
-  <section class="nf-section">
-    <div class="nf-section-head">
-      <h2>Near you</h2>
-      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+  <section class="nf-section" data-controller="carousel">
+    <div class="nf-row__head">
+      <h2 class="nf-row__title">Near you</h2>
+      <div class="nf-arrows">
+        <button type="button" class="nf-arrow" data-action="carousel#prev" aria-label="Scroll left">‹</button>
+        <button type="button" class="nf-arrow" data-action="carousel#next" aria-label="Scroll right">›</button>
+        <%= link_to "See all", foods_path, class: "nf-row__seeall" %>
+      </div>
     </div>
-    <div class="nf-grid">
+
+    <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Near you">
       <% if defined?(@nearby) && @nearby.present? %>
         <% @nearby.each do |food| %>
-          <%= render "foods/card", food: food %>
+          <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
         <% 6.times do %>
-          <%= render "foods/card", food: nil %>
+          <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>
     </div>
   </section>
 
   <!-- Section: Cooked meals -->
-  <section class="nf-section">
-    <div class="nf-section-head">
-      <h2>Cooked meals</h2>
-      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+  <section class="nf-section" data-controller="carousel">
+    <div class="nf-row__head">
+      <h2 class="nf-row__title">Cooked meals</h2>
+      <div class="nf-arrows">
+        <button class="nf-arrow" data-action="carousel#prev" aria-label="Scroll left">‹</button>
+        <button class="nf-arrow" data-action="carousel#next" aria-label="Scroll right">›</button>
+        <%= link_to "See all", foods_path, class: "nf-row__seeall" %>
+      </div>
     </div>
-    <div class="nf-grid">
+
+    <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Cooked meals">
       <% if defined?(@cooked) && @cooked.present? %>
         <% @cooked.limit(4).each do |food| %>
-          <%= render "foods/card", food: food %>
+          <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
         <% 4.times do %>
-          <%= render "foods/card", food: nil %>
+          <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>
     </div>
   </section>
 
   <!-- Section: Groceries -->
-  <section class="nf-section">
-    <div class="nf-section-head">
-      <h2>Groceries</h2>
-      <%= link_to "See all", foods_path, class: "nf-see-all" %>
+  <section class="nf-section" data-controller="carousel">
+    <div class="nf-row__head">
+      <h2 class="nf-row__title">Groceries</h2>
+      <div class="nf-arrows">
+        <button class="nf-arrow" data-action="carousel#prev" aria-label="Scroll left">‹</button>
+        <button class="nf-arrow" data-action="carousel#next" aria-label="Scroll right">›</button>
+        <%= link_to "See all", foods_path, class: "nf-row__seeall" %>
+      </div>
     </div>
-    <div class="nf-grid">
+
+    <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Groceries">
       <% if defined?(@groceries) && @groceries.present? %>
         <% @groceries.limit(4).each do |food| %>
-          <%= render "foods/card", food: food %>
+          <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
         <% 4.times do %>
-          <%= render "foods/card", food: nil %>
+          <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>
     </div>
