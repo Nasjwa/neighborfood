@@ -1,152 +1,43 @@
-/* ===== Design tokens (NeighborFood) ===== */
-:root {
-  --nf-green-700: #2E7D32;  /* deep leaf */
-  --nf-green-500: #4CAF50;  /* primary */
-  --nf-green-300: #7CC96F;  /* light accent */
-  --nf-cream-50:  #F6F7F2;  /* background tint */
-  --nf-ink-900:   #0F1E16;  /* headings */
-  --nf-ink-700:   #2A3A30;  /* body */
-  --nf-border:    #E6EAE3;
-  --nf-radius:    12px;
-  --nf-shadow:    0 6px 24px rgba(18, 62, 32, 0.06);
-}
-
-/* ===== Layout helper ===== */
-.nf-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-/* ===== Navbar ===== */
-.nf-navbar {
-  background: #ffffff;
-  border-bottom: 1px solid var(--nf-border);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
+/* ===== Navbar container becomes column on mobile ===== */
 .nf-navbar .nf-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+/* Row 1 */
+.nf-toprow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 64px;
+  min-height: 56px;
 }
 
-/* brand */
-.nf-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-.nf-logo { width: 28px; height: 28px; }
-.nf-wordmark {
-  font-weight: 800;
-  letter-spacing: .2px;
-  color: var(--nf-green-700);
-}
+/* center brand on mobile since there are no right-side icons */
+.nf-toprow { justify-content: center; }
 
-/* links wrapper */
-.nf-links {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 0;
-  padding: 0;
-}
+/* Brand stays readable on mobile */
+.nf-brand { display: inline-flex; align-items: center; gap: 8px; }
+.nf-logo  { width: 22px; height: 22px; }
+.nf-wordmark { font-size: 16px; font-weight: 800; color: var(--nf-green-700); }
 
-/* plain links */
-.nf-link {
-  color: var(--nf-ink-700);
-  text-decoration: none;
-  padding: 8px 6px;
-  border-radius: 8px;
-}
-.nf-link:hover,
-.nf-link:focus {
-  color: var(--nf-green-700);
-  background: var(--nf-cream-50);
-}
-
-/* primary CTA */
-.nf-button {
-  display: inline-block;
-  padding: 10px 14px;
-  border-radius: var(--nf-radius);
-  background: var(--nf-green-500);
-  color: #fff !important;
-  text-decoration: none;
-  font-weight: 600;
-  box-shadow: var(--nf-shadow);
-}
-.nf-button:hover {
-  background: var(--nf-green-700);
-}
-.nf-button--outline {
-  background: #fff;
-  color: var(--nf-green-700) !important;
-  border: 1px solid var(--nf-green-300);
-  box-shadow: none;
-}
-.nf-button--outline:hover {
-  background: var(--nf-cream-50);
-}
-
-/* mobile toggle (hidden on desktop) */
-.nf-menu-toggle {
+/* (kept for completeness; you removed the actions visually) */
+.nf-actions { display: inline-flex; gap: 8px; }
+.nf-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px; height: 42px;
+  width: 36px; height: 36px;
   border-radius: 10px;
   border: 1px solid var(--nf-border);
   background: #fff;
-  cursor: pointer;
-}
-.nf-burger, .nf-burger::before, .nf-burger::after {
-  content: "";
-  display: block;
-  width: 18px; height: 2px;
-  background: var(--nf-ink-700);
-  position: relative;
-  transition: .2s ease;
-}
-.nf-burger::before { position: absolute; transform: translateY(-6px); }
-.nf-burger::after  { position: absolute; transform: translateY( 6px); }
-
-@media (min-width: 900px) {
-  .nf-menu-toggle { display: none; }
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
 }
 
-/* mobile menu behavior (default: collapsed) */
-@media (max-width: 899px) {
-  .nf-links {
-    position: absolute;
-    left: 0; right: 0; top: 64px;
-    background: #fff;
-    border-bottom: 1px solid var(--nf-border);
-    padding: 12px 16px 16px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
-    display: none;
-  }
-  .nf-links.is-open { display: flex; }
-  .nf-cta { order: -1; } /* CTA first on mobile */
-}
-
-/* accessibility helper for screen readers */
-.sr-only {
-  position: absolute !important;
-  height: 1px; width: 1px;
-  overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap; border: 0; padding: 0; margin: -1px;
-}
-
+/* Search pill takes full width on mobile */
 .nav-search {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -154,26 +45,129 @@
   background: #fff;
   border: 1px solid var(--nf-border);
   border-radius: 999px;
-  width: 40%;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   transition: box-shadow .2s ease;
+}
+.nav-search:focus-within { box-shadow: 0 0 0 3px var(--nf-green-300); }
+.nav-search .search-input {
+  flex: 1; border: none; background: transparent; font-size: 14px; padding: 10px 12px;
+}
+.nav-search .search-input:focus { outline: none; }
+.nav-search .nf-button { border-radius: 50px; padding: 10px 16px; }
 
-  &:focus-within {
-    box-shadow: 0 0 0 3px var(--nf-green-300);
+/* Collapse the link list on mobile */
+.nf-links {
+  list-style: none;
+  display: none;
+  padding: 0; margin: 0;
+}
+.nf-links.is-open {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  border-top: 1px solid var(--nf-border);
+  padding-top: 8px;
+}
+
+/* ===================== */
+/* DESKTOP / TABLET ONLY */
+/* ===================== */
+@media (min-width: 900px) {
+  /* Single-row layout using grid: [brand] [centered search] [links] */
+  .nf-navbar .nf-container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 16px;
+    min-height: 64px;
   }
-  .search-input {
-    flex: 1;
+
+  .nf-logo { width: 28px; height: 28px; }
+  .nf-wordmark { font-size: 18px; }
+
+  /* Centered search */
+  .nav-search {
+    width: 100%;
+    max-width: 640px;
+    justify-self: center;
+  }
+
+  /* Right-aligned links */
+  .nf-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-self: end;
+  }
+
+  /* “Sign in” → text link */
+  .nf-link {
+    color: var(--nf-ink-700) !important;
+    text-decoration: none !important;
+    padding: 8px 6px;
+    border-radius: 8px;
+  }
+  .nf-link:hover,
+  .nf-link:focus {
+    color: var(--nf-green-700) !important;
+    background: var(--nf-cream-50);
+  }
+
+  /* “Sign up” → solid green CTA button */
+  .nf-cta .nf-button {
+    background: var(--nf-green-500);
+    color: #fff !important;
     border: none;
-    background: transparent;
-    font-size: 14px;
-    padding: 10px 12px;
-
-    &:focus { outline: none; }
-    &::placeholder { color: #9aa0a6; }
+    padding: 10px 18px;
+    border-radius: var(--nf-radius);
+    font-weight: 600;
+    box-shadow: var(--nf-shadow);
+    transition: background 0.2s ease;
+    white-space: nowrap;
   }
-
-  .nf-button {
-    border-radius: 50px;
-    padding: 10px 16px;
+  .nf-cta .nf-button:hover {
+    background: var(--nf-green-700);
   }
+}
+
+/* ===== Location bar styling ===== */
+.nf-location-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--nf-cream-50);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--nf-border);
+  position: sticky;
+  top: 64px;
+  z-index: 900;
+}
+
+.nf-location-btn {
+  background: #fff;
+  border: 1px solid var(--nf-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--nf-shadow);
+  font-weight: 500;
+  color: var(--nf-ink-700);
+  cursor: pointer;
+}
+.nf-location-btn:hover { background: var(--nf-cream-50); }
+.nf-dot { width: 8px; height: 8px; background: var(--nf-green-500); border-radius: 50%; }
+
+.nf-change-link {
+  font-size: 14px;
+  color: var(--nf-green-700);
+  font-weight: 600;
+  text-decoration: none;
+}
+.nf-change-link:hover { text-decoration: underline; }
+
+@media (max-width: 899px) {
+  .nf-location-bar { top: 92px; }  /* navbar is two rows on mobile; push location below it */
 }
