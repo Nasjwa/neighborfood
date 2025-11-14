@@ -17,9 +17,23 @@
 /* center brand on mobile since there are no right-side icons */
 .nf-toprow { justify-content: center; }
 
-/* Brand stays readable on mobile */
-.nf-brand { display: inline-flex; align-items: center; gap: 8px; }
-.nf-logo  { width: 22px; height: 22px; }
+/* Brand link (logo + wordmark) — cleaned up */
+.nf-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;      /* remove underline */
+  color: inherit;             /* prevent blue link color */
+}
+.nf-brand:hover,
+.nf-brand:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ✅ Bigger logo (mobile) with proper aspect ratio */
+.nf-logo  { width: 34px; height: auto; border-radius: 6px; object-fit: contain; }
+
 .nf-wordmark { font-size: 16px; font-weight: 800; color: var(--nf-green-700); }
 
 /* (kept for completeness; you removed the actions visually) */
@@ -83,7 +97,9 @@
     min-height: 64px;
   }
 
-  .nf-logo { width: 28px; height: 28px; }
+  /* ✅ Bigger logo on desktop */
+  .nf-logo { width: 44px; height: auto; }
+
   .nf-wordmark { font-size: 18px; }
 
   /* Centered search */
