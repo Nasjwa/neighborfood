@@ -1,0 +1,11 @@
+<%# Floating Action Button: mobile only, shows when logged in %>
+<% hide_fab = controller_name == "foods" && action_name.in?(%w[new edit create update]) %>
+
+<% if user_signed_in? && !hide_fab %>
+  <%= link_to new_food_path,
+              class: "nf-fab",
+              aria: { label: "Post Food" },
+              title: "Post Food" do %>
+    <span class="nf-fab-plus" aria-hidden="true">+</span>
+  <% end %>
+<% end %>
