@@ -1,0 +1,43 @@
+:root {
+  --nf-tabbar-gap: 72px;   /* space reserved for your bottom tab bar */
+  --nf-fab-size: 56px;
+}
+
+/* Floating Action Button */
+.nf-fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(var(--nf-tabbar-gap) + env(safe-area-inset-bottom) + 10px);
+  width: var(--nf-fab-size);
+  height: var(--nf-fab-size);
+  border-radius: 50%;
+  background: var(--nf-green-500);
+  color: #fff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(18, 62, 32, 0.22);
+  z-index: 1100; /* above content & tab bar */
+  transition: transform .15s ease, background .15s ease;
+}
+
+.nf-fab:hover { background: var(--nf-green-700); transform: translateY(-1px); }
+.nf-fab:active { transform: translateY(0); }
+
+.nf-fab-plus {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+/* Hide on desktop – mobile only */
+@media (min-width: 900px) {
+  .nf-fab { display: none; }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  :root { --nf-fab-size: 52px; }
+  .nf-fab { right: 12px; }
+}
