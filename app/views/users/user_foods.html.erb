@@ -7,7 +7,29 @@
 
   <div class="nf-grid">
     <% @user_foods.each do |food| %>
-      <%= render "foods/card", food: food %>
+      <article class="nf-card">
+        <%= link_to food_path(food), class: "nf-card-media" do %>
+          <% if food.photos.attached? %>
+                    <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
+          <% else %>
+            <div class="nf-card-ph"></div>
+          <% end %>
+        <% end %>
+        <div class="nf-card-body">
+          <h3 class="nf-card-title"><%= link_to food.title, food %></h3>
+          <%# Optional tag example %>
+          <div class="nf-card-tags">
+            <%# replace with real tags later %>
+          </div>
+          <p class="nf-card-desc"><%= truncate(food.description.to_s, length: 80) %></p>
+          <div class="nf-card-actions">
+            <%= link_to "Edit", edit_food_path(food), class: "nf-chip nf-chip--cta" %>
+            <%= link_to "Delete", food_path(food),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "nf-chip" %>
+          </div>
+        </div>
+      </article>
     <% end %>
   </div>
 
