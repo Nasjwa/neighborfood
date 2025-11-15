@@ -39,6 +39,7 @@
 .nf-chip:hover{ border-color:var(--nf-green-300); color:var(--nf-green-700); }
 .nf-chip--cta{ background:var(--nf-green-500); color:#fff; border:0; }
 .nf-chip--ghost{ background:#eee; color:transparent; border:0; }
+.nf-chip--tag.is-active { background:var(--nf-green-500); color:#fff; border:0; }
 
 /* sections */
 .nf-section{ margin: 14px 0; }
