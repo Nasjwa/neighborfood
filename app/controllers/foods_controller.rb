@@ -1,10 +1,11 @@
 class FoodsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
+  before_action :set_food, only: [:show, :edit, :update, :destroy]
 
   def index
     @foods = Food.all
     @tags = Tag.all
-    @nearby    = Food.limit(6)
+    @nearby = Food.limit(6)
     @cooked = Food.where(kind_of_food: 0).includes(:tags).order(created_at: :desc)
     @groceries = Food.where(kind_of_food: 1).includes(:tags).order(created_at: :desc)
 
@@ -25,7 +26,7 @@ class FoodsController < ApplicationController
 
       {
         lat: food.user.latitude,
-        lng: food.user.longitude,                    # use lng if your JS expects it
+        lng: food.user.longitude, # use lng if your JS expects it
         info_window_html: render_to_string(partial: "info_window", locals: { food: food }),
         marker_html: render_to_string(partial: "marker", locals: { food: food })
       }
@@ -64,9 +65,15 @@ class FoodsController < ApplicationController
   end
 
   def destroy
+    @food.destroy
+    redirect_to foods_path, notice: "Food deleted"
   end
 
   private
+
+  def set_food
+    @food = Food.find(params[:id])
+  end
 
   def food_params
     params.require(:food).permit(:title, :description, :start_time, :end_time, :quantity, :kind_of_food, :cooking_date, :expire_date, tag_ids: [], photos: [])
