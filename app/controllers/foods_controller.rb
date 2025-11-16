@@ -19,6 +19,7 @@ def index
       OR foods.title @@ :query
       OR users.post_code @@ :query
       OR users.first_name @@ :query
+      OR tags.name @@ :query
     SQL
 
     base_scope = base_scope.where(sql_subquery, query: params[:query])
