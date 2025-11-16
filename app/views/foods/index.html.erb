@@ -11,10 +11,22 @@
 
   <!-- Tag chips -->
   <div class="nf-chip-row">
-    <% Array(@tags).each do |tag| %>
-      <%= link_to tag.name, foods_path(q: tag), class: "nf-chip" %>
+    <% selected = Array(params[:tags]) %>
+
+    <% @tags.each do |tag| %>
+      <% active = selected.include?(tag.name) %>
+
+      <%= link_to tag.name,
+        foods_path(tags: active ? selected - [tag.name] : selected + [tag.name]),
+        class: "nf-chip #{active ? 'nf-chip--cta' : ''}" %>
+    <% end %>
+
+    <% if selected.any? %>
+      <%= link_to "Clear filters", foods_path, class: "nf-chip nf-chip--cta" %>
     <% end %>
   </div>
+
+  
 
   <!-- Section: Near you -->
   <section class="nf-section nf-row" data-controller="carousel">

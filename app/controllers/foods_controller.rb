@@ -2,36 +2,59 @@ class FoodsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   before_action :set_food, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @foods = Food.all
-    @tags = Tag.all
-    @nearby = Food.limit(6)
-    @cooked = Food.where(kind_of_food: 0).includes(:tags).order(created_at: :desc)
-    @groceries = Food.where(kind_of_food: 1).includes(:tags).order(created_at: :desc)
+def index
+  @tags = Tag.all
+  selected_tags = Array(params[:tags])
 
-    if params[:query].present?
-      sql_subquery = <<~SQL
-        foods.title @@ :query
-        OR foods.description @@ :query
-        OR users.post_code @@ :query
-        OR users.first_name @@ :query
-      SQL
-      @foods = @foods.joins(:user).where(sql_subquery, query: params[:query])
-    end
+  base_scope = Food
+    .joins(:user)
+    .left_joins(:tags)
+    .where.not(users: { latitude: nil, longitude: nil })
+    .distinct
 
-    @foods = Food.joins(:user).where.not(users: { latitude: nil, longitude: nil })
+  if params[:query].present?
+    sql_subquery = <<~SQL
+      foods.title @@ :query
+      OR foods.description @@ :query
+      OR foods.title @@ :query
+      OR users.post_code @@ :query
+      OR users.first_name @@ :query
+    SQL
 
-    @markers = @foods.map do |food|
-      next unless food.user&.latitude && food.user&.longitude
-
-      {
-        lat: food.user.latitude,
-        lng: food.user.longitude, # use lng if your JS expects it
-        info_window_html: render_to_string(partial: "info_window", locals: { food: food }),
-        marker_html: render_to_string(partial: "marker", locals: { food: food })
-      }
-    end.compact
+    base_scope = base_scope.where(sql_subquery, query: params[:query])
   end
+
+  if selected_tags.any?
+    strict_matches = base_scope
+      .where(tags: { name: selected_tags })
+      .group("foods.id")
+      .having("COUNT(DISTINCT tags.id) = ?", selected_tags.size)
+
+    if strict_matches.exists?
+      base_scope = strict_matches
+    else
+      base_scope = base_scope.where(tags: { name: selected_tags })
+    end
+  end
+
+  @foods = base_scope
+
+  @nearby    = base_scope.limit(6)
+  @cooked    = base_scope.where(kind_of_food: 0).order(created_at: :desc)
+  @groceries = base_scope.where(kind_of_food: 1).order(created_at: :desc)
+
+  @markers = base_scope.map do |food|
+    next unless food.user&.latitude && food.user&.longitude
+
+    {
+      lat: food.user.latitude,
+      lng: food.user.longitude,
+      info_window_html: render_to_string(partial: "info_window", locals: { food: food }),
+      marker_html: render_to_string(partial: "marker", locals: { food: food })
+    }
+  end.compact
+end
+
 
   def show
     @food = Food.find(params[:id])
@@ -62,6 +85,11 @@ class FoodsController < ApplicationController
   end
 
   def update
+    if @food.update(food_params)
+      redirect_to @food, notice: "Food updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
