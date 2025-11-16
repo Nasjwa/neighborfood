@@ -1,0 +1,22 @@
+<div class="container">
+  <h1> Claim <%= @food.title %></h1>
+  <div class="nf-grid">
+    <%= form_with model: [@food, Claim.new], local: true do |form| %>
+      <%= render "foods/card", food: @food %>
+      <div>
+        <%= form.label :collect_time, "Select a collection time:" %>
+        <%= form.datetime_local_field :collect_time,
+          value: (Time.current.change(min: 0) + 1.hour).strftime("%Y-%m-%dT%H:%M"),
+          min: @food.start_time.strftime("%Y-%m-%dT%H:%M"),
+          max: @food.end_time.strftime("%Y-%m-%dT%H:%M"),
+          class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.submit "Claim Food", class: "nf-button" %>
+        <%= link_to "Back to food", food_path(@food), class: "btn" %>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>

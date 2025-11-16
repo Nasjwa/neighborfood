@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <h1>My claims</h1>
+
+  <% if @claims.any? %>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% @claims.each do |claim| %>
+        <% food = claim.food %>
+
+        <%= link_to food_path(food), class: "thumb" do %>
+          <div class="card h-100">
+            <%= image_tag food.photos.first.variant(resize_to_limit: [400, 400]), class: "card-img-top", alt: food.title if food.photos.attached? %>
+          </div>
+        <% end %>
+
+        <div class="content">
+          <h3>
+            <%= link_to (food.title || "Food"), food_path(food) %>
+          </h3>
+
+          <% default_dt = (food&.start_time || Time.current + 1.hour).in_time_zone %>
+          <% min_dt     = (food&.start_time || Time.current).in_time_zone %>
+          <% max_dt     = (food&.end_time   || Time.current + 3.hours).in_time_zone %>
+
+          <p>Collect at: <strong><%= claim.collect_time ? claim.collect_time.strftime("%Y-%m-%dT%H:%M") : "Not set" %></strong></p>
+          <p>Status: <strong><%= claim.status.capitalize %></strong></p>
+
+          <div>
+            <%= link_to "View food", food_path(food), class: "btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>You have no claims yet.</p>
+  <% end %>
+</div>
