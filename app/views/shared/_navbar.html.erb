@@ -25,6 +25,7 @@
             <%= link_to "Post Food", new_food_path, class: "nf-button" %>
           </li>
           <li><%= link_to "My Listings", user_foods_path(current_user), class: "nf-link" %></li>
+          <li><%= link_to "My Claims", claims_path, class: "nf-link" %></li>
           <li><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "nf-link" %></li>
         <% else %>
           <li><%= link_to "Sign in", new_user_session_path, class: "nf-link" %></li>

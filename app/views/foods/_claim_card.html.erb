@@ -1,0 +1,31 @@
+<% if local_assigns[:food].present? %>
+  <article class="nf-card">
+    <%= link_to food_path(food), class: "nf-card-media" do %>
+      <% if food.photos.attached? %>
+                <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
+      <% else %>
+        <div class="nf-card-ph"></div>
+      <% end %>
+    <% end %>
+    <div class="nf-card-body">
+      <h3 class="nf-card-title"><%= link_to food.title, food %></h3>
+      <%# Optional tag example %>
+      <div class="nf-card-tags">
+        <%# replace with real tags later %>
+      </div>
+      <p class="nf-card-desc"><%= truncate(food.description.to_s, length: 80) %></p>
+      <p>Collect from <%= food.start_time.strftime("%H:%M") %> to <%= food.end_time.strftime("%H:%M") %></p>
+    </div>
+  </article>
+<% else %>
+  <!-- Skeleton placeholder -->
+  <article class="nf-card is-skeleton" aria-hidden="true">
+    <div class="nf-card-media"><div class="nf-skel"></div></div>
+    <div class="nf-card-body">
+      <div class="nf-skel nf-skel-title"></div>
+      <div class="nf-skel nf-skel-line"></div>
+      <div class="nf-skel nf-skel-line short"></div>
+      <div class="nf-chip nf-chip--ghost" style="width:72px;">&nbsp;</div>
+    </div>
+  </article>
+<% end %>
