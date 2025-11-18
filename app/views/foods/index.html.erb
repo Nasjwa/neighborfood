@@ -26,8 +26,6 @@
     <% end %>
   </div>
 
-
-
   <!-- Section: Near you -->
   <section class="nf-section nf-row" data-controller="carousel">
     <div class="nf-row__head">
@@ -100,35 +98,9 @@
     </div>
   </section>
 
-
   <!-- Map -->
   <div style="width: 100%; height: 600px;"
-  data-controller="map"
-  data-map-markers-value="<%= @markers.to_json %>"
-  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
-
-
-
-  <!-- Bottom tab bar (mobile) -->
-  <nav class="nf-tabbar" aria-label="Bottom navigation">
-    <%= link_to foods_path, class: "nf-tab" do %>
-      <span class="nf-tab-ico">🍲</span>
-      <span>Discover</span>
-    <% end %>
-    <%= link_to foods_path, class: "nf-tab" do %>
-      <span class="nf-tab-ico">🔎</span>
-      <span>Search</span>
-    <% end %>
-    <% if user_signed_in? %>
-      <%= link_to root_path, class: "nf-tab" do %>
-        <span class="nf-tab-ico">👤</span>
-        <span>Profile</span>
-      <% end %>
-    <% else %>
-      <%= link_to new_user_session_path, class: "nf-tab" do %>
-        <span class="nf-tab-ico">👤</span>
-        <span>Sign in</span>
-      <% end %>
-    <% end %>
-  </nav>
-</div>
+       data-controller="map"
+       data-map-markers-value="<%= @markers.to_json %>"
+       data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+  </div>

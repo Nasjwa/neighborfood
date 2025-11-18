@@ -15,7 +15,9 @@
 }
 
 /* center brand on mobile since there are no right-side icons */
-.nf-toprow { justify-content: center; }
+.nf-toprow {
+  justify-content: center;
+}
 
 /* Brand link (logo + wordmark) — cleaned up */
 .nf-brand {
@@ -25,28 +27,43 @@
   text-decoration: none;      /* remove underline */
   color: inherit;             /* prevent blue link color */
 }
+
 .nf-brand:hover,
 .nf-brand:focus {
   text-decoration: none;
   color: inherit;
 }
 
-/* ✅ Bigger logo (mobile) with proper aspect ratio */
-.nf-logo  { width: 34px; height: auto; border-radius: 6px; object-fit: contain; }
+/* Bigger logo (mobile) with proper aspect ratio */
+.nf-logo  {
+  width: 34px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: contain;
+}
 
-.nf-wordmark { font-size: 16px; font-weight: 800; color: var(--nf-green-700); }
+.nf-wordmark {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--nf-green-700);
+}
 
 /* (kept for completeness; you removed the actions visually) */
-.nf-actions { display: inline-flex; gap: 8px; }
+.nf-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
 .nf-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   border-radius: 10px;
   border: 1px solid var(--nf-border);
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
 }
 
 /* Search pill takes full width on mobile */
@@ -59,22 +76,39 @@
   background: #fff;
   border: 1px solid var(--nf-border);
   border-radius: 999px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: box-shadow .2s ease;
 }
-.nav-search:focus-within { box-shadow: 0 0 0 3px var(--nf-green-300); }
-.nav-search .search-input {
-  flex: 1; border: none; background: transparent; font-size: 14px; padding: 10px 12px;
+
+.nav-search:focus-within {
+  box-shadow: 0 0 0 3px var(--nf-green-300);
 }
-.nav-search .search-input:focus { outline: none; }
-.nav-search .nf-button { border-radius: 50px; padding: 10px 16px; }
+
+.nav-search .search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  padding: 10px 12px;
+}
+
+.nav-search .search-input:focus {
+  outline: none;
+}
+
+.nav-search .nf-button {
+  border-radius: 50px;
+  padding: 10px 16px;
+}
 
 /* Collapse the link list on mobile */
 .nf-links {
   list-style: none;
   display: none;
-  padding: 0; margin: 0;
+  padding: 0;
+  margin: 0;
 }
+
 .nf-links.is-open {
   display: flex;
   flex-direction: column;
@@ -97,10 +131,15 @@
     min-height: 64px;
   }
 
-  /* ✅ Bigger logo on desktop */
-  .nf-logo { width: 44px; height: auto; }
+  /* Bigger logo on desktop */
+  .nf-logo {
+    width: 44px;
+    height: auto;
+  }
 
-  .nf-wordmark { font-size: 18px; }
+  .nf-wordmark {
+    font-size: 18px;
+  }
 
   /* Centered search */
   .nav-search {
@@ -117,20 +156,21 @@
     justify-self: end;
   }
 
-  /* “Sign in” → text link */
+  /* Basic nav link */
   .nf-link {
     color: var(--nf-ink-700) !important;
     text-decoration: none !important;
     padding: 8px 6px;
     border-radius: 8px;
   }
+
   .nf-link:hover,
   .nf-link:focus {
     color: var(--nf-green-700) !important;
     background: var(--nf-cream-50);
   }
 
-  /* “Sign up” → solid green CTA button */
+  /* “Sign up” / Post Food CTA button */
   .nf-cta .nf-button {
     background: var(--nf-green-500);
     color: #fff !important;
@@ -142,8 +182,33 @@
     transition: background 0.2s ease;
     white-space: nowrap;
   }
+
   .nf-cta .nf-button:hover {
     background: var(--nf-green-700);
+  }
+
+  /* Avatar + "My profile" link in navbar */
+  .nf-nav-profile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .nf-nav-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e3f5e7;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #234028;
+  }
+
+  .nf-nav-profile-label {
+    font-size: 0.95rem;
   }
 }
 
@@ -173,8 +238,17 @@
   color: var(--nf-ink-700);
   cursor: pointer;
 }
-.nf-location-btn:hover { background: var(--nf-cream-50); }
-.nf-dot { width: 8px; height: 8px; background: var(--nf-green-500); border-radius: 50%; }
+
+.nf-location-btn:hover {
+  background: var(--nf-cream-50);
+}
+
+.nf-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--nf-green-500);
+  border-radius: 50%;
+}
 
 .nf-change-link {
   font-size: 14px;
@@ -182,8 +256,13 @@
   font-weight: 600;
   text-decoration: none;
 }
-.nf-change-link:hover { text-decoration: underline; }
+
+.nf-change-link:hover {
+  text-decoration: underline;
+}
 
 @media (max-width: 899px) {
-  .nf-location-bar { top: 92px; }  /* navbar is two rows on mobile; push location below it */
+  .nf-location-bar {
+    top: 92px; /* navbar is two rows on mobile; push location below it */
+  }
 }

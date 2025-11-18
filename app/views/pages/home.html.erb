@@ -87,27 +87,4 @@
       <% end %>
     </div>
   </section>
-
-  <!-- Bottom tab bar (mobile) -->
-  <nav class="nf-tabbar" aria-label="Bottom navigation">
-    <%= link_to foods_path, class: "nf-tab" do %>
-      <span class="nf-tab-ico">🍲</span>
-      <span>Discover</span>
-    <% end %>
-    <%= link_to foods_path, class: "nf-tab" do %>
-      <span class="nf-tab-ico">🔎</span>
-      <span>Search</span>
-    <% end %>
-    <% if user_signed_in? %>
-      <%= link_to root_path, class: "nf-tab" do %>
-        <span class="nf-tab-ico">👤</span>
-        <span>Profile</span>
-      <% end %>
-    <% else %>
-      <%= link_to new_user_session_path, class: "nf-tab" do %>
-        <span class="nf-tab-ico">👤</span>
-        <span>Sign in</span>
-      <% end %>
-    <% end %>
-  </nav>
 </div>
