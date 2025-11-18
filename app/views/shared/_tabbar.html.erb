@@ -1,22 +1,33 @@
 <nav class="nf-tabbar" aria-label="Bottom navigation">
-  <%= link_to foods_path, class: "nf-tab" do %>
-    <span class="nf-tab-ico">🍲</span>
+  <!-- Discover: go to main listing / home -->
+  <%= link_to root_path, class: "nf-tab" do %>
+    <span class="nf-tab-ico">
+      <i class="fa fa-cutlery" aria-hidden="true"></i>
+    </span>
     <span>Discover</span>
   <% end %>
 
+  <!-- Search: go to map search page -->
   <%= link_to foods_path, class: "nf-tab" do %>
-    <span class="nf-tab-ico">🔎</span>
+    <span class="nf-tab-ico">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+    </span>
     <span>Search</span>
   <% end %>
 
+  <!-- Profile: avatar when logged in, icon when logged out -->
   <% if user_signed_in? %>
-    <%= link_to user_path(current_user, tab: "details"), class: "nf-tab" do %>
-      <span class="nf-tab-ico">👤</span>
+    <%= link_to user_path(current_user, tab: "details"), class: "nf-tab nf-tab--profile" do %>
+      <span class="nf-tab-avatar">
+        <%= current_user.first_name.to_s.first&.upcase || current_user.email.first.upcase %>
+      </span>
       <span>Profile</span>
     <% end %>
   <% else %>
     <%= link_to new_user_session_path, class: "nf-tab" do %>
-      <span class="nf-tab-ico">👤</span>
+      <span class="nf-tab-ico">
+        <i class="fa fa-user" aria-hidden="true"></i>
+      </span>
       <span>Sign in</span>
     <% end %>
   <% end %>
