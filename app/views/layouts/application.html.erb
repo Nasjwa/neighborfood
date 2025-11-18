@@ -24,6 +24,9 @@
     <!-- Main page content -->
     <%= yield %>
 
+    <!-- Mobile bottom nav (shown on every page, hidden on desktop via CSS) -->
+    <%= render "shared/tabbar" %>
+
     <%= render "shared/post_fab" %>
   </body>
 </html>

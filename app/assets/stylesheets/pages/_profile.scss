@@ -1,0 +1,229 @@
+.nf-page {
+  padding: 1.5rem 1rem 5rem; // room for mobile bottom nav
+}
+
+.nf-profile {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.nf-profile-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 25px rgba(15, 40, 20, 0.06);
+}
+
+.nf-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.nf-profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e3f5e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.nf-profile-main {
+  flex: 1;
+}
+
+/* Name + edit icon row */
+.nf-profile-mainrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nf-profile-name {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.nf-profile-sub {
+  margin: 0.15rem 0 0;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.nf-profile-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #d6e3d9;
+  color: #234028;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.nf-profile-edit:hover {
+  background: #f7faf8;
+}
+
+/* Tabs */
+.nf-profile-tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1rem 0 1.25rem;
+  overflow-x: auto;
+}
+
+.nf-profile-tab {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid #d6e3d9;
+  color: #234028;
+  background: #f7faf8;
+}
+
+.nf-profile-tab.is-active {
+  background: #33a852;
+  color: #fff;
+  border-color: #33a852;
+}
+
+/* Panels */
+.nf-profile-panels {
+  min-height: 100px;
+}
+
+.nf-profile-panel {
+  display: none;
+}
+
+.nf-profile-panel.is-active {
+  display: block;
+}
+
+.nf-profile-food-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Sign out button on profile page */
+.nf-profile-signout {
+  margin-top: 1.75rem;
+  text-align: center;
+}
+
+.nf-profile-signout-link {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #b00020; /* red-ish for destructive action */
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fde7eb;
+}
+
+.nf-profile-signout-link:hover {
+  text-decoration: underline;
+}
+
+/* Change password link inside details panel */
+.nf-profile-password-link {
+  margin-top: 0.75rem;
+}
+
+.nf-link-underline {
+  color: #2E7D32;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* Edit / change password forms */
+.nf-profile-edit-title {
+  font-size: 1.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.nf-form-group {
+  margin-bottom: 0.9rem;
+}
+
+.nf-form-group label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+  color: #2A3A30;
+}
+
+.nf-input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #d6e3d9;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+.nf-hint {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 0.25rem;
+}
+
+.nf-form-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.nf-link-cancel {
+  font-size: 0.9rem;
+  color: #777;
+  text-decoration: none;
+}
+
+.nf-link-cancel:hover {
+  text-decoration: underline;
+}
+
+/* Screen-reader only text for accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 768px) {
+  .nf-page {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .nf-profile-card {
+    padding: 2rem;
+  }
+
+  .nf-profile-food-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .nf-profile-signout {
+    display: none;
+  }
+}

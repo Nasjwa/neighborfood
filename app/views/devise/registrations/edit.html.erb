@@ -1,35 +1,44 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="nf-page nf-profile">
+  <div class="nf-profile-card">
+    <h1 class="nf-profile-edit-title">Change password</h1>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+    <%= simple_form_for(resource,
+                        as: resource_name,
+                        url: registration_path(resource_name),
+                        html: { method: :put }) do |f| %>
+      <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+      <div class="nf-form-group">
+        <%= f.label :current_password, "Current password" %>
+        <%= f.password_field :current_password,
+                             required: true,
+                             autocomplete: "current-password",
+                             class: "nf-input" %>
+      </div>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+      <div class="nf-form-group">
+        <%= f.label :password, "New password" %>
+        <%= f.password_field :password,
+                             required: true,
+                             autocomplete: "new-password",
+                             class: "nf-input" %>
+        <% if @minimum_password_length %>
+          <p class="nf-hint"><%= @minimum_password_length %> characters minimum</p>
+        <% end %>
+      </div>
+
+      <div class="nf-form-group">
+        <%= f.label :password_confirmation, "Confirm new password" %>
+        <%= f.password_field :password_confirmation,
+                             required: true,
+                             autocomplete: "new-password",
+                             class: "nf-input" %>
+      </div>
+
+      <div class="nf-form-actions">
+        <%= f.submit "Save new password", class: "nf-button" %>
+        <%= link_to "Cancel", user_path(current_user, tab: "details"), class: "nf-link-cancel" %>
+      </div>
     <% end %>
-
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

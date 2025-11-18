@@ -1,7 +1,101 @@
-<div class="container">
-  <h1>User details</h1>
-  <p><%= @user.email %></p>
-  <p><%= @user.first_name %> <%= @user.last_name %></p>
-  <p>Post Code: <%= @user.post_code %></p>
-  <p>Address: <%= @user.address %></p>
+<div class="nf-page nf-profile">
+  <div class="nf-profile-card">
+    <div class="nf-profile-header">
+      <div class="nf-profile-avatar">
+        <span><%= @user.first_name.to_s.first&.upcase || @user.email.first.upcase %></span>
+      </div>
+
+      <div class="nf-profile-main">
+        <div class="nf-profile-mainrow">
+          <h1 class="nf-profile-name">
+            <%= [@user.first_name, @user.last_name].compact.join(" ") %>
+          </h1>
+
+          <!-- Edit profile pencil (for editing name/address in your own UsersController) -->
+          <%= link_to edit_user_path(@user), class: "nf-profile-edit", title: "Edit profile" do %>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            <span class="sr-only">Edit profile</span>
+          <% end %>
+        </div>
+
+        <p class="nf-profile-sub"><%= @user.email %></p>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <nav class="nf-profile-tabs" aria-label="Profile sections">
+      <%= link_to user_path(@user, tab: "details"),
+          class: "nf-profile-tab #{'is-active' if @active_tab == 'details'}" do %>
+        User details
+      <% end %>
+
+      <%= link_to user_path(@user, tab: "listings"),
+          class: "nf-profile-tab #{'is-active' if @active_tab == 'listings'}" do %>
+        My listings
+      <% end %>
+
+      <%= link_to user_path(@user, tab: "claims"),
+          class: "nf-profile-tab #{'is-active' if @active_tab == 'claims'}" do %>
+        My claims
+      <% end %>
+    </nav>
+
+    <!-- PANELS -->
+    <div class="nf-profile-panels">
+      <!-- User details -->
+      <section class="nf-profile-panel <%= 'is-active' if @active_tab == 'details' %>">
+        <p><strong>Email:</strong> <%= @user.email %></p>
+        <p>
+          <strong>Name:</strong>
+          <%= [@user.first_name, @user.last_name].compact.join(" ") %>
+        </p>
+        <p><strong>Post Code:</strong> <%= @user.post_code %></p>
+        <p><strong>Address:</strong> <%= @user.address %></p>
+
+        <!-- Change password link (goes to Devise registrations edit) -->
+        <p class="nf-profile-password-link">
+          <%= link_to "Change password", edit_user_registration_path, class: "nf-link-underline" %>
+        </p>
+      </section>
+
+      <!-- My listings -->
+      <section class="nf-profile-panel <%= 'is-active' if @active_tab == 'listings' %>">
+        <% if @user_foods.present? %>
+          <div class="nf-profile-food-grid">
+            <% @user_foods.each do |food| %>
+              <div class="nf-snap">
+                <%= render "foods/card", food: food %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p>You don’t have any listings yet.</p>
+        <% end %>
+      </section>
+
+      <!-- My claims -->
+      <section class="nf-profile-panel <%= 'is-active' if @active_tab == 'claims' %>">
+        <% if @user_claims.present? %>
+          <ul class="nf-profile-claims">
+            <% @user_claims.each do |claim| %>
+              <li>
+                <strong><%= claim.food.title %></strong>
+                – status: <%= claim.status %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>You haven’t claimed any foods yet.</p>
+        <% end %>
+      </section>
+    </div>
+
+    <!-- SIGN OUT (mobile only; hidden on desktop in CSS) -->
+    <div class="nf-profile-signout">
+      <%= link_to "Sign out",
+          destroy_user_session_path,
+          data: { turbo_method: :delete },
+          class: "nf-profile-signout-link" %>
+    </div>
+  </div>
 </div>
