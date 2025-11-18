@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :claims, only: [:new, :create]
     resources :reviews, only: [:new, :create]
     resources :tags, only: [:index]
+    resources :reviews, only: [:create, :destroy, :show]
   end
 
   resources :claims, only: [:index, :show, :edit, :update, :destroy]

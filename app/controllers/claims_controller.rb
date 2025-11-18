@@ -4,7 +4,7 @@ class ClaimsController < ApplicationController
 
   def index
     @claims = current_user.claims
-                          .includes(food: { photos_attachments: :blob })
+                          .includes(food: [{ photos_attachments: :blob }, :reviews ])
                           .order(collect_time: :desc)
   end
 
@@ -15,6 +15,12 @@ class ClaimsController < ApplicationController
 
   def create
     @food = Food.find(params[:food_id])
+    
+    if @food.user == current_user
+      redirect_to @food, alert: "You cannot claim your own food."
+      return
+    end
+
     @claim = current_user.claims.build(claim_params.merge(food: @food))
     @claim.food = @food
 

@@ -1,0 +1,19 @@
+<div class="nf-home">
+  <%= link_to 'Back to my claims', claims_path, class: "nf-chip nf-chip--cta" %>
+
+  <h1 class="mt-4">My review for <%= @food.title %></h1>
+
+  <div class="review-details">
+    
+    <h2>Rating: 
+      <%= @review.rating %>
+    </h2>
+
+    <div class="mt-4">
+      <h5>
+        <strong>Comment:</strong> <%= @review.comment %>
+      </h5>
+    </div>
+    
+  </div>
+</div>
