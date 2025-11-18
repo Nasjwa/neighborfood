@@ -1,0 +1,16 @@
+    <h4>Review the food that you saved!</h4>
+    <%= form_with model: [@food, @review], local: true do |f| %>
+        <div class="field mb-3 ">
+        <%= f.label :rating %>
+        <%= f.number_field :rating, in: 1..5 %>
+        </div>
+
+        <div class="field mb-3 ">
+        <%= f.label :comment %>
+        <%= f.text_area :comment %>
+        </div>
+
+        <div class="field mb-3 ">
+        <%= f.submit "Submit review" %>
+        </div>
+    <% end %>

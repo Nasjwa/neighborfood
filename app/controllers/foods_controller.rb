@@ -9,7 +9,9 @@ def index
   base_scope = Food
     .joins(:user)
     .left_joins(:tags)
+    .left_joins(:claims)  
     .where.not(users: { latitude: nil, longitude: nil })
+    .where("claims.id IS NULL OR claims.status != ?", "claimed")
     .distinct
 
   if params[:query].present?
