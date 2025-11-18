@@ -264,9 +264,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;   /* center icon + label vertically */
+  gap: 4px;
   padding: 6px 0;
-  border-radius: 10px;
+  height: 56px;              /* consistent height for all tabs */
 }
 
 .nf-tab:hover {
@@ -276,13 +277,21 @@
 
 /* icon for non-profile tabs */
 .nf-tab-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.nf-tab-ico i {
   font-size: 18px;
   line-height: 1;
 }
 
 /* profile tab avatar on mobile */
 .nf-tab--profile {
-   position: relative;
+  position: relative;
 }
 
 .nf-tab-avatar {
@@ -295,7 +304,8 @@
   justify-content: center;
   font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 2px;
+  color: #234028;
+  /* no margin-bottom so text aligns with other tabs */
 }
 
 @media (min-width: 900px) {
