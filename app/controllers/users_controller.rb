@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @user_foods  = @user.foods
-    @user_claims = @user.claims if @user.respond_to?(:claims)
+    @claims = @user.claims.includes(:food)
     @active_tab  = params[:tab].presence_in(%w[details listings claims]) || "details"
   end
 

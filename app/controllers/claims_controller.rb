@@ -28,7 +28,7 @@ class ClaimsController < ApplicationController
     @claim.status = "claimed"
 
     if @claim.save
-      redirect_to claims_path, notice: 'Claim created successfully.'
+      redirect_to user_path(current_user, tab: "claims"), notice: 'Claim created successfully.'
     else
       Rails.logger.debug "Claim save failed: #{@claim.errors.full_messages.inspect}"
       flash.now[:alert] = @claim.errors.full_messages.to_sentence
