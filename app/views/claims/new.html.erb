@@ -1,8 +1,13 @@
 <div class="container">
-  <h1> Claim <%= @food.title %></h1>
-  <div class="nf-grid mt-2">
+  <h1 class="mb-4"> Claim <strong><%= @food.title %></strong></h1>
+  <% if @food.photos.attached? %>
+    <%= image_tag @food.photos.first, alt: @food.title, class: "img-fluid" %>
+  <% end %>
+  <p><%= @food.description %></p>
+  <p> <strong>Collect from <%= @food.start_time.strftime("%H:%M") %> to <%= @food.end_time.strftime("%H:%M") %></strong></p>
+  <div class="nf-grid ">
     <%= form_with model: [@food, Claim.new], local: true do |form| %>
-      <div class="mb-3 mt-4">
+      <div class="mb-3 mt-2">
         <%= form.label :collect_time do %>
           <strong>Select a collection time:</strong>
         <% end %>

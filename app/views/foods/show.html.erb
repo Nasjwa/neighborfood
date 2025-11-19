@@ -1,20 +1,20 @@
-<div class="container">
+<div class="container mt-4">
   <div class="d-flex justify-content-center">
     <%= render "shared/carousel", photos: @food.photos, alt: @food.title %>
   </div>
-    <h1><%= @food.title %></h1>
+    <h1 class="mb-4"><%= @food.title %></h1>
     <p><%= @food.description %></p>
-    <p>Kind of food: <%= @food.kind_of_food.humanize %></p>
-    <p>Tags: <%= @food.tags.present? ? @food.tags.map(&:name).join(", ") : "None" %></p>
-    <p>Quantity: <%= @food.quantity %></p>
-    <p>Collection time: <%= @food.start_time.strftime("%H:%M") if @food.start_time %> - <%= @food.end_time.strftime("%H:%M") if @food.end_time %></p>
+    <p><strong>Kind of food:</strong> <%= @food.kind_of_food.humanize %></p>
+    <p><strong>Tags:</strong> <%= @food.tags.present? ? @food.tags.map(&:name).join(", ") : "None" %></p>
+    <p><strong>Quantity:</strong> <%= @food.quantity %></p>
+    <p><strong>Collection time:</strong> <%= @food.start_time.strftime("%H:%M") if @food.start_time %> - <%= @food.end_time.strftime("%H:%M") if @food.end_time %></p>
     <% if @food.kind_of_food == "groceries" %>
-      <p>Expire date: <%= @food.expire_date.strftime("%Y-%m-%d") if @food.expire_date %></p>
+      <p><strong>Expire date:</strong> <%= @food.expire_date.strftime("%Y-%m-%d") if @food.expire_date %></p>
     <% else %>
-      <p>Cooking date: <%= @food.cooking_date.strftime("%Y-%m-%d") if @food.cooking_date %></p>
+      <p><strong>Cooking date:</strong> <%= @food.cooking_date.strftime("%Y-%m-%d") if @food.cooking_date %></p>
     <% end %>
-    <p>Posted by: <%= @food.user.first_name %> </p>
-    <p>Location: <%= @food.user.post_code %> </p>
+    <p><strong>Posted by:</strong> <%= @food.user.first_name %> </p>
+    <p class ="mb-4"><strong>Location:</strong> <%= @food.user.post_code %> </p>
 
     <%= link_to "Back to Foods", foods_path, class: "nf-button mt-3" %>
 
