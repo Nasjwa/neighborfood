@@ -75,17 +75,16 @@
 
       <!-- My claims -->
       <section class="nf-profile-panel <%= 'is-active' if @active_tab == 'claims' %>">
-        <% if @user_claims.present? %>
-          <ul class="nf-profile-claims">
-            <% @user_claims.each do |claim| %>
-              <li>
-                <strong><%= claim.food.title %></strong>
-                – status: <%= claim.status %>
-              </li>
+        <% if @claims.present? %>
+          <div class="nf-profile-food-grid">
+            <% @claims.each do |claim| %>
+              <div class="nf-snap">
+                <%= render "claims/claim_card"%>
+              </div>
             <% end %>
-          </ul>
+          </div>
         <% else %>
-          <p>You haven’t claimed any foods yet.</p>
+          <p>You don’t have any claims yet.</p>
         <% end %>
       </section>
     </div>

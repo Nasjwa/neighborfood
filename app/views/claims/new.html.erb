@@ -2,7 +2,6 @@
   <h1> Claim <%= @food.title %></h1>
   <div class="nf-grid mt-2">
     <%= form_with model: [@food, Claim.new], local: true do |form| %>
-      <%= render "foods/claim_card", food: @food %>
       <div class="mb-3 mt-4">
         <%= form.label :collect_time do %>
           <strong>Select a collection time:</strong>
