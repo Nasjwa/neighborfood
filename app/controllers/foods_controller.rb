@@ -43,8 +43,8 @@ def index
   @foods = base_scope
 
   @nearby    = base_scope.all
-  @cooked    = base_scope.where(kind_of_food: 0).order(created_at: :desc)
-  @groceries = base_scope.where(kind_of_food: 1).order(created_at: :desc)
+  @cooked    = base_scope.where(kind_of_food: 0).order(created_at: :desc).all
+  @groceries = base_scope.where(kind_of_food: 1).order(created_at: :desc).all
 
   @markers = base_scope.map do |food|
     next unless food.user&.latitude && food.user&.longitude

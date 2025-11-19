@@ -78,8 +78,11 @@
         <% if @claims.present? %>
           <div class="nf-profile-food-grid">
             <% @claims.each do |claim| %>
+              <% food = claim.food %>
+              <% next unless food.present? %>
+
               <div class="nf-snap">
-                <%= render "claims/claim_card"%>
+                <%= render "claims/claim_card", food: food, claim: claim %>
               </div>
             <% end %>
           </div>

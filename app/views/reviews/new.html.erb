@@ -1,4 +1,5 @@
-    <h4>Review the food that you saved!</h4>
+    <h4>Review the <%= @food.title %> that you saved!</h4>
+
     <%= form_with model: [@food, @review], local: true do |f| %>
         <div class="field mb-3 ">
         <%= f.label :rating %>
@@ -13,4 +14,7 @@
         <div class="field mb-3 ">
         <%= f.submit "Submit review" %>
         </div>
+    
+    <%= link_to "Back to my claims", user_path(current_user, tab: "claims"), class: "nf-chip" %>
+    
     <% end %>

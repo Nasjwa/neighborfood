@@ -63,11 +63,11 @@
 
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Cooked meals">
       <% if defined?(@cooked) && @cooked.present? %>
-        <% @cooked.limit(4).each do |food| %>
+        <% @cooked.each do |food| %>
           <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
-        <% 4.times do %>
+        <% 6.times do %>
           <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>
@@ -87,11 +87,11 @@
 
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Groceries">
       <% if defined?(@groceries) && @groceries.present? %>
-        <% @groceries.limit(4).each do |food| %>
+        <% @groceries.each do |food| %>
           <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
-        <% 4.times do %>
+        <% 6.times do %>
           <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>

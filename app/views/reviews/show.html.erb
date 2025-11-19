@@ -1,5 +1,5 @@
 <div class="nf-home">
-  <%= link_to 'Back to my claims', claims_path, class: "nf-chip nf-chip--cta" %>
+  <%= link_to "Back to my claims", user_path(current_user, tab: "claims"), class: "nf-chip" %>
 
   <h1 class="mt-4">My review for <%= @food.title %></h1>
 
