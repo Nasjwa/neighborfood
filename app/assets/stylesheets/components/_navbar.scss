@@ -1,4 +1,18 @@
 /* ===== Navbar container becomes column on mobile ===== */
+.nf-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--nf-bg, #fff);
+}
+
+/* Spacer for the element immediately after the navbar so content is not covered */
+.nf-navbar + * {
+  margin-top: 80px;
+}
+
 .nf-navbar .nf-container {
   display: flex;
   flex-direction: column;
