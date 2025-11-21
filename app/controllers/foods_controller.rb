@@ -9,7 +9,7 @@ def index
   base_scope = Food
     .joins(:user)
     .left_joins(:tags)
-    .left_joins(:claims)  
+    .left_joins(:claims)
     .where.not(users: { latitude: nil, longitude: nil })
     .where("claims.id IS NULL OR claims.status != ?", "claimed")
     .distinct
@@ -61,6 +61,19 @@ end
 
   def show
     @food = Food.find(params[:id])
+
+    # Only build a marker for the shown food so the map centers on it
+    if @food.user&.latitude && @food.user&.longitude
+      @markers = [{
+        lat: @food.user.latitude.to_f,
+        lng: @food.user.longitude.to_f,
+        info_window_html: render_to_string(partial: "info_window", locals: { food: @food }),
+        marker_html: render_to_string(partial: "marker", locals: { food: @food })
+      }]
+    else
+      @markers = []
+    end
+    Rails.logger.debug "MARKERS: #{@markers.inspect}"
   end
 
   def new
