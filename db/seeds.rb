@@ -36,8 +36,8 @@ users = [
     password: "123456",
     first_name: "Nasjwa",
     last_name: "Eddyani",
-    address: "14 Hoxton Square, Shoreditch, London, N1 6NU, United Kingdom",
-    post_code: "N1 6NU",
+    address: "8 Camerton Cl, Hackney, London, E8 3TB, United Kingdom",
+    post_code: "E8 3TB",
   },
 
   {
@@ -45,8 +45,8 @@ users = [
     password: "123456",
     first_name: "Jean",
     last_name: "Toneli",
-    address: "57 Clapham Common North Side, Clapham, London, SW4 0AA, United Kingdom",
-    post_code: "SW4 0AA"
+    address: "179 Arlington Rd, Camden, London, NW1 7EY, United Kingdom",
+    post_code: "NW1 7EY"
   },
 
   {
@@ -54,8 +54,8 @@ users = [
     password: "123456",
     first_name: "Gonçalo",
     last_name: "Freitas",
-    address: "23 Gloucester Road, Kensington, London, SW7 4PL, United Kingdom",
-    post_code: "SW7 4PL"
+    address: "16 Gordon Pl, Kensington, London, W8 4JD, United Kingdom",
+    post_code: "W8 4JD"
   },
 ].map { |attrs| User.create!(attrs) }
 
