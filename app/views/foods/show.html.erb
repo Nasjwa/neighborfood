@@ -18,4 +18,10 @@
 
     <%= link_to "Back to Foods", foods_path, class: "nf-button mt-3" %>
 
+    <!-- Map -->
+    <div class ="mt-4" id="map" style="width:600px;height:400px"
+      data-controller="map"
+      data-map-api-key-value="<%= ENV.fetch('MAPBOX_API_KEY','') %>"
+      data-map-markers-value='<%= raw(@markers.to_json) %>'>
+    </div>
 </div>
