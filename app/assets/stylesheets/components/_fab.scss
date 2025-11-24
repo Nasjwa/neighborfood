@@ -53,6 +53,7 @@
     box-shadow: var(--nf-shadow);
     transition: background 0.2s ease;
     white-space: nowrap;
+    box-shadow: 0 0 2px #3f3f3fff;
   }
 .nf-button:hover {
     background: var(--nf-green-700);
