@@ -177,7 +177,7 @@ groceries = [
   { title: "Olive Oil Bottle", description: "Extra-virgin olive oil in a glass bottle." },
   { title: "Sugar Pack", description: "1 kg pack of white sugar for baking." },
   { title: "Flour Bag", description: "1 kg bag of wheat flour, unopened." },
-  { title: "Salt Shaker", description: "Full shaker of table salt." },
+  { title: "Salt Bag", description: "Full bag of table salt." },
   { title: "Tomato Sauce Jar", description: "Jar of tomato sauce for pasta." },
   { title: "Canned Tuna", description: "Three cans of tuna in water." },
   { title: "Peanut Butter Jar", description: "Unopened jar of smooth peanut butter." },
