@@ -113,6 +113,7 @@
 .nav-search .nf-button {
   border-radius: 50px;
   padding: 10px 16px;
+  box-shadow: 0 0 2px #3f3f3fff;
 }
 
 /* Collapse the link list on mobile */
@@ -195,6 +196,7 @@
     box-shadow: var(--nf-shadow);
     transition: background 0.2s ease;
     white-space: nowrap;
+    box-shadow: 0 0 2px #3f3f3fff;
   }
 
   .nf-cta .nf-button:hover {
