@@ -1,147 +1,85 @@
-<%= form_with(model: food, local: true) do |form| %>
-  <% if food.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(food.errors.count, "error") %> prohibited this food from being saved:</h2>
+<%= simple_form_for(food, html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
 
-      <ul>
-        <% food.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <div class="nf-form-body">
+    <!-- Basic info -->
+    <%= f.input :title,
+                required: true,
+                label: "Title",
+                placeholder: "Lasagna, apple pie, veggie curry..." %>
+
+    <%= f.input :description,
+                as: :text,
+                label: "Description",
+                input_html: { rows: 3 },
+                placeholder: "Short description and anything neighbours should know." %>
+
+    <!-- Kind & quantity side by side -->
+    <div class="nf-form-row">
+      <%= f.input :kind_of_food,
+                  as: :select,
+                  collection: Food.kind_of_foods.keys.map { |k| [k.humanize, k] },
+                  prompt: "Select kind",
+                  label: "Kind of food",
+                  required: true %>
+
+      <%= f.input :quantity,
+                  label: "Quantity",
+                  required: true,
+                  hint: "Number of portions or items",
+                  input_html: { min: 0, step: 1 } %>
     </div>
-  <% end %>
 
-  <div class="field mb-3 ">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+    <!-- Collection window -->
+    <div class="nf-form-row">
+      <%= f.input :start_time,
+                  as: :string,
+                  label: "Collection start",
+                  input_html: { type: "datetime-local" } %>
 
-  <div class="field mb-3">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="field mb-3">
-    <%= form.select :kind_of_food,
-      Food.kind_of_foods.keys.map { |k| [k.humanize, k] },
-      include_blank: 'Select kind',
-      class: 'form-control' %>
-  </div>
-
-  <div class="field mb-3">
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
-  </div>
-
-  <div class="field mb-3">
-    <%= form.label :tags, "Tags" %>
-    <div class="tag-checkboxes">
-      <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
-        <div class="form-check">
-          <%= b.check_box(class: "form-check-input") %>
-          <%= b.label(class: "form-check-label") %>
-        </div>
-      <% end %>
+      <%= f.input :end_time,
+                  as: :string,
+                  label: "Collection end",
+                  input_html: { type: "datetime-local" } %>
     </div>
-  </div>
 
-  <div class="field mb-3">
-    <%= form.label :collection_time, "Collection time" %>
-    <div class="d-flex gap-2">
-      <div>
-        <%= form.label :start_time, "From", class: "sr-only" %>
-        <%= form.time_field :start_time, class: "form-control", step: 60, placeholder: "HH:MM" %>
-      </div>
-      <div>
-        <%= form.label :end_time, "To", class: "sr-only" %>
-        <%= form.time_field :end_time, class: "form-control", step: 60, placeholder: "HH:MM" %>
-      </div>
+    <!-- Cooking / expiry dates – compact HTML5 date inputs -->
+    <div class="nf-form-row">
+      <%= f.input :cooking_date,
+                  as: :string,
+                  label: "Cooking date",
+                  input_html: { type: "date" } %>
+
+      <%= f.input :expire_date,
+                  as: :string,
+                  label: "Expire date",
+                  input_html: { type: "date" } %>
     </div>
-  </div>
 
-  <div id="cooking-date-field" style="<%= food.kind_of_food.to_s.downcase.include?('cooked') ? '' : 'display:none;' %>">
-    <%= form.label :cooking_date, "Cooking date" %>
-    <%= form.date_field :cooking_date, class: "form-control", readonly: !food.kind_of_food.to_s.downcase.include?('cooked') %>
-  </div>
-
-  <div id="expire-date-field" style="<%= food.kind_of_food.to_s.downcase.include?('cooked') ? 'display:none;' : '' %>">
-    <%= form.label :expire_date, "Expire date" %>
-    <%= form.date_field :expire_date, class: "form-control", readonly: food.kind_of_food.to_s.downcase.include?('cooked') %>
-  </div>
-
-  <script>
-    (function () {
-      function initToggleDates() {
-        const kindSelect = document.getElementById('food_kind_of_food');
-        if (!kindSelect) return;
-
-        const cookEl = document.getElementById('cooking-date-field');
-        const expireEl = document.getElementById('expire-date-field');
-
-        function setContainerVisible(container, visible) {
-          if (!container) return;
-          container.style.display = visible ? '' : 'none';
-
-          // update all form controls inside the container
-          container.querySelectorAll('input, textarea, select').forEach(el => {
-            // keep values submittable — avoid using `el.disabled = true`
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-              el.readOnly = !visible; // readonly still submits
-            } else if (el.tagName === 'SELECT') {
-              // selects have no readonly — make non-editable visually but keep it enabled so it submits
-              if (!visible) {
-                el.classList.add('readonly-select');      // CSS to block pointer events
-                el.setAttribute('aria-disabled', 'true');
-                el.tabIndex = -1;
-              } else {
-                el.classList.remove('readonly-select');
-                el.removeAttribute('aria-disabled');
-                el.tabIndex = 0;
-              }
-            }
-          });
-        }
-
-        function toggleDates() {
-          const value = (kindSelect.value || '').toLowerCase();
-          const si = kindSelect.selectedIndex;
-          const text = (si >= 0 && kindSelect.options[si]) ? kindSelect.options[si].text.toLowerCase() : '';
-          const isCooked = value.includes('cooked') || text.includes('cooked');
-
-          setContainerVisible(cookEl, isCooked);
-          setContainerVisible(expireEl, !isCooked);
-        }
-
-        kindSelect.addEventListener('change', toggleDates);
-        toggleDates();
-      }
-
-      document.addEventListener('turbo:load', initToggleDates);
-      document.addEventListener('DOMContentLoaded', initToggleDates);
-    })();
-  </script>
-
-<!-- >
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location %>
-  </div>
--->
-
-  <div class="field mb-3 mt-3">
-    <label>Upload photos</label>
-    <%= form.file_field :photos, multiple: true, direct_upload: true, class: "food-input" %>
-
-    <% if food.photos.attached? %>
-      <div class="food-photo-preview">
-        <% food.photos.each do |photo| %>
-          <%= image_tag url_for(photo), alt: food.title %>
+    <!-- Tags (via food_tags join) -->
+    <fieldset class="nf-form-group">
+      <legend>Tags</legend>
+      <div class="nf-form-checkbox-list">
+        <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name do |tag_builder| %>
+          <label>
+            <%= tag_builder.check_box %>
+            <%= tag_builder.text %>
+          </label>
         <% end %>
       </div>
-    <% end %>
+    </fieldset>
+
+    <!-- Photos -->
+    <div class="nf-form-group">
+      <%= f.input :photos,
+                  as: :file,
+                  label: "Photos",
+                  input_html: { multiple: true } %>
+    </div>
   </div>
 
-  <div class="actions mt-3 ">
-    <%= form.submit "Save Food", class: "nf-button border-0" %>
+  <div class="nf-form-actions">
+    <%= f.button :submit, "Post Food", class: "nf-btn nf-btn--primary" %>
+    <%= link_to "Cancel", foods_path, class: "nf-btn nf-btn--ghost" %>
   </div>
 <% end %>

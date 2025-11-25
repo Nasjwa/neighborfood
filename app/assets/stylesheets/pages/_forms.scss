@@ -1,0 +1,235 @@
+/* ========= Generic form layout ========= */
+
+.nf-form-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+}
+
+.nf-form-page--wide {
+  max-width: 640px;
+}
+
+.nf-form-card {
+  background: #fff;
+  border-radius: var(--nf-radius);
+  border: 1px solid var(--nf-border);
+  box-shadow: var(--nf-shadow);
+  padding: 20px 18px 22px;
+}
+
+/* Headings */
+
+.nf-form-title {
+  font-size: 1.4rem;
+  margin: 0 0 6px;
+  color: var(--nf-ink-900);
+}
+
+.nf-form-subtitle {
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: var(--nf-ink-700);
+}
+
+/* Main body */
+
+.nf-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Simple Form wrappers */
+
+.simple_form .input,
+.nf-form-body .form-group {
+  margin-bottom: 0; /* spacing handled by gap */
+}
+
+.simple_form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--nf-ink-900);
+}
+
+/* === Inputs inside cards (works for simple_form AND form_with) === */
+
+.nf-form-card input[type="text"],
+.nf-form-card input[type="email"],
+.nf-form-card input[type="password"],
+.nf-form-card input[type="number"],
+.nf-form-card input[type="datetime-local"],
+.nf-form-card input[type="time"],
+.nf-form-card input[type="date"],
+.nf-form-card textarea,
+.nf-form-card select {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--nf-border);
+  padding: 4px 9px;              /* was 6px 10px */
+  font-size: 0.8rem !important;  /* force smaller text */
+  line-height: 1.2;
+  background: #fff;
+}
+
+.nf-form-card input[type="date"],
+.nf-form-card input[type="time"],
+.nf-form-card input[type="datetime-local"] {
+  max-width: 100%;
+}
+
+.nf-form-card select {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 0.78rem !important;
+}
+
+
+/* focus state */
+
+.nf-form-card input:focus,
+.nf-form-card textarea:focus,
+.nf-form-card select:focus {
+  outline: none;
+  border-color: var(--nf-green-500);
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.15);
+}
+
+/* Make select boxes a tiny bit slimmer */
+.nf-form-card select {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 0.85rem;
+}
+
+/* Two-column rows (e.g. kind + quantity, start + end) */
+
+.nf-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .nf-form-row {
+    flex-direction: row;
+  }
+
+  .nf-form-row .input,
+  .nf-form-row .form-group {
+    flex: 1;
+  }
+}
+
+/* Fieldset / tags groups */
+
+.nf-form-group {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.nf-form-group legend {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--nf-ink-900);
+}
+
+.nf-form-checkbox-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 12px;
+}
+
+.nf-form-checkbox-list label {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Remember me / boolean */
+
+.simple_form .boolean label {
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Buttons */
+
+.nf-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nf-btn--primary {
+  background: var(--nf-green-500);
+  border-color: var(--nf-green-500);
+  color: #fff;
+  font-weight: 600;
+}
+
+.nf-btn--primary:hover {
+  background: var(--nf-green-700);
+  border-color: var(--nf-green-700);
+}
+
+.nf-btn--ghost {
+  background: #fff;
+  border-color: var(--nf-border);
+  color: var(--nf-ink-700);
+}
+
+.nf-btn--ghost:hover {
+  border-color: var(--nf-green-300);
+  color: var(--nf-green-700);
+}
+
+/* Small helper / links under form */
+
+.nf-form-meta {
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.nf-form-meta a {
+  color: var(--nf-green-700);
+  text-decoration: none;
+}
+
+.nf-form-meta a:hover {
+  text-decoration: underline;
+}
+
+/* Simple Form errors & hints */
+
+.simple_form .error {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+.simple_form .hint {
+  font-size: 0.8rem;
+  color: var(--nf-ink-700);
+}

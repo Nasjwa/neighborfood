@@ -5,7 +5,12 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--nf-bg, #fff);
+
+  /* Rails asset helper */
+  background-image: image-url("navbar-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Spacer for the element immediately after the navbar so content is not covered */
@@ -33,13 +38,13 @@
   justify-content: center;
 }
 
-/* Brand link (logo + wordmark) — cleaned up */
+/* Brand link (logo + wordmark) */
 .nf-brand {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;      /* remove underline */
-  color: inherit;             /* prevent blue link color */
+  text-decoration: none;
+  color: inherit;
 }
 
 .nf-brand:hover,
@@ -49,20 +54,21 @@
 }
 
 /* Bigger logo (mobile) with proper aspect ratio */
-.nf-logo  {
+.nf-logo {
   width: 34px;
   height: auto;
   border-radius: 6px;
   object-fit: contain;
 }
 
+/* Brand name is white */
 .nf-wordmark {
   font-size: 16px;
   font-weight: 800;
-  color: var(--nf-green-700);
+  color: #ffffff !important;
 }
 
-/* (kept for completeness; you removed the actions visually) */
+/* Actions (unused now) */
 .nf-actions {
   display: inline-flex;
   gap: 8px;
@@ -80,7 +86,7 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
 }
 
-/* Search pill takes full width on mobile */
+/* Search pill - unchanged */
 .nav-search {
   width: 100%;
   display: flex;
@@ -137,7 +143,8 @@
 /* DESKTOP / TABLET ONLY */
 /* ===================== */
 @media (min-width: 900px) {
-  /* Single-row layout using grid: [brand] [centered search] [links] */
+
+  /* Single-row layout */
   .nf-navbar .nf-container {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -171,39 +178,39 @@
     justify-self: end;
   }
 
-  /* Basic nav link */
+  /* Desktop nav links → WHITE for dark background */
   .nf-link {
-    color: var(--nf-ink-700) !important;
+    color: #ffffff !important;
     text-decoration: none !important;
     padding: 8px 6px;
     border-radius: 8px;
+    transition: 0.2s ease;
   }
 
   .nf-link:hover,
   .nf-link:focus {
-    color: var(--nf-green-700) !important;
-    background: var(--nf-cream-50);
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.12);
   }
 
-  /* “Sign up” / Post Food CTA button */
+  /* SIGN UP button — white text only (your request) */
   .nf-cta .nf-button {
-    background: var(--nf-green-500);
-    color: #fff !important;
-    border: none;
+    background: transparent; /* remove green */
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
     padding: 10px 18px;
     border-radius: var(--nf-radius);
     font-weight: 600;
-    box-shadow: var(--nf-shadow);
-    transition: background 0.2s ease;
     white-space: nowrap;
-    box-shadow: 0 0 2px #3f3f3fff;
+    box-shadow: none;
+    transition: 0.25s ease;
   }
 
   .nf-cta .nf-button:hover {
-    background: var(--nf-green-700);
+    background: rgba(255, 255, 255, 0.18);
   }
 
-  /* Avatar + "My profile" link in navbar */
+  /* Avatar + label */
   .nf-nav-profile {
     display: inline-flex;
     align-items: center;
@@ -279,6 +286,6 @@
 
 @media (max-width: 899px) {
   .nf-location-bar {
-    top: 92px; /* navbar is two rows on mobile; push location below it */
+    top: 92px; /* navbar is two rows on mobile */
   }
 }

@@ -33,7 +33,7 @@
       <div class="nf-arrows">
         <button type="button" class="nf-arrow" data-action="carousel#prev" aria-label="Scroll left">‹</button>
         <button type="button" class="nf-arrow" data-action="carousel#next" aria-label="Scroll right">›</button>
-        <!-- <%= link_to "See all", foods_path, class: "nf-row__seeall" %> -->
+        <%= link_to "See all", foods_path, class: "nf-row__seeall" %>
       </div>
     </div>
 
@@ -57,17 +57,17 @@
       <div class="nf-arrows">
         <button type="button" class="nf-arrow" data-action="carousel#prev" aria-label="Scroll left">‹</button>
         <button type="button" class="nf-arrow" data-action="carousel#next" aria-label="Scroll right">›</button>
-        <!-- <%= link_to "See all", foods_path, class: "nf-row__seeall" %> -->
+        <%= link_to "See all", foods_path, class: "nf-row__seeall" %>
       </div>
     </div>
 
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Cooked meals">
       <% if defined?(@cooked) && @cooked.present? %>
-        <% @cooked.each do |food| %>
+        <% @cooked.limit(4).each do |food| %>
           <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
-        <% 6.times do %>
+        <% 4.times do %>
           <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>
@@ -81,17 +81,17 @@
       <div class="nf-arrows">
         <button type="button" class="nf-arrow" data-action="carousel#prev" aria-label="Scroll left">‹</button>
         <button type="button" class="nf-arrow" data-action="carousel#next" aria-label="Scroll right">›</button>
-        <!-- <%= link_to "See all", foods_path, class: "nf-row__seeall" %> -->
+        <%= link_to "See all", foods_path, class: "nf-row__seeall" %>
       </div>
     </div>
 
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Groceries">
       <% if defined?(@groceries) && @groceries.present? %>
-        <% @groceries.each do |food| %>
+        <% @groceries.limit(4).each do |food| %>
           <div class="nf-snap"><%= render "foods/card", food: food %></div>
         <% end %>
       <% else %>
-        <% 6.times do %>
+        <% 4.times do %>
           <div class="nf-snap"><%= render "foods/card", food: nil %></div>
         <% end %>
       <% end %>
@@ -99,7 +99,7 @@
   </section>
 
   <!-- Map -->
-  <div style="width: 100%; height: 600px; box-shadow: 0 0 10px #3f3f3fff;" id="map"
+  <div style="width: 100%; height: 600px;"
        data-controller="map"
        data-map-markers-value="<%= @markers.to_json %>"
        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
