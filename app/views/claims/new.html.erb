@@ -1,28 +1,41 @@
-<div class="container">
-  <h1 class="mb-4"> Claim <strong><%= @food.title %></strong></h1>
-  <% if @food.photos.attached? %>
-    <%= image_tag @food.photos.first, alt: @food.title, class: "img-fluid" %>
-  <% end %>
-  <p><%= @food.description %></p>
-  <p> <strong>Collect from <%= @food.start_time.strftime("%H:%M") %> to <%= @food.end_time.strftime("%H:%M") %></strong></p>
-  <div class="nf-grid ">
-    <%= form_with model: [@food, Claim.new], local: true do |form| %>
-      <div class="mb-3 mt-2">
-        <%= form.label :collect_time do %>
-          <strong>Select a collection time:</strong>
-        <% end %>
-        <%= form.datetime_local_field :collect_time,
-          value: (Time.current.change(min: 0) + 1.hour).strftime("%Y-%m-%dT%H:%M"),
-          min: @food.start_time.strftime("%Y-%m-%dT%H:%M"),
-          max: @food.end_time.strftime("%Y-%m-%dT%H:%M"),
-          class: "form-control" %>
-      </div>
-      <div class="mb-3 mt-4">
-        <%= form.submit "Claim Food", class: "nf-button border-0" %>
-        <%= link_to "Back to food", foods_path, class: "nf-chip" %>
-      </div>
+<div class="nf-form-page">
+  <div class="nf-form-card">
+    <h1 class="nf-form-title">
+      Claim <span class="nf-form-title-accent"><%= @food.title %></span>
+    </h1>
+
+    <% if @food.photos.attached? %>
+      <p style="margin-bottom: 12px;">
+        <%= image_tag @food.photos.first, alt: @food.title, class: "img-fluid" %>
+      </p>
     <% end %>
 
-  </div>
+    <p class="nf-form-subtitle">
+      <%= @food.description %>
+    </p>
 
+    <p class="nf-form-helper">
+      Collect from <strong><%= @food.start_time.strftime("%H:%M") %></strong>
+      to <strong><%= @food.end_time.strftime("%H:%M") %></strong>.
+    </p>
+
+    <%= form_with model: [@food, Claim.new], local: true do |form| %>
+      <div class="nf-form-body">
+        <div class="input">
+          <%= form.label :collect_time do %>
+            <strong>Select a collection time:</strong>
+          <% end %>
+          <%= form.datetime_local_field :collect_time,
+                value: (Time.current.change(min: 0) + 1.hour).strftime("%Y-%m-%dT%H:%M"),
+                min: @food.start_time.strftime("%Y-%m-%dT%H:%M"),
+                max: @food.end_time.strftime("%Y-%m-%dT%H:%M") %>
+        </div>
+      </div>
+
+      <div class="nf-form-actions">
+        <%= form.submit "Claim Food", class: "nf-btn nf-btn--primary" %>
+        <%= link_to "Back to food", foods_path, class: "nf-btn nf-btn--ghost" %>
+      </div>
+    <% end %>
+  </div>
 </div>

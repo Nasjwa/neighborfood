@@ -10,16 +10,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+    <body>
     <!-- Navbar -->
     <%= render "shared/navbar" %>
 
-    <!-- Flash messages -->
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <!-- Everything below the navbar -->
+    <main class="nf-page-wrapper">
+      <!-- Flash messages -->
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
 
-    <!-- Main page content -->
-    <%= yield %>
+      <!-- Main page content -->
+      <%= yield %>
+    </main>
 
     <!-- Mobile bottom nav (shown on every page, hidden on desktop via CSS) -->
     <%= render "shared/tabbar" %>
