@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @user_foods  = @user.foods
     @claims = @user.claims.includes(:food)
     @active_tab  = params[:tab].presence_in(%w[details listings claims]) || "details"
+    @reviews = @user.reviews.includes(:food)
   end
 
   def edit

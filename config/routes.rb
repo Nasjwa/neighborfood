@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   resources :claims, only: [:index, :show, :edit, :update, :destroy]
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show, :edit, :update] do
+    resources :reviews, only: [:show]
+  end
   get "user/:id/foods", to: "users#user_foods", as: :user_foods
 
 end
