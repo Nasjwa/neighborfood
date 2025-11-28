@@ -96,6 +96,15 @@
           </div>
         </div>
 
+        <!-- REVIEWS -->
+        <div class="nf-food-meta-row">
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">User Reviews</span>
+            <span class="nf-food-meta-value"><%= stars_for(@food.user.foods.joins(:reviews).average("reviews.rating"), precision: :half, show_number: false) %>
+          </div>
+        </div>
+
         <!-- AREA -->
         <div class="nf-food-meta-row">
           <i class="fa fa-map-marker" aria-hidden="true"></i>

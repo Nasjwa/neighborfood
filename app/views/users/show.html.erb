@@ -51,6 +51,7 @@
         </p>
         <p><strong>Post Code:</strong> <%= @user.post_code %></p>
         <p><strong>Address:</strong> <%= @user.address %></p>
+        <p><strong>Average Rating:</strong> <%= stars_for(@user.foods.joins(:reviews).average("reviews.rating"), precision: :half, show_number: false) %></p>
 
         <!-- Change password link (goes to Devise registrations edit) -->
         <p class="nf-profile-password-link">
