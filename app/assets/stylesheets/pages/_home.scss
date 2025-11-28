@@ -111,10 +111,6 @@
   color: var(--nf-ink-900);
 }
 
-.nf-see-all {
-  color: var(--nf-green-700);
-  text-decoration: none;
-}
 
 /* grid */
 .nf-grid {
@@ -135,7 +131,7 @@
   }
 }
 
-/* card */
+/* ===== CARD ===== */
 .nf-card {
   background: #fff;
   border: 1px solid var(--nf-border);
@@ -144,6 +140,9 @@
   box-shadow: var(--nf-shadow);
   display: flex;
   flex-direction: column;
+
+  /* fixed, uniform height for all cards */
+  height: 420px;
 }
 
 .nf-card-media {
@@ -167,11 +166,13 @@
   background: linear-gradient(135deg, #eaf6ea, #ffffff);
 }
 
+/* flex body so content + button are arranged nicely */
 .nf-card-body {
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex: 1;                /* take all remaining height under the image */
 }
 
 .nf-card-title {
@@ -188,14 +189,21 @@
   color: var(--nf-green-700);
 }
 
+/* description is clamped so it can't push button off-screen */
 .nf-card-desc {
   font-size: .85rem;
   color: var(--nf-ink-700);
   margin: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;       /* max 3 lines of description */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
+/* button area always pinned to the bottom of the body */
 .nf-card-actions {
-  margin-top: 4px;
+  margin-top: auto;
 }
 
 /* skeletons */
