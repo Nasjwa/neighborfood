@@ -1,27 +1,148 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-center">
-    <%= render "shared/carousel", photos: @food.photos, alt: @food.title %>
-  </div>
-    <h1 class="mb-4"><%= @food.title %></h1>
-    <p><%= @food.description %></p>
-    <p><strong>Kind of food:</strong> <%= @food.kind_of_food.humanize %></p>
-    <p><strong>Tags:</strong> <%= @food.tags.present? ? @food.tags.map(&:name).join(", ") : "None" %></p>
-    <p><strong>Quantity:</strong> <%= @food.quantity %></p>
-    <p><strong>Collection time:</strong> <%= @food.start_time.strftime("%H:%M") if @food.start_time %> - <%= @food.end_time.strftime("%H:%M") if @food.end_time %></p>
-    <% if @food.kind_of_food == "groceries" %>
-      <p><strong>Expire date:</strong> <%= @food.expire_date.strftime("%Y-%m-%d") if @food.expire_date %></p>
-    <% else %>
-      <p><strong>Cooking date:</strong> <%= @food.cooking_date.strftime("%Y-%m-%d") if @food.cooking_date %></p>
-    <% end %>
-    <p><strong>Posted by:</strong> <%= @food.user.first_name %> </p>
-    <p class ="mb-4"><strong>Location:</strong> <%= @food.user.post_code %> </p>
+<div class="nf-food-page">
 
-    <%= link_to "Back to Foods", foods_path, class: "nf-button mt-3"  %>
+  <!-- HERO IMAGE / CAROUSEL -->
+  <div class="nf-food-hero">
+    <div class="nf-food-hero-inner">
+      <%= render "shared/carousel", photos: @food.photos, alt: @food.title %>
 
-    <!-- Map -->
-    <div class ="mt-5" id="map" style="width:80%; height:400px; box-shadow: 0 0 10px #3f3f3fff; center;margin:auto;"
-      data-controller="map"
-      data-map-api-key-value="<%= ENV.fetch('MAPBOX_API_KEY','') %>"
-      data-map-markers-value='<%= raw(@markers.to_json) %>'>
+      <div class="nf-food-hero-pill">
+        <i class="fa fa-cutlery" aria-hidden="true"></i>
+        <span><%= @food.kind_of_food.humanize %></span>
+      </div>
     </div>
+  </div>
+
+  <!-- MAIN CONTENT CARD -->
+  <div class="nf-food-content">
+
+    <!-- HEADER: TITLE + TAGS -->
+    <header class="nf-food-header">
+      <h1 class="nf-food-title"><%= @food.title %></h1>
+
+      <% if @food.tags.present? %>
+        <ul class="nf-food-tags">
+          <% @food.tags.each do |tag| %>
+            <li class="nf-food-tag"><%= tag.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </header>
+
+    <!-- DESCRIPTION -->
+    <section class="nf-food-section">
+      <h2 class="nf-food-section-title">Description</h2>
+      <p class="nf-food-text"><%= @food.description %></p>
+    </section>
+
+    <!-- DETAILS GRID -->
+    <section class="nf-food-section">
+      <h2 class="nf-food-section-title">Details</h2>
+
+      <div class="nf-food-meta">
+        <!-- KIND OF FOOD -->
+        <div class="nf-food-meta-row">
+          <i class="fa fa-cutlery" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">Kind of food</span>
+            <span class="nf-food-meta-value"><%= @food.kind_of_food.humanize %></span>
+          </div>
+        </div>
+
+        <!-- COLLECTION TIME (WITH CLOCK ICON) -->
+        <div class="nf-food-meta-row">
+          <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">Collection time</span>
+            <span class="nf-food-meta-value">
+              <%= @food.start_time&.strftime("%H:%M") %> – <%= @food.end_time&.strftime("%H:%M") %>
+            </span>
+          </div>
+        </div>
+
+        <!-- COOKING / EXPIRE DATE -->
+        <div class="nf-food-meta-row">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">
+              <%= @food.kind_of_food == "groceries" ? "Expire date" : "Cooking date" %>
+            </span>
+            <span class="nf-food-meta-value">
+              <% if @food.kind_of_food == "groceries" %>
+                <%= @food.expire_date&.strftime("%Y-%m-%d") %>
+              <% else %>
+                <%= @food.cooking_date&.strftime("%Y-%m-%d") %>
+              <% end %>
+            </span>
+          </div>
+        </div>
+
+        <!-- PORTIONS YOU CAN GET (BETTER WORDING) -->
+        <div class="nf-food-meta-row">
+          <i class="fa fa-cutlery" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">Portions</span>
+            <span class="nf-food-meta-value">
+              <%= pluralize(@food.quantity, "portion") %>
+            </span>
+          </div>
+        </div>
+
+        <!-- SHARED BY -->
+        <div class="nf-food-meta-row">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">Shared by</span>
+            <span class="nf-food-meta-value"><%= @food.user.first_name %></span>
+          </div>
+        </div>
+
+        <!-- AREA -->
+        <div class="nf-food-meta-row">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          <div>
+            <span class="nf-food-meta-label">Area</span>
+            <span class="nf-food-meta-value"><%= @food.user.post_code %></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SAFETY / INFO -->
+    <section class="nf-food-section nf-food-section--subtle">
+      <p class="nf-food-info">
+        ✅ Please collect on time.
+        ⚠ Always check ingredients and freshness when you arrive.
+      </p>
+    </section>
+
+    <!-- MAP -->
+    <section class="nf-food-section">
+      <h2 class="nf-food-section-title">Pickup area</h2>
+      <div
+        id="map"
+        class="nf-food-map"
+        data-controller="map"
+        data-map-api-key-value="<%= ENV.fetch('MAPBOX_API_KEY','') %>"
+        data-map-markers-value='<%= raw(@markers.to_json) %>'>
+      </div>
+      <p class="nf-food-map-hint">
+        Exact address is shared once you claim this meal.
+      </p>
+    </section>
+
+    <!-- CLAIM BUTTON -->
+    <div class="nf-food-claim-wrap">
+      <% if user_signed_in? %>
+        <%= link_to "Claim this meal", new_food_claim_path(@food), class: "nf-food-claim-btn" %>
+      <% else %>
+        <%= link_to "Sign in to claim", new_user_session_path, class: "nf-food-claim-btn" %>
+      <% end %>
+    </div>
+
+    <!-- BACK LINK -->
+    <div class="nf-food-back">
+      <%= link_to "← Back to foods", foods_path, class: "nf-food-back-link" %>
+    </div>
+
+  </div>
 </div>
