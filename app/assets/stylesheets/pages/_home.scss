@@ -315,3 +315,72 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  #open-map-btn {
+    display: none !important;
+  }
+}
+
+.map-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.map-modal.hidden {
+  display: none;
+}
+
+.map-modal-content {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 900px;
+  height: 80%;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.close-map-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f2f2f2;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#close-map-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 99999;
+}
+
+.close-map-btn:hover {
+  background: #e6e6e6;
+}
+
+.map-area {
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+}
