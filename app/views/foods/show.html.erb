@@ -1,5 +1,7 @@
 <div class="nf-food-page">
-
+  <script type="text/template" id="claim-template-show">
+    <%= render "claims/claiming_food", food: @food %>
+  </script>
   <!-- HERO IMAGE / CAROUSEL -->
   <div class="nf-food-hero">
     <div class="nf-food-hero-inner">
@@ -141,11 +143,16 @@
 
     <!-- CLAIM BUTTON -->
     <div class="nf-food-claim-wrap">
-      <% if user_signed_in? %>
-        <%= link_to "Claim this meal", new_food_claim_path(@food), class: "nf-food-claim-btn" %>
-      <% else %>
-        <%= link_to "Sign in to claim", new_user_session_path, class: "nf-food-claim-btn" %>
-      <% end %>
+        <% unless user_signed_in? %>
+          <%= link_to "Claim",
+                      new_user_session_path,
+                      class: "nf-chip nf-chip--cta" %>
+        <% else %>
+          <%= link_to "Claim",
+                      "#",
+                      class: "nf-chip nf-chip--cta",
+                      data: { claim_modal: true } %>
+        <% end %>
     </div>
 
     <!-- BACK LINK -->
@@ -153,5 +160,15 @@
       <%= link_to "← Back to foods", foods_path, class: "nf-food-back-link" %>
     </div>
 
+  </div>
+</div>
+
+<!-- CLAIM MODAL -->
+<div id="claim-modal" class="claim-modal hidden">
+  <div class="claim-modal-content">
+
+    <div id="claim-wrapper" class="claim-area">
+      <div id="claim-modal-body"></div>
+    </div>
   </div>
 </div>

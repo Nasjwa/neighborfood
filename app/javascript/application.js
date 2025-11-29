@@ -3,6 +3,7 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
+import "./controllers/modal"
 
 // === NeighborFood Navbar Toggle ===
 document.addEventListener("turbo:load", () => {

@@ -95,9 +95,39 @@
     </div>
   </section>
 
-  <!-- Map -->
+
+  <!-- MAP MODAL -->
+<div id="map-modal" class="map-modal hidden">
+  <div class="map-modal-content">
+    <button id="close-map-modal" class="close-map-btn">✕</button>
+
+    <div id="map-wrapper" class="map-area">
+      
+      <div id="modal-map"
+           style="width: 100%; height: 100%;"
+           data-controller="map"
+           data-map-markers-value="<%= @markers.to_json %>"
+           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CLAIM MODAL -->
+<div id="claim-modal" class="claim-modal hidden">
+  <div class="claim-modal-content">
+
+    <div id="claim-wrapper" class="claim-area">
+      <div id="claim-modal-body"></div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Map 
   <div style="width: 100%; height: 600px;"
        data-controller="map"
        data-map-markers-value="<%= @markers.to_json %>"
        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
-  </div>
+  </div> -->
