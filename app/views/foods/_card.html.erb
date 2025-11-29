@@ -1,5 +1,9 @@
 <% if local_assigns[:food].present? %>
   <article class="nf-card">
+    <template class="claim-template">
+      <%= render "claims/claiming_food", food: food %>
+    </template>
+    
     <%= link_to food_path(food), class: "nf-card-media" do %>
       <% if food.photos.attached? %>
                 <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
@@ -15,9 +19,18 @@
       </div>
       <p class="nf-card-desc"><%= truncate(food.description.to_s, length: 80) %></p>
       <p>Collect from <%= food.start_time.strftime("%H:%M") %> to <%= food.end_time.strftime("%H:%M") %></p>
+      
       <div class="nf-card-actions">
-        <%= link_to "Claim", new_user_session_path, class: "nf-chip nf-chip--cta" unless user_signed_in? %>
-        <%= link_to "Claim", new_food_claim_path(food), class: "nf-chip nf-chip--cta" if user_signed_in? %>
+        <% unless user_signed_in? %>
+          <%= link_to "Claim",
+                      new_user_session_path,
+                      class: "nf-chip nf-chip--cta" %>
+        <% else %>
+          <%= link_to "Claim",
+                      "#",
+                      class: "nf-chip nf-chip--cta",
+                      data: { claim_modal: true } %>
+        <% end %>
       </div>
     </div>
   </article>

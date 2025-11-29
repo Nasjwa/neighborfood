@@ -17,7 +17,16 @@ export default class extends Controller {
 
       this.#addMarkersToMap();
       this.#FITMapToMarkers();
+    
+       window.myMap = this.map;
+  }
+
+  resize() {
+    if (this.map) {
+      this.map.resize();
+      this.#FITMapToMarkers();
     }
+  }
 
   #addMarkersToMap() {
   // Create a new marker.
