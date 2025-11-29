@@ -353,18 +353,19 @@
   width: 90%;
   max-width: 900px;
   height: 80%;
-  padding: 20px;
   position: relative;
+  overflow: hidden; /* make the inner map fill the frame */
+  padding: 0;       /* remove internal padding */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   display: flex;
-  flex-direction: column;
 }
 
 .close-map-btn {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #f2f2f2;
+  background: var(--nf-green-500);
+  color: white;
   border: none;
   border-radius: 50%;
   width: 35px;
@@ -382,13 +383,68 @@
 }
 
 .close-map-btn:hover {
-  background: #e6e6e6;
+  background: var(--nf-ink-900);
 }
 
 .map-area {
   width: 100%;
   height: 100%;
-  margin-top: 10px;
   border-radius: 15px;
   overflow: hidden;
+}
+
+.claim-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.claim-modal.hidden {
+  display: none;
+}
+
+.claim-modal-content {
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0
+}
+
+.close-claim-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f2f2f2;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  z-index: 99999;
+}
+
+.close-claim-btn:hover {
+  background: #e6e6e6;
+}
+
+.claim-area {
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  border-radius: 15px;
+  overflow: auto; 
+  padding: 10px;
+}
+
+.claim-modal img {
+  height: 400px;
+  width: 100;
 }

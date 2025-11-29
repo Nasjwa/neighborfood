@@ -8,10 +8,25 @@ class ClaimsController < ApplicationController
                           .order(collect_time: :desc)
   end
 
-  def new
-    @food = Food.find(params[:food_id])
-    @claim = Claim.new
+  def show
+  @food = Food.find(params[:id])
+
+    respond_to do |format|
+      format.html # full page claim
+      format.js { render partial: "claims/claiming_food", locals: { food: @food } }
+    end
   end
+
+  def new
+    @food  = Food.find(params[:food_id])
+    @claim = Claim.new
+
+    respond_to do |format|
+      format.html # normal full-page render
+      format.js   { render partial: "claims/claiming_food", locals: { food: @food } }
+    end
+  end
+
 
   def create
     @food = Food.find(params[:food_id])
