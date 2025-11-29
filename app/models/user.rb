@@ -13,4 +13,9 @@ class User < ApplicationRecord
 
   geocoded_by :post_code
   after_validation :geocode, if: :will_save_change_to_post_code?
+
+  def average_rating_for_own_foods
+    avg = foods.joins(:reviews).average('reviews.rating')
+    avg && avg.to_f
+  end
 end

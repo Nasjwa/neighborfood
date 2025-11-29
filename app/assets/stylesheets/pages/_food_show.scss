@@ -1,0 +1,255 @@
+/* Food show (detail page) */
+
+/* MOBILE-FIRST STYLES (what you already like) */
+.nf-food-page {
+  background: #f6f7f2;
+  min-height: 100vh;
+  padding: 12px 12px 80px; // leave room for bottom nav / FAB
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* HERO IMAGE */
+
+.nf-food-hero {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto 12px;
+}
+
+.nf-food-hero-inner {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+/* pill on top of the image */
+.nf-food-hero-pill {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+}
+
+.nf-food-hero-pill i {
+  font-size: 0.85rem;
+}
+
+/* MAIN CARD */
+
+.nf-food-content {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px 16px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* HEADER */
+
+.nf-food-header {
+  margin-bottom: 12px;
+}
+
+.nf-food-title {
+  font-size: 1.35rem;
+  margin: 0 0 8px;
+}
+
+.nf-food-tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nf-food-tag {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: #eaf6ea;
+  font-size: 0.75rem;
+}
+
+/* SECTIONS */
+
+.nf-food-section {
+  margin: 12px 0;
+}
+
+.nf-food-section-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.nf-food-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* DETAILS LIST */
+
+.nf-food-meta {
+  border-radius: 12px;
+  background: #f7faf7;
+  padding: 10px 10px 6px;
+}
+
+.nf-food-meta-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.nf-food-meta-row:last-child {
+  border-bottom: 0;
+}
+
+.nf-food-meta-row i {
+  margin-top: 2px;
+  font-size: 0.9rem;
+  color: #6c7a6f;
+}
+
+.nf-food-meta-label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #7a847a;
+}
+
+.nf-food-meta-value {
+  display: block;
+  font-size: 0.9rem;
+  color: #243225;
+}
+
+/* INFO / SAFETY */
+
+.nf-food-section--subtle {
+  font-size: 0.8rem;
+  color: #566156;
+}
+
+.nf-food-info {
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* MAP */
+
+.nf-food-map {
+  width: 100%;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.nf-food-map-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: #6b756b;
+}
+
+/* CLAIM BUTTON */
+
+.nf-food-claim-wrap {
+  margin-top: 18px;
+}
+
+.nf-food-claim-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--nf-green-500);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(27, 94, 32, 0.3);
+}
+
+.nf-food-claim-btn:hover {
+  background: var(--nf-green-700);
+  color: #fff;
+}
+
+/* BACK LINK */
+
+.nf-food-back {
+  margin-top: 14px;
+}
+
+.nf-food-back-link {
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: #506b52;
+}
+
+.nf-food-back-link:hover {
+  text-decoration: underline;
+}
+
+/* ========================= */
+/* DESKTOP / LARGE SCREENS  */
+/* ========================= */
+
+@media (min-width: 900px) {
+  .nf-food-page {
+    padding: 32px 48px 80px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .nf-food-hero,
+  .nf-food-content {
+    max-width: 520px;
+    margin: 0; /* handled by flex gap */
+  }
+
+  .nf-food-content {
+    padding: 20px 20px 24px;
+  }
+
+  .nf-food-title {
+    font-size: 1.6rem;
+  }
+
+  .nf-food-section {
+    margin: 16px 0;
+  }
+
+  .nf-food-map {
+    height: 260px;
+  }
+}
+
+.card-food-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
