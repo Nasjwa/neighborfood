@@ -28,28 +28,33 @@ class ClaimsController < ApplicationController
   end
 
 
-  def create
-    @food = Food.find(params[:food_id])
-    
-    if @food.user == current_user
-      redirect_to @food, alert: "You cannot claim your own food."
-      return
-    end
+def create
+  @food = Food.find(params[:food_id])
 
-    @claim = current_user.claims.build(claim_params.merge(food: @food))
-    @claim.food = @food
-
-    # set status
-    @claim.status = "claimed"
-
-    if @claim.save
-      redirect_to user_path(current_user, tab: "claims"), notice: 'Claim created successfully.'
-    else
-      Rails.logger.debug "Claim save failed: #{@claim.errors.full_messages.inspect}"
-      flash.now[:alert] = @claim.errors.full_messages.to_sentence
-      render :new, status: :unprocessable_entity
-    end
+  # Prevent claiming your own food
+  if @food.user == current_user
+    return render turbo_stream: turbo_stream.update(
+      "claim-modal-body",
+      partial: "claims/claim_error",
+      locals: { message: "You cannot claim your own food." }
+    )
   end
+
+  @claim = current_user.claims.build(claim_params.merge(food: @food))
+  @claim.status = "claimed"
+
+  if @claim.save
+    # Always turbo: flip modal to confirmation
+    render "claims/create"
+  else
+    render turbo_stream: turbo_stream.update(
+      "claim-modal-body",
+      partial: "claims/claim_error",
+      locals: { message: @claim.errors.full_messages.to_sentence }
+    )
+  end
+end
+
 
   private
 
