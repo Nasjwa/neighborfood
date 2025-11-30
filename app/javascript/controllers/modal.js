@@ -1,9 +1,9 @@
 function initModals() {
-  
+
   // CLAIM MODAL (index + show)
+
   const claimModal = document.getElementById("claim-modal");
   const claimModalBody = document.getElementById("claim-modal-body");
-  const closeClaimBtn = document.getElementById("close-claim-modal");
 
   // Open modal from any claim button
   document.addEventListener("click", (e) => {
@@ -14,33 +14,34 @@ function initModals() {
 
     let template = null;
 
-    // Index page claim modal
+    // Index page open 
     const card = btn.closest(".nf-card");
     if (card) {
       template = card.querySelector(".claim-template");
     }
 
-    // Show page modal
+    // Show page open
     if (!template) {
-      const showTemplate = document.getElementById("claim-template-show");
-      if (showTemplate) {
-        template = showTemplate;
-      }
+      template = document.getElementById("claim-template-show");
     }
+
+    if (!template) return;
 
     claimModalBody.innerHTML = template.innerHTML;
     claimModal.classList.remove("hidden");
   });
 
-  // Close with button
-  if (closeClaimBtn) {
-    closeClaimBtn.addEventListener("click", () => {
+  // CLOSE claim modal "Close" button
+  document.addEventListener("click", (e) => {
+    if (!claimModal) return;
+
+    if (e.target.closest("#close-claim-modal")) {
       claimModal.classList.add("hidden");
       claimModalBody.innerHTML = "";
-    });
-  }
+    }
+  });
 
-  // Close clicking outside
+  // Close modal by clicking the background
   if (claimModal) {
     claimModal.addEventListener("click", (e) => {
       if (e.target === claimModal) {
@@ -50,45 +51,48 @@ function initModals() {
     });
   }
 
+
   // MAP MODAL
   const mapModal = document.getElementById("map-modal");
-  const closeMapBtn = document.getElementById("close-map-modal");
 
-  // Desktop button
+  // Open map from navbar button
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("#open-map-btn");
     if (!btn || !mapModal) return;
-    e.preventDefault();
 
+    e.preventDefault();
     mapModal.classList.remove("hidden");
+
     setTimeout(() => window.myMap?.resize(), 200);
   });
 
-  // Mobile tab
+  // Open map from mobile tab
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("#mobile-search-tab");
     if (!btn || !mapModal) return;
-    e.preventDefault();
 
+    e.preventDefault();
     mapModal.classList.remove("hidden");
+
     setTimeout(() => window.myMap?.resize(), 200);
   });
 
-  // Close map button
-  if (closeMapBtn) {
-    closeMapBtn.addEventListener("click", () => {
-      mapModal.classList.add("hidden");
-    });
-  }
+  // Close map modal (X button)
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#close-map-modal")) {
+      mapModal?.classList.add("hidden");
+    }
+  });
 
-  // Close map by clicking outside
+  // Close map modal by clicking background
   if (mapModal) {
     mapModal.addEventListener("click", (e) => {
-      if (e.target === mapModal) mapModal.classList.add("hidden");
+      if (e.target === mapModal) {
+        mapModal.classList.add("hidden");
+      }
     });
   }
 }
 
 document.addEventListener("DOMContentLoaded", initModals);
-
 document.addEventListener("turbo:load", initModals);

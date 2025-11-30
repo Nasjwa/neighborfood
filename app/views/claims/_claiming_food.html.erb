@@ -18,7 +18,7 @@
       to <strong><%= food.end_time.strftime("%H:%M") %></strong>.
     </p>
 
-    <%= form_with model: [food, Claim.new], local: true do |form| %>
+    <%= form_with model: [food, Claim.new], data: { turbo_stream: true } do |form| %>
       <div class="nf-form-body">
         <div class="input">
           <%= form.label :collect_time do %>

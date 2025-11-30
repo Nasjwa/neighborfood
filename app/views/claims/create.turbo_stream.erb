@@ -1,0 +1,31 @@
+<turbo-stream target="claim-modal-body" action="update">
+  <template>
+    <div class="nf-form-card">
+
+      <h1 class="nf-form-title">
+        🎉Thank You
+      </h1>
+
+      <p class="nf-form-subtitle">
+        You saved <strong><%= @food.title %></strong>.
+      </p>
+
+      <p class="nf-form-helper">
+        Collection time: 
+        <strong><%= @claim.collect_time.strftime("%H:%M") %></strong>
+      </p>
+
+      <div class="nf-form-actions">
+        <a href="<%= user_path(current_user, tab: 'claims') %>"
+           class="nf-btn nf-btn--primary">
+           Go to My Claims
+        </a>
+
+        <button class="nf-btn nf-btn--ghost" id="close-claim-modal">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </template>
+</turbo-stream>
