@@ -94,6 +94,9 @@
   border: 0;
 }
 
+
+
+
 /* sections */
 .nf-section {
   margin: 14px 0;
@@ -136,20 +139,22 @@
   background: #fff;
   border: 1px solid var(--nf-border);
   border-radius: var(--nf-radius);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--nf-shadow);
   display: flex;
   flex-direction: column;
-
+  
   /* fixed, uniform height for all cards */
-  height: 420px;
+  height: 100%;
+  min-height: 330px;
 }
 
 .nf-card-media {
   position: relative;
   width: 100%;
   padding-top: 70%;
-  background: #fff;
+  background: transparent;
+  border-radius: var(--nf-radius);
 }
 
 .nf-card-media img {
@@ -158,6 +163,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--nf-radius);
 }
 
 .nf-card-ph {
@@ -172,7 +178,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  flex: 1;                /* take all remaining height under the image */
+  flex-grow: 1;
+  overflow: visible;               /* take all remaining height under the image */
 }
 
 .nf-card-title {
@@ -194,17 +201,50 @@
   font-size: .85rem;
   color: var(--nf-ink-700);
   margin: 0;
-
+  
   display: -webkit-box;
   -webkit-line-clamp: 3;       /* max 3 lines of description */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* button area always pinned to the bottom of the body */
-.nf-card-actions {
+.nf-card-footer {
   margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  min-height: 48px;
+  padding-top: 8px;
 }
+
+.nf-card-actions {
+  display: flex;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.nf-card-tags {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nf-card-claim {
+  display: flex;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.nf-chip--tag {
+  padding: 3px 10px;
+  font-size: 10px;
+  color: white;
+  background-color: var(--nf-green-800);
+}
+/* button area always pinned to the bottom of the body */
 
 /* skeletons */
 .nf-skel {

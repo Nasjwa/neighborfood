@@ -16,14 +16,22 @@
       <p class="nf-card-desc"><%= truncate(food.description.to_s, length: 80) %></p>
       <p>Collect from <%= food.start_time.strftime("%H:%M") %> to <%= food.end_time.strftime("%H:%M") %></p>
 
-      <div class="nf-card-actions">
-        <% user_review = food.reviews.find_by(user: current_user) %>
+      <div class="nf-card-footer">
+        <div class="nf-card-actions">
+          <% user_review = food.reviews.find_by(user: current_user) %>
 
-        <% if user_review.present? %>
-          <%= link_to "See my review", food_review_path(food, user_review), class: "nf-chip nf-chip" %>
-        <% else %>
-          <%= link_to "Write a review", new_food_review_path(food), class: "nf-chip nf-chip--cta" %>
-        <% end %>
+          <% if user_review.present? %>
+            <%= link_to "See my review", food_review_path(food, user_review), class: "nf-chip nf-chip" %>
+          <% else %>
+            <%= link_to "Write a review", new_food_review_path(food), class: "nf-chip nf-chip--cta" %>
+          <% end %>
+        </div>
+
+        <div class="nf-card-tags">
+          <% food.tags.each do |tag| %>
+            <span class="nf-chip nf-chip--tag"><%= tag.name %></span>
+          <% end %>
+        </div>
       </div>
     </div>
   </article>
