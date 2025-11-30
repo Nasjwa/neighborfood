@@ -3,7 +3,7 @@
     <template class="claim-template">
       <%= render "claims/claiming_food", food: food %>
     </template>
-
+    
     <%= link_to food_path(food), class: "nf-card-media" do %>
       <% if food.photos.attached? %>
         <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
@@ -25,24 +25,12 @@
         Collect from <%= food.start_time.strftime("%H:%M") %> to <%= food.end_time.strftime("%H:%M") %>
       </p>
 
+      <!-- TAGS-->
       <div class="nf-card-footer">
-        <div class="nf-card-actions">
-          <% unless user_signed_in? %>
-            <%= link_to "Claim",
-                        new_user_session_path,
-                        class: "nf-chip nf-chip--cta" %>
-          <% else %>
-            <%= link_to "Claim",
-                        "#",
-                        class: "nf-chip nf-chip--cta",
-                        data: { claim_modal: true } %>
-          <% end %>
-        </div>
-
-        <div class="nf-card-tags">
-          <% food.tags.each do |tag| %>
-            <span class="nf-chip nf-chip--tag"><%= tag.name %></span>
-          <% end %>
+        <div class="nf-card-tags-bottom">
+            <% food.tags.each do |tag| %>
+                <span class="nf-chip nf-chip--tag"><%= tag.name %></span>
+            <% end %>
         </div>
       </div>
     </div>
