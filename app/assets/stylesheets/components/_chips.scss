@@ -1,0 +1,83 @@
+/* app/assets/stylesheets/components/_chips.scss
+   CTA chip with visible sliding highlight using a ::before layer.
+   Background color is rgba(18,62,32,0.22) as requested.
+*/
+
+$chip-bg-color: rgba(18, 62, 32, 0.22);
+$chip-border-color: rgba(18, 62, 32, 0.45);
+$chip-text-color: #123e20;
+$chip-padding-y: .35rem;
+$chip-padding-x: .65rem;
+
+.nf-chip {
+  display: inline-block;
+  padding: $chip-padding-y $chip-padding-x;
+  border-radius: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  position: relative;    // needed for the pseudo-element
+  overflow: hidden;      // clip the animated highlight
+}
+
+/* CTA variant with animated highlight ::before */
+.nf-chip--cta {
+  color: $chip-text-color;
+  background-color: $chip-bg-color;
+  border: 1px solid $chip-border-color;
+  position: relative;
+  z-index: 0;
+
+  // keep visible baseline shadow and subtle lift on hover
+  transition: transform 120ms ease, box-shadow 120ms ease;
+
+  // Highlight layer (single sweeping shine / brighter stripe)
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;                    // top:0 right:0 bottom:0 left:0
+    pointer-events: none;
+    z-index: 1;                  // above bg but below text
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0.00) 0%,
+      rgba(255,255,255,0.15) 30%,
+      rgba(255,255,255,0.30) 50%,
+      rgba(255,255,255,0.12) 60%,
+      rgba(255,255,255,0.00) 100%
+    );
+    transform: translateX(110%); // start off to the right
+    transition: transform 360ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease;
+    opacity: 0.95;
+    mix-blend-mode: normal;      // use normal blend so highlight lightens bg
+  }
+
+  // text should sit above the highlight
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  &:hover,
+  &:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+
+    &::before {
+      transform: translateX(-10%); // sweep left across the chip
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.10);
+  }
+
+  &.small {
+    padding: .18rem .45rem;
+    border-radius: 14px;
+  }
+}
