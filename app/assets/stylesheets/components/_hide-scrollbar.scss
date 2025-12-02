@@ -1,0 +1,19 @@
+/* Hide scrollbar but keep scrolling (works across browsers) */
+.hide-scrollbar,
+.nf-chip-row--scroll,
+.carousel {
+  overflow: auto; /* must allow scrolling */
+  -webkit-overflow-scrolling: touch; /* smooth on iOS */
+
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE 10+ */
+  -ms-overflow-style: none;
+}
+
+/* WebKit browsers */
+.hide-scrollbar::-webkit-scrollbar,
+.nf-chip-row--scroll::-webkit-scrollbar,
+.carousel::-webkit-scrollbar {
+  display: none;
+}
