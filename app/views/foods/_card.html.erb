@@ -21,10 +21,14 @@
         <%= truncate(food.description.to_s, length: 80) %>
       </p>
 
-      <p>
-        Collect from <%= food.start_time.strftime("%H:%M") %> to <%= food.end_time.strftime("%H:%M") %>
-      </p>
-
+      <div  class="nf-card-colect">
+        <p>
+          Collect on <strong><%= food.start_time.to_date.strftime("%d %b %Y") %></strong><br>
+          Between <strong><%= food.start_time.strftime("%H:%M") %></strong>
+          and <strong><%= food.end_time.strftime("%H:%M") %></strong>
+        </p>
+      </div>
+      
       <div class="nf-card-footer">
         <div class="nf-card-actions">
           <% unless user_signed_in? %>
@@ -33,15 +37,15 @@
                         class: "nf-chip nf-chip--cta" %>
           <% else %>
             <%= link_to "Claim",
-                        "#",
-                        class: "nf-chip nf-chip--cta",
-                        data: { claim_modal: true } %>
+                new_food_claim_path(food),
+                class: "nf-chip nf-chip--cta",
+                data: { claim_modal_url: new_food_claim_path(food) } %>
           <% end %>
         </div>
 
         <div class="nf-card-tags">
           <% food.tags.each do |tag| %>
-            <span class="nf-chip nf-chip--tag"><%= tag.name %></span>
+            <span class="nf-food-tag"><%= tag.name %></span>
           <% end %>
         </div>
       </div>

@@ -9,9 +9,21 @@ Tag.destroy_all
 User.destroy_all
 
 def random_collection_window
-  start = Time.now + rand(0..3).days + rand(8..18).hours + rand(0..59).minutes
-  finish = start + rand(1..3).hours
-  [start, finish]
+  date = Date.today + rand(0..2)
+
+  total_minutes = (24 - 8) * 60
+  random_minutes = rand(0...total_minutes)
+
+  rounded_minutes = (random_minutes / 5) * 5
+
+  start_time = Time.new(date.year, date.month, date.day, 8, 0) + rounded_minutes * 60
+
+  end_time = start_time + rand(1..3).hours
+
+  end_of_day = Time.new(date.year, date.month, date.day, 24, 0)
+  end_time = [end_time, end_of_day].min
+
+  [start_time, end_time]
 end
 
 
@@ -28,6 +40,7 @@ end
 def random_expire_date(days = 3)
   Date.today + rand(1..days)
 end
+
 
 addresses = JSON.parse(File.read(Rails.root.join('db','london_addresses.json')))
 addresses.shuffle!
@@ -61,7 +74,7 @@ users = [
   },
 ].map { |attrs| User.create!(attrs) }
 
-faker_users = 80.times.map do
+faker_users = 50.times.map do
   address = addresses.sample
   User.create!(
     first_name: Faker::Name.first_name,
@@ -75,6 +88,19 @@ end
 
 puts "Created #{users.count} users"
 puts "Created #{faker_users.count} fake users."
+
+(users + faker_users).each do |user|
+  if rand < 0.75
+    rating = rand(3.5..5.0)
+  else
+    rating = rand(1.0..3.4)
+  end
+
+  user.update!(average_rating: rating.round(1))
+end
+
+
+puts "Assigned average ratings to all users."
 
 
 tag_names = [
