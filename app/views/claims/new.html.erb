@@ -1,4 +1,4 @@
-<div class="nf-form-page nf-form-page--wide">
+<div class="nf-form-page">
   <div class="nf-form-card">
     <h1 class="nf-form-title">
       Claim <span class="nf-form-title-accent"><%= @food.title %></span>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="nf-form-actions">
-        <%= form.submit "Claim Food", class: "nf-btn nf-btn--primary" %>
+        <%= form.submit "Claim Food", class: "nf-btn nf-btn--ghost" %>
         <%= link_to "Back to food", foods_path, class: "nf-btn nf-btn--ghost" %>
       </div>
     <% end %>
