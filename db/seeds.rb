@@ -90,16 +90,11 @@ tag_names = [
 tags = tag_names.map { |name| Tag.create!(name: name) }.index_by(&:name)
 puts "Created #{Tag.count} tags."
 
-def resize_cloudinary(url)
-  url.sub("/upload/", "/upload/w_800,h_600,c_fill,f_auto/")
-end
 
 def attach_cloudinary_photos(food, urls)
   urls.each do |url|
-    transformed_url = resize_cloudinary(url)
-
     food.photos.attach(
-      io: URI.open(transformed_url),
+      io: URI.open(url),
       filename: File.basename(URI.parse(url).path),
       content_type: "image/png"
     )

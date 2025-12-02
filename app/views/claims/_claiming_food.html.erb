@@ -5,7 +5,7 @@
 
     <% if food.photos.attached? %>
       <p style="margin-bottom: 12px;">
-        <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
+        <%= image_tag food.photos.first, alt: food.title, class: "nf-claim-media" %>
       </p>
     <% end %>
 
@@ -33,6 +33,7 @@
 
       <div class="nf-form-actions">
         <%= form.submit "Claim Food", class: "nf-btn nf-btn--primary" %>
+        <%= link_to "See the details", food_path(food), class: "nf-chip nf-details-btn"%>
       </div>
     <% end %>
   </div>
