@@ -2,6 +2,7 @@
   <script type="text/template" id="claim-template-show">
     <%= render "claims/claiming_food", food: @food %>
   </script>
+
   <!-- HERO IMAGE / CAROUSEL -->
   <div class="nf-food-hero">
     <div class="nf-food-hero-inner">
@@ -98,14 +99,25 @@
           </div>
         </div>
 
-        <!-- REVIEWS -->
+        <!-- USER RATING -->
         <div class="nf-food-meta-row">
           <i class="fa fa-star" aria-hidden="true"></i>
+
           <div>
-            <span class="nf-food-meta-label">User Reviews</span>
-            <span class="nf-food-meta-value"><%= stars_for(@food.user.foods.joins(:reviews).average("reviews.rating"), precision: :half, show_number: false) %>
+            <span class="nf-food-meta-label">User Rating</span>
+
+            <% if @food.user.average_rating.present? %>
+              <div class="rating-center">
+                <span class="rating-number"><%= @food.user.average_rating %></span>
+                <%= stars_for(@food.user.average_rating, precision: :half, show_number: false) %>
+              </div>
+            <% else %>
+              <span class="nf-food-meta-value">No rating yet</span>
+            <% end %>
           </div>
         </div>
+
+
 
         <!-- AREA -->
         <div class="nf-food-meta-row">
@@ -156,9 +168,9 @@
                       class: "nf-chip nf-chip--cta" %>
         <% else %>
           <%= link_to "Claim",
-                      "#",
-                      class: "nf-chip nf-chip--cta",
-                      data: { claim_modal: true } %>
+            new_food_claim_path(@food),
+            class: "nf-chip nf-chip--cta",
+            data: { claim_modal_url: new_food_claim_path(@food) } %>
         <% end %>
       <% end %>
     </div>

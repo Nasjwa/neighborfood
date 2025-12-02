@@ -1,39 +1,54 @@
-  <div class="nf-form-card">
-    <h1 class="nf-form-title">
-      Claim <span class="nf-form-title-accent"><%= food.title %></span>
-    </h1>
+<div class="nf-form-card">
+  <h1 class="nf-form-title">
+    Claim <span class="nf-form-title-accent"><%= food.title %></span>
+  </h1>
 
-    <% if food.photos.attached? %>
-      <p style="margin-bottom: 12px;">
-        <%= image_tag food.photos.first, alt: food.title, class: "nf-claim-media" %>
-      </p>
-    <% end %>
-
-    <p class="nf-form-subtitle">
-      <%= food.description %>
+  <% if food.photos.attached? %>
+    <p style="margin-bottom: 12px;">
+      <%= image_tag food.photos.first, alt: food.title, class: "nf-claim-media" %>
     </p>
+  <% end %>
 
-    <p class="nf-form-helper">
-      Collect from <strong><%= food.start_time.strftime("%H:%M") %></strong>
-      to <strong><%= food.end_time.strftime("%H:%M") %></strong>.
-    </p>
+  <p class="nf-form-subtitle">
+    <%= food.description %>
+  </p>
 
-    <%= form_with model: [food, Claim.new], data: { turbo_stream: true } do |form| %>
-      <div class="nf-form-body">
-        <div class="input">
-          <%= form.label :collect_time do %>
-            <strong>Select a collection time:</strong>
-          <% end %>
-          <%= form.datetime_local_field :collect_time,
-                value: (Time.current.change(min: 0) + 1.hour).strftime("%Y-%m-%dT%H:%M"),
-                min: food.start_time.strftime("%Y-%m-%dT%H:%M"),
-                max: food.end_time.strftime("%Y-%m-%dT%H:%M") %>
-        </div>
+  <p>
+    Collect on <strong><%= food.start_time.to_date.strftime("%d %b %Y") %></strong><br>
+    Between <strong><%= food.start_time.strftime("%H:%M") %></strong>
+    and <strong><%= food.end_time.strftime("%H:%M") %></strong>.
+  </p>
+
+  <%= form_with model: [food, Claim.new], data: { turbo_stream: true } do |form| %>
+    <div class="nf-form-body">
+      <div class="input">
+
+        <%= form.label :collect_time do %>
+          <strong>Select a collection time:</strong>
+        <% end %>
+
+        <% times = (local_assigns[:available_times] || @available_times || []) %>
+
+        <%= form.select :collect_time,
+              options_for_select(
+                times.map { |t| [t.strftime("%H:%M"), t.strftime("%H:%M")] }
+              ),
+              include_blank: times.empty?,
+              class: "nf-select"
+        %>
+
+        <% if times.empty? %>
+          <p class="nf-form-helper" style="color: #d9534f; margin-top: 4px;">
+            No available time slots.
+          </p>
+        <% end %>
+
       </div>
+    </div>
 
-      <div class="nf-form-actions">
-        <%= form.submit "Claim Food", class: "nf-btn nf-btn--primary" %>
-        <%= link_to "See the details", food_path(food), class: "nf-chip nf-details-btn"%>
-      </div>
-    <% end %>
-  </div>
+    <div class="nf-form-actions">
+      <%= form.submit "Claim Food", class: "nf-btn nf-btn--primary" %>
+      <%= link_to "See the details", food_path(food), class: "nf-chip nf-details-btn" %>
+    </div>
+  <% end %>
+</div>
