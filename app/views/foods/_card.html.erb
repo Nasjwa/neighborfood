@@ -6,7 +6,9 @@
 
     <%= link_to food_path(food), class: "nf-card-media" do %>
       <% if food.photos.attached? %>
-        <%= image_tag food.photos.first, alt: food.title, class: "img-fluid" %>
+        <%= image_tag food.photos.first,
+                      alt: food.title,
+                      class: "card-food-image" %>
       <% else %>
         <div class="nf-card-ph"></div>
       <% end %>
