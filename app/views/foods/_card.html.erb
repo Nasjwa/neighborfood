@@ -34,11 +34,11 @@
           <% unless user_signed_in? %>
             <%= link_to "Claim",
                         new_user_session_path,
-                        class: "nf-chip nf-chip--cta" %>
+                        class: "nf-claim-btn" %>
           <% else %>
             <%= link_to "Claim",
                 new_food_claim_path(food),
-                class: "nf-chip nf-chip--cta",
+                class: "nf-claim-btn",
                 data: { claim_modal_url: new_food_claim_path(food) } %>
           <% end %>
         </div>

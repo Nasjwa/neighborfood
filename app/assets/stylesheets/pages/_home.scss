@@ -561,3 +561,93 @@
   border: solid 1px var(--nf-green-500);
   margin-left: auto;
 }
+
+/*
+   Claim button with visible sliding highlight using a ::before layer.
+   Background color is rgba(18,62,32,0.22) as requested.
+*/
+
+$chip-bg-color: rgba(18, 62, 32, 0.22);
+$chip-border-color: rgba(18, 62, 32, 0.45);
+$chip-text-color: #123e20;
+
+.nf-claim-btn {
+  background: var(--nf-green-500);
+  border: 1px solid var(--nf-border);
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: var(--nf-shadow);
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
+
+  /* --- SHINE --- */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0.00) 0%,
+      rgba(255,255,255,0.25) 30%,
+      rgba(255,255,255,0.55) 50%,   // STRONG bright core
+      rgba(255,255,255,0.20) 60%,
+      rgba(255,255,255,0.00) 100%
+    );
+
+    transform: translateX(120%);
+    opacity: 0;
+    mix-blend-mode: screen;          // STRONG shine without text glow
+
+    transition:
+      transform 360ms cubic-bezier(.2,.8,.2,1),
+      opacity 250ms ease;
+  }
+
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $chip-bg-color;
+    border-color: $chip-border-color;
+    color: $chip-text-color;
+
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+
+    &::before {
+      opacity: 1;                   // Maximum visibility
+      transform: translateX(-5%);   // Slightly slower sweep = feels stronger
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.10);
+  }
+
+  &.small {
+    padding: .18rem .45rem;
+    border-radius: 14px;
+  }
+}
