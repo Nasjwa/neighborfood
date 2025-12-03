@@ -42,7 +42,7 @@
 .nf-brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   text-decoration: none;
   color: inherit;
 }
@@ -55,7 +55,7 @@
 
 /* Bigger logo (mobile) with proper aspect ratio */
 .nf-logo {
-  width: 34px;
+  width: 45px;
   height: auto;
   border-radius: 6px;
   object-fit: contain;
@@ -66,6 +66,7 @@
   font-size: 16px;
   font-weight: 800;
   color: #ffffff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
 }
 
 /* Actions (unused now) */
@@ -155,12 +156,12 @@
 
   /* Bigger logo on desktop */
   .nf-logo {
-    width: 44px;
+    width: 65px;
     height: auto;
   }
 
   .nf-wordmark {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   /* Centered search */
@@ -185,6 +186,8 @@
     padding: 8px 6px;
     border-radius: 8px;
     transition: 0.2s ease;
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 1);
   }
 
   .nf-link:hover,
