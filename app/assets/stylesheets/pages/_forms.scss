@@ -233,3 +233,132 @@
   font-size: 0.8rem;
   color: var(--nf-ink-700);
 }
+
+.nf-claim-form-card {
+  width: 400px;
+  height: 520px;
+  background: #fff;
+  border-radius: var(--nf-radius);
+  border: 1px solid var(--nf-border);
+  box-shadow: var(--nf-shadow);
+  padding: 20px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nf-claim-form-title {
+  font-size: 1.4rem;
+  margin: 0 0 6px;
+  color: var(--nf-ink-900);
+  font-weight: bold;
+}
+
+.nf-claim-form-subtitle {
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: var(--nf-ink-700);
+}
+
+/* Main body */
+
+.nf-claim-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.nf-claim-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+/* Select line*/
+.nf-claim-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Label */
+.nf-claim-time-label label {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+/* SELECT WRAPPER */
+.nf-custom-select {
+  position: relative;
+  width: 120px;   /* melhor tamanho */
+}
+
+/* BUTTON (trigger) */
+.nf-custom-select-trigger {
+  width: 100%;
+  padding: 6px 34px 6px 10px; /* altura perfeita */
+  border-radius: 10px;
+  border: 1px solid #d6e3d9;
+  background: #f7faf8;
+  color: #234028;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  height: 35px; /* fix height */
+  line-height: 22px;
+
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23234028' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* DROPDOWN */
+.nf-custom-select-options {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 4px); /* OPEN UPWARDS */
+  top: auto;
+  left: 0;
+  width: 100%;
+
+  background: #fff;
+  border: 1px solid #d6e3d9;
+  border-radius: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 0;
+  z-index: 2000;
+}
+
+/* toggle */
+.nf-custom-select-options.open {
+  display: block;
+}
+
+/* options */
+.nf-custom-select-options li {
+  list-style: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.nf-custom-select-options li:hover {
+  background: #e8f3ec;
+}
+
+/* scrollbar */
+.nf-custom-select-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.nf-custom-select-options::-webkit-scrollbar-thumb {
+  background: #b7c9bc;
+  border-radius: 4px;
+}

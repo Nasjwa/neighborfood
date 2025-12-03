@@ -1,6 +1,6 @@
-<div class="nf-form-card">
-  <h1 class="nf-form-title">
-    Claim <span class="nf-form-title-accent"><%= food.title %></span>
+<div class="nf-claim-form-card">
+  <h1 class="nf-claim-form-title">
+    Claim <span class="nf-claim-form-title-accent"><%= food.title %></span>
   </h1>
 
   <% if food.photos.attached? %>
@@ -9,7 +9,7 @@
     </p>
   <% end %>
 
-  <p class="nf-form-subtitle">
+  <p class="nf-claim-form-subtitle">
     <%= food.description %>
   </p>
 
@@ -20,35 +20,47 @@
   </p>
 
   <%= form_with model: [food, Claim.new], data: { turbo_stream: true } do |form| %>
-    <div class="nf-form-body">
-      <div class="input">
+    <div class="nf-claim-form-body">
 
-        <%= form.label :collect_time do %>
-          <strong>Select a collection time:</strong>
-        <% end %>
+      <% times = (local_assigns[:available_times] || @available_times || []) %>
 
-        <% times = (local_assigns[:available_times] || @available_times || []) %>
+      <div class="nf-claim-time-row">
 
-        <%= form.select :collect_time,
-              options_for_select(
-                times.map { |t| [t.strftime("%H:%M"), t.strftime("%H:%M")] }
-              ),
-              include_blank: times.empty?,
-              class: "nf-select"
-        %>
+        <div class="nf-claim-time-label">
+          <%= form.label :collect_time do %>
+            <strong>Select a collection time:</strong>
+          <% end %>
+        </div>
 
-        <% if times.empty? %>
-          <p class="nf-form-helper" style="color: #d9534f; margin-top: 4px;">
-            No available time slots.
-          </p>
-        <% end %>
+        <div class="nf-custom-select" data-controller="nfselect">
+          <button type="button" class="nf-custom-select-trigger" data-action="click->nfselect#toggle">
+            <span data-nfselect-target="label">Select a time</span>
+          </button>
+
+          <ul class="nf-custom-select-options" data-nfselect-target="options">
+            <% times.each do |t| %>
+              <% value = t.strftime("%H:%M") %>
+              <li data-action="click->nfselect#choose" data-value="<%= value %>"><%= value %></li>
+            <% end %>
+          </ul>
+
+          <%= form.hidden_field :collect_time, data: { nfselect_target: "hidden" } %>
+        </div>
 
       </div>
+
+      <% if times.empty? %>
+        <p class="nf-claim-form-helper" style="color: #d9534f; margin-top: 4px;">
+          No available time slots.
+        </p>
+      <% end %>
+
     </div>
 
-    <div class="nf-form-actions">
+    <div class="nf-claim-form-actions">
       <%= form.submit "Claim Food", class: "nf-claim-btn" %>
       <%= link_to "See the details", food_path(food), class: "nf-chip nf-details-btn" %>
     </div>
+
   <% end %>
 </div>
