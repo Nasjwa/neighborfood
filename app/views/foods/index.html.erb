@@ -10,7 +10,7 @@
   </div> -->
 
   <!-- Tag chips -->
-  <div class="nf-chip-row">
+  <div class="nf-chip-rownf-chip-row--scroll" tabindex="0" aria-label="Filter tags">
     <% selected = Array(params[:tags]) %>
 
     <% @tags.each do |tag| %>
@@ -102,7 +102,7 @@
     <button id="close-map-modal" class="close-map-btn">✕</button>
 
     <div id="map-wrapper" class="map-area">
-      
+
       <div id="modal-map"
            style="width: 100%; height: 100%;"
            data-controller="map"
@@ -125,7 +125,7 @@
 </div>
 
 
-  <!-- Map 
+  <!-- Map
   <div style="width: 100%; height: 600px;"
        data-controller="map"
        data-map-markers-value="<%= @markers.to_json %>"

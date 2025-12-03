@@ -23,7 +23,7 @@
     </div>
 
     <!-- TABS -->
-    <nav class="nf-profile-tabs" aria-label="Profile sections">
+    <nav class="nf-profile-tabs nf-chip-row nf-chip-row--scroll hide-scrollbar" aria-label="Profile sections">
       <%= link_to user_path(@user, tab: "details"),
           class: "nf-profile-tab #{'is-active' if @active_tab == 'details'}" do %>
         User details
