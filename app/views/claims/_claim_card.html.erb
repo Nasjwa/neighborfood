@@ -2,7 +2,7 @@
   <article class="nf-card">
     <%= link_to food_path(food), class: "nf-card-media" do %>
       <% if food.photos.attached? %>
-        <%= image_tag food.photos.first, alt: food.title, class: "nf-claim-media" %>
+        <%= image_tag url_for(food.photos.first), alt: food.title, class: "nf-claim-media", style: "position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" %>
       <% else %>
         <div class="nf-card-ph"></div>
       <% end %>
