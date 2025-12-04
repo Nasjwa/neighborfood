@@ -55,8 +55,8 @@
   display: flex;
   gap: 10px;
   overflow: auto;
-  padding-bottom: 6px;
-  margin-bottom: 10px;
+  padding-bottom: 17px;
+  margin-bottom: 5px;
 }
 
 .nf-chip {
@@ -437,8 +437,17 @@
   .nf-form-card{
     transform: scale(0.95);
     transform-origin: top center;
+    margin-top: 20px;
   }
 
+  .nf-chip-row{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  
 }
 
 .map-modal {
@@ -649,5 +658,271 @@ $chip-text-color: #123e20;
   &.small {
     padding: .18rem .45rem;
     border-radius: 14px;
+  }
+}
+
+/* --------------------------------------------- */
+/* SUPER COMPACT CHIP-STYLED DATE/TIME SELECTORS */
+/* --------------------------------------------- */
+
+/* Keep everything in one line */
+.nf-datetime-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+/* Separator ":" */
+.nf-datetime-separator {
+  font-size: 0.75rem;
+  color: #234028;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.nf-collect-select {
+  position: relative;
+}
+
+.nf-collect-trigger {
+  width: 100%;
+  height: 18px;
+  padding: 0 16px 0 6px;
+  border-radius: 6px;
+  border: 1px solid var(--nf-border);
+  background: #ffffff !important;
+  font-size: 0.75rem;
+  color: #000 !important;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+}
+
+.nf-collect-select--date   { width: 105px !important; }
+.nf-collect-select--hour   { width: 38px !important; }
+.nf-collect-select--minute { width: 38px !important; }
+
+.nf-collect-select--hour .nf-collect-trigger,
+.nf-collect-select--minute .nf-collect-trigger {
+  justify-content: center;
+  text-align: center;
+}
+
+.nf-collect-options {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--nf-border);
+  border-radius: 6px;
+  max-height: 110px;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  z-index: 999;
+}
+
+.nf-collect-options.open {
+  display: block;
+}
+
+.nf-collect-options li {
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+.nf-collect-options li:hover {
+  background: #e8f3ec;
+}
+
+/* Override form default input sizing */
+.nf-form-card .nf-collect-trigger {
+  height: 24px !important;
+  padding: 3px 10px !important;
+  border-radius: 8px !important;
+  font-size: 0.8rem !important;
+  line-height: 1 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Compact dropdown panel */
+.nf-form-card .nf-collect-options {
+  max-height: 120px !important;
+  border-radius: 6px !important;
+  padding: 0 !important;
+}
+
+.nf-form-card .nf-collect-options li {
+  padding: 4px 6px !important;
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+  text-align: center;
+}
+
+.nf-form-card .nf-collect-options li:hover {
+  background: #eef5f0 !important;
+}
+/* Add spacing between Collection start and Collection end */
+
+
+/* 2-column layout for rows that need alignment */
+.nf-form-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr; /* left column / right column */
+  column-gap: 32px;
+  width: 100%;
+}
+
+/* Ensure each wrapper stays in its intended column */
+.nf-form-row .input,          /* SimpleForm fields */
+.nf-form-row .nf-datetime-wrapper {
+  width: 100%;
+}
+
+/* Optional: Cooking/Expire row also aligns with collection end */
+.nf-form-row.nf-cook-expire {
+  grid-template-columns: 1fr 1fr;
+}
+
+.nf-form-row .food_quantity {
+  max-width: 100px !important;
+}
+
+.nf-form-row .food_expire_date {
+  max-width: 125px !important;
+}
+
+.nf-form-row .food_cooking_date {
+  max-width: 125px !important;
+}
+
+.nf-form-row .food_kind_of_food {
+  max-width: 150px !important;
+}
+
+/* Make date selector nicely wide */
+.nf-collect-select--date {
+  width: 150px !important;
+}
+
+/* Ensure dropdown matches width */
+.nf-collect-select--date .nf-collect-options {
+  width: 150px !important;
+}
+
+/* --------------------------------------------- */
+/* DEDICATED DATETIME GRID (does NOT affect other fields) */
+/* --------------------------------------------- */
+
+.nf-datetime-row-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Inside each collection box: stack vertically */
+.nf-datetime-wrapper .nf-datetime-row {
+  flex-direction: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Date full width, hour/minute smaller inline */
+.nf-collect-select--date {
+  width: 160px !important;
+}
+
+.nf-datetime-time-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.date-wrapper {
+  position: relative;
+  overflow: visible;
+}
+
+/* ------------------ MOBILE ------------------ */
+@media (max-width: 600px) {
+  .nf-datetime-row-wrapper {
+    grid-template-columns: 1fr; /* stack start + end */
+    gap: 24px;
+  }
+
+  /* Keep date + time inside the screen */
+  .nf-collect-select--date {
+    width: 100% !important;
+  }
+
+  .nf-datetime-time-row {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+
+  /* Keep Start + End side by side */
+  .nf-datetime-row-wrapper {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Inside each block: stack vertically */
+  .nf-datetime-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* Date becomes full width on mobile */
+  .nf-collect-select--date {
+    width: 120px !important;
+  }
+
+  /* Time row stays inline but below date */
+  .nf-collect-select--hour,
+  .nf-collect-select--minute,
+  .nf-datetime-separator {
+    display: inline-flex !important;
+  }
+
+  /* Keep hour/minute compact */
+  .nf-collect-select--hour,
+  .nf-collect-select--minute {
+    width: 48px !important;
+  }
+
+  .nf-datetime-separator {
+    padding: 0 4px;
+  }
+
+  input[type="date"] {
+    position: relative;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    z-index: 10;
+  }
+
+  /* Prevent calendar from going outside */
+  input[type="date"] {
+    transform-origin: top left !important;
+    margin-right: 50px;
+  }
+
+  .date-wrapper {
+    overflow-x: clip;
   }
 }

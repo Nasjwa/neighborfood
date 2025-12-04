@@ -19,32 +19,146 @@
       <%= f.input :kind_of_food,
                   as: :select,
                   collection: Food.kind_of_foods.keys.map { |k| [k.humanize, k] },
-                  prompt: "Select kind",
+                  prompt: "Select kind of food",
                   label: "Kind of food",
                   required: true %>
 
       <%= f.input :quantity,
+                  prompt: "Portions / Items",
                   label: "Quantity",
-                  required: true,
-                  hint: "Number of portions or items",
-                  input_html: { min: 0, step: 1 } %>
+                  required: true %>
     </div>
 
-    <!-- Collection window -->
-    <div class="nf-form-row">
-      <%= f.input :start_time,
-                  as: :string,
-                  label: "Collection start",
-                  input_html: { type: "datetime-local" } %>
+  <!-- COLLECTION WINDOW -->
+  <div class="nf-datetime-row-wrapper">
 
-      <%= f.input :end_time,
-                  as: :string,
-                  label: "Collection end",
-                  input_html: { type: "datetime-local" } %>
+    <!-- COLLECTION START -->
+    <div class="nf-datetime-wrapper" data-controller="nfdatetime" data-nfdatetime-type="start">
+      <label class="nf-label"><strong>Collection start</strong></label>
+
+      <div class="nf-datetime-row">
+
+        <!-- DATE SELECT -->
+        <div class="nf-collect-select nf-collect-select--date" data-nfdatetime-target="dateSelect">
+          <button type="button" class="nf-collect-trigger" data-action="click->nfdatetime#toggleDate">
+            <span data-nfdatetime-target="dateLabel">Select date</span>
+          </button>
+
+          <ul class="nf-collect-options" data-nfdatetime-target="dateOptions">
+            <% 14.times do |i| %>
+              <% date = Date.today + i.days %>
+              <li data-value="<%= date.strftime('%Y-%m-%d') %>"
+                  data-text="<%= date.strftime('%d %b %Y') %>"
+                  data-action="click->nfdatetime#chooseDate">
+                <%= date.strftime('%d %b %Y') %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <!-- TIME ROW (hour + minute) -->
+        <div class="nf-datetime-time-row">
+
+          <!-- HOUR SELECT -->
+          <div class="nf-collect-select nf-collect-select--hour" data-nfdatetime-target="hourSelect">
+            <button type="button" class="nf-collect-trigger" data-action="click->nfdatetime#toggleHour">
+              <span data-nfdatetime-target="hourLabel">--</span>
+            </button>
+            <ul class="nf-collect-options" data-nfdatetime-target="hourOptions">
+              <% (0..23).each do |h| %>
+                <li data-value="<%= "%02d" % h %>" data-action="click->nfdatetime#chooseHour">
+                  <%= "%02d" % h %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+          <span class="nf-datetime-separator">:</span>
+
+          <!-- MINUTE SELECT -->
+          <div class="nf-collect-select nf-collect-select--minute" data-nfdatetime-target="minuteSelect">
+            <button type="button" class="nf-collect-trigger" data-action="click->nfdatetime#toggleMinute">
+              <span data-nfdatetime-target="minuteLabel">--</span>
+            </button>
+            <ul class="nf-collect-options" data-nfdatetime-target="minuteOptions">
+              <% [0,5,10,15,20,25,30,35,40,45,50,55].each do |m| %>
+                <li data-value="<%= "%02d" % m %>" data-action="click->nfdatetime#chooseMinute">
+                  <%= "%02d" % m %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+        </div> <!-- END TIME ROW -->
+
+      </div>
+
+      <%= f.hidden_field :start_time, data: { nfdatetime_target: "hiddenField" } %>
     </div>
+
+
+
+    <!-- COLLECTION END -->
+    <div class="nf-datetime-wrapper" data-controller="nfdatetime" data-nfdatetime-type="end">
+      <label class="nf-label"><strong>Collection end</strong></label>
+
+      <div class="nf-datetime-row">
+
+        <!-- DATE LOCKED -->
+        <div class="nf-collect-select nf-collect-select--date nf-collect-select--locked" data-nfdatetime-target="dateSelect">
+          <button type="button" class="nf-collect-trigger" disabled>
+            <span data-nfdatetime-target="dateLabel"> Date</span>
+          </button>
+
+          <ul class="nf-collect-options" data-nfdatetime-target="dateOptions"></ul>
+        </div>
+
+        <!-- TIME ROW -->
+        <div class="nf-datetime-time-row">
+
+          <!-- HOUR SELECT -->
+          <div class="nf-collect-select nf-collect-select--hour" data-nfdatetime-target="hourSelect">
+            <button type="button" class="nf-collect-trigger" data-action="click->nfdatetime#toggleHour">
+              <span data-nfdatetime-target="hourLabel">--</span>
+            </button>
+            <ul class="nf-collect-options" data-nfdatetime-target="hourOptions">
+              <% (0..23).each do |h| %>
+                <li data-value="<%= "%02d" % h %>" data-action="click->nfdatetime#chooseHour">
+                  <%= "%02d" % h %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+          <span class="nf-datetime-separator">:</span>
+
+          <!-- MINUTE SELECT -->
+          <div class="nf-collect-select nf-collect-select--minute" data-nfdatetime-target="minuteSelect">
+            <button type="button" class="nf-collect-trigger" data-action="click->nfdatetime#toggleMinute">
+              <span data-nfdatetime-target="minuteLabel">--</span>
+            </button>
+            <ul class="nf-collect-options" data-nfdatetime-target="minuteOptions">
+              <% [0,5,10,15,20,25,30,35,40,45,50,55].each do |m| %>
+                <li data-value="<%= "%02d" % m %>" data-action="click->nfdatetime#chooseMinute">
+                  <%= "%02d" % m %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+        </div> <!-- END TIME ROW -->
+
+      </div>
+
+      <%= f.hidden_field :end_time, data: { nfdatetime_target: "hiddenField" } %>
+    </div>
+
+  </div>
+
 
     <!-- Cooking / expiry dates – compact HTML5 date inputs -->
-    <div class="nf-form-row">
+  <div class="date-wrapper">
+    <div class="nf-form-row nf-cook-expire">
       <%= f.input :cooking_date,
                   as: :string,
                   label: "Cooking date",
@@ -55,6 +169,7 @@
                   label: "Expire date",
                   input_html: { type: "date" } %>
     </div>
+  </div>
 
     <!-- Tags (via food_tags join) -->
     <fieldset class="nf-form-group">
