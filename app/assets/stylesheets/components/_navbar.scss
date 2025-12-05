@@ -6,14 +6,13 @@
   right: 0;
   z-index: 1000;
 
-  /* Rails asset helper */
   background-image: image-url("navbar-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Spacer for the element immediately after the navbar so content is not covered */
+/* Spacer so content isn't hidden behind navbar */
 .nf-navbar + * {
   margin-top: 50px;
 }
@@ -29,16 +28,11 @@
 .nf-toprow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   min-height: 56px;
 }
 
-/* center brand on mobile since there are no right-side icons */
-.nf-toprow {
-  justify-content: center;
-}
-
-/* Brand link (logo + wordmark) */
+/* Brand link */
 .nf-brand {
   display: inline-flex;
   align-items: center;
@@ -53,7 +47,6 @@
   color: inherit;
 }
 
-/* Bigger logo (mobile) with proper aspect ratio */
 .nf-logo {
   width: 45px;
   height: auto;
@@ -61,33 +54,14 @@
   object-fit: contain;
 }
 
-/* Brand name is white */
 .nf-wordmark {
   font-size: 16px;
   font-weight: 800;
   color: #ffffff !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
 
-/* Actions (unused now) */
-.nf-actions {
-  display: inline-flex;
-  gap: 8px;
-}
-
-.nf-icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: 1px solid var(--nf-border);
-  background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
-}
-
-/* Search pill - unchanged */
+/* Search pill */
 .nav-search {
   width: 100%;
   display: flex;
@@ -123,7 +97,7 @@
   box-shadow: 0 0 2px #3f3f3fff;
 }
 
-/* Collapse the link list on mobile */
+/* Mobile collapsible list */
 .nf-links {
   list-style: none;
   display: none;
@@ -154,10 +128,8 @@
     min-height: 64px;
   }
 
-  /* Bigger logo on desktop */
   .nf-logo {
     width: 65px;
-    height: auto;
   }
 
   .nf-wordmark {
@@ -166,12 +138,11 @@
 
   /* Centered search */
   .nav-search {
-    width: 100%;
     max-width: 640px;
     justify-self: center;
   }
 
-  /* Right-aligned links */
+  /* Right links always visible */
   .nf-links {
     display: flex;
     align-items: center;
@@ -179,41 +150,69 @@
     justify-self: end;
   }
 
-  /* Desktop nav links → WHITE for dark background */
+  /* ========== BASE NAV LINK / PILL ========== */
   .nf-link {
-    color: #ffffff !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
     text-decoration: none !important;
-    padding: 8px 6px;
-    border-radius: 8px;
-    transition: 0.2s ease;
-    font-weight: bold;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 1);
-  }
-
-  .nf-link:hover,
-  .nf-link:focus {
-    color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.12);
-  }
-
-  /* SIGN UP button — white text only (your request) */
-  .nf-cta .nf-button {
-    background: transparent; /* remove green */
-    color: #ffffff !important;
-    border: 2px solid #ffffff !important;
-    padding: 10px 18px;
-    border-radius: var(--nf-radius);
+    border-radius: 999px;
     font-weight: 600;
-    white-space: nowrap;
-    box-shadow: none;
-    transition: 0.25s ease;
+    font-size: 0.95rem;
+    color: #ffffff !important;
+    text-shadow: 0 0 3px rgba(0,0,0,0.9);
+
+    /* 👇 same pill size for ALL CTAs */
+    padding: 8px 18px;
+
+    background: transparent;
+    border: none;
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.12s ease,
+      box-shadow 0.12s ease;
   }
 
-  .nf-cta .nf-button:hover {
-    background: rgba(255, 255, 255, 0.18);
+  /* Hover for plain links (if you ever use nf-link without modifiers) */
+  .nf-link:not(.nf-link--primary):not(.nf-link--secondary):hover,
+  .nf-link:not(.nf-link--primary):not(.nf-link--secondary):focus {
+    background: rgba(0, 0, 0, 0.35);
+    transform: translateY(-1px);
   }
 
-  /* Avatar + label */
+  /* ========== PRIMARY CTA (Post Food / Sign in) ========== */
+  .nf-link--primary {
+    background: var(--nf-green-500);
+    border: 1px solid var(--nf-green-500);
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    letter-spacing: 0.02em;
+  }
+
+  .nf-link--primary:hover,
+  .nf-link--primary:focus {
+    background: #2e7d32;
+    border-color: #2e7d32;
+    transform: translateY(-2px);
+  }
+
+  /* ========== SECONDARY CTA (My profile / Sign out / Sign up) ========== */
+  .nf-link--secondary {
+    background: rgba(0, 0, 0, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .nf-link--secondary:hover,
+  .nf-link--secondary:focus {
+    background: rgba(0, 0, 0, 0.55) !important;
+    transform: translateY(-1px);
+  }
+
+  /* Avatar + label inside "My profile" */
   .nf-nav-profile {
     display: inline-flex;
     align-items: center;
@@ -221,24 +220,25 @@
   }
 
   .nf-nav-avatar {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: #e3f5e7;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: #234028;
+    flex-shrink: 0;
   }
 
   .nf-nav-profile-label {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 }
 
-/* ===== Location bar styling ===== */
+/* ===== Location bar ===== */
 .nf-location-bar {
   display: flex;
   align-items: center;
@@ -251,56 +251,20 @@
   z-index: 900;
 }
 
-.nf-location-btn {
-  background: #fff;
-  border: 1px solid var(--nf-border);
-  border-radius: 999px;
-  padding: 6px 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: var(--nf-shadow);
-  font-weight: 500;
-  color: var(--nf-ink-700);
-  cursor: pointer;
-}
-
-.nf-location-btn:hover {
-  background: var(--nf-cream-50);
-}
-
-.nf-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--nf-green-500);
-  border-radius: 50%;
-}
-
-.nf-change-link {
-  font-size: 14px;
-  color: var(--nf-green-700);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.nf-change-link:hover {
-  text-decoration: underline;
-}
-
 @media (max-width: 899px) {
   .nf-location-bar {
-    top: 92px; /* navbar is two rows on mobile */
+    top: 92px;
   }
 }
 
+/* Map button in search row */
 .nf-search-row {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
   margin-top: 10px;
-
-  justify-content: flex-end; /* 👈 NEW LINE */
+  justify-content: flex-end;
 }
 
 .nf-map-nav-btn {
@@ -313,7 +277,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 20px;
   cursor: pointer;
   transition: 0.2s ease-in-out;

@@ -1,65 +1,80 @@
-<nav class="nf-navbar" aria-label="Primary ">
+<nav class="nf-navbar" aria-label="Primary">
   <div class="nf-container">
 
     <!-- Row 1: brand only -->
     <div class="nf-toprow">
       <%= link_to root_path, class: "nf-brand" do %>
-        <%= image_tag "neighborfood-logo.png", class: "nf-logo", alt: "NeighborFood logo" %>
+        <%= image_tag "neighborfood-logo.png",
+                      class: "nf-logo",
+                      alt: "NeighborFood logo" %>
         <span class="nf-wordmark">NeighborFood</span>
       <% end %>
     </div>
 
-    <!-- Row 2: full-width search pill (never overlaps brand) -->
-    <%= form_with url: foods_path, method: :get, local: true, html: { class: "nav-search", role: "search" } do %>
-      <%= text_field_tag :query, params[:query],
-            class: "search-input",
-            placeholder: "Type here to search...",
-            aria: { label: "Search" } %>
-     <!-- Map button -->
-    <a href="#" id="open-map-btn" class="nf-map-nav-btn">
-      <i class="fa-solid fa-map-location-dot"></i>
-    </a>
+    <!-- Row 2: full-width search pill -->
+    <%= form_with url: foods_path,
+                  method: :get,
+                  local: true,
+                  html: { class: "nav-search", role: "search" } do %>
+
+      <%= text_field_tag :query,
+                         params[:query],
+                         class: "search-input",
+                         placeholder: "Type here to search...",
+                         aria: { label: "Search" } %>
+
+      <!-- Map button -->
+      <a href="#" id="open-map-btn" class="nf-map-nav-btn">
+        <i class="fa-solid fa-map-location-dot"></i>
+      </a>
+
       <%= submit_tag "Search", class: "nf-button border-0" %>
     <% end %>
 
-
-
-    <!-- Navigation links -->
+    <!-- Navigation links (desktop) -->
     <ul id="nf-mainmenu" class="nf-links">
-      <ul id="nf-mainmenu" class="nf-links">
-        <% if user_signed_in? %>
-          <li class="nf-cta">
-            <%= link_to "Post Food", new_food_path, class: "nf-button" %>
-          </li>
+      <% if user_signed_in? %>
+        <!-- PRIMARY CTA: Post Food -->
+        <li>
+          <%= link_to "Post Food",
+                      new_food_path,
+                      class: "nf-link nf-link--primary" %>
+        </li>
 
-          <li>
-            <%= link_to user_path(current_user, tab: "details"),
-                        class: "nf-link nf-nav-profile" do %>
-              <div class="nf-nav-avatar">
-                <%= current_user.first_name.to_s.first&.upcase || current_user.email.first.upcase %>
-              </div>
-              <span class="nf-nav-profile-label">My profile</span>
-            <% end %>
-          </li>
+        <!-- SECONDARY CTA: My profile (with avatar pill) -->
+        <li>
+          <%= link_to user_path(current_user, tab: "details"),
+                      class: "nf-link nf-link--secondary nf-nav-profile" do %>
+            <div class="nf-nav-avatar">
+              <%= current_user.first_name.to_s.first&.upcase ||
+                  current_user.email.first.upcase %>
+            </div>
+            <span class="nf-nav-profile-label">My profile</span>
+          <% end %>
+        </li>
 
-          <li>
-            <%= link_to "Sign out",
-                        destroy_user_session_path,
-                        data: { turbo_method: :delete },
-                        class: "nf-link" %>
-          </li>
-        <% else %>
-          <li>
-            <%= link_to "Sign in", new_user_session_path, class: "nf-link" %>
-          </li>
-          <li class="nf-cta">
-            <%= link_to "Sign up",
-                        new_user_registration_path,
-                        class: "nf-button nf-button--outline" %>
-          </li>
-        <% end %>
-      </ul>
+        <!-- SECONDARY CTA: Sign out -->
+        <li>
+          <%= link_to "Sign out",
+                      destroy_user_session_path,
+                      data: { turbo_method: :delete },
+                      class: "nf-link nf-link--secondary" %>
+        </li>
+      <% else %>
+        <!-- Logged out: Sign in (primary), Sign up (secondary) -->
+        <li>
+          <%= link_to "Sign in",
+                      new_user_session_path,
+                      class: "nf-link nf-link--primary" %>
+        </li>
 
+        <li>
+          <%= link_to "Sign up",
+                      new_user_registration_path,
+                      class: "nf-link nf-link--secondary" %>
+        </li>
+      <% end %>
+    </ul>
 
   </div>
 </nav>
