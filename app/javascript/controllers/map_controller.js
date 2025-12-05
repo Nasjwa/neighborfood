@@ -9,7 +9,8 @@ export default class extends Controller {
   }
 
   connect() {
-    // Simple safety checks (also very helpful on Heroku)
+    console.log("[map] connect", this.apiKeyValue, this.markersValue)
+
     if (!this.apiKeyValue) {
       console.warn("[map] Missing Mapbox API key")
       return
@@ -18,31 +19,28 @@ export default class extends Controller {
     mapboxgl.accessToken = this.apiKeyValue
 
     this.map = new mapboxgl.Map({
-      container: this.element,                    // container ID
-      style: "mapbox://styles/mapbox/streets-v12" // style URL
+      container: this.element,
+      style: "mapbox://styles/mapbox/streets-v12"
     })
 
     this.map.addControl(new mapboxgl.NavigationControl())
 
-    // When the style is ready, add markers and fit bounds
     this.map.on("load", () => {
+      console.log("[map] map loaded, adding markers")
       this.addMarkersToMap()
       this.fitMapToMarkers()
     })
 
-    // Expose for debugging if needed
+    // For debugging if needed
     window.myMap = this.map
   }
 
-  // Called by window resize or Stimulus action if you add one
   resize() {
     if (this.map) {
       this.map.resize()
       this.fitMapToMarkers()
     }
   }
-
-  // ---------- normal methods (no #private syntax) ----------
 
   addMarkersToMap() {
     if (!this.markersValue || this.markersValue.length === 0) {
@@ -56,7 +54,6 @@ export default class extends Controller {
       const wrapper = document.createElement("div")
       wrapper.innerHTML = marker.marker_html
 
-      // Use the actual marker element (firstChild), not the wrapper div
       const element =
         wrapper.firstElementChild || wrapper.firstChild || wrapper
 
