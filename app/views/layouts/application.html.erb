@@ -16,6 +16,12 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <script>
+      // set token from a Rails ENV variable that you've set on Heroku
+      mapboxgl.accessToken = "<%= ENV['MAPBOX_API_KEY'] %>";
+    </script>
 
     <!-- Favicon (PNG + ICO for maximum compatibility) -->
     <link rel="icon" type="image/png" href="<%= image_url('favicon.png') %>">
