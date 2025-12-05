@@ -1,23 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Neighborfood</title>
+    <meta charset="utf-8">
+
+    <title>
+      <%= content_for?(:title) ?
+            yield(:title) :
+            "NeighborFood – Share and claim food in your neighborhood" %>
+    </title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- Favicon -->
+    <%= favicon_link_tag "favicon.png", type: "image/png" %>
+
+    <!-- Open Graph basic -->
+    <meta property="og:site_name" content="NeighborFood" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url if defined?(request) %>" />
+
+    <!-- Open Graph title/description (overridable with content_for) -->
+    <meta property="og:title" content="<%= content_for?(:og_title) ?
+      yield(:og_title) :
+      'NeighborFood – Share and claim food in your neighborhood' %>" />
+
+    <meta property="og:description" content="<%= content_for?(:og_description) ?
+      yield(:og_description) :
+      'Find home-cooked meals and groceries near you, claim portions and reduce food waste.' %>" />
+
+    <!-- Open Graph image (1200x630 recommended) -->
+    <meta property="og:image" content="<%= image_url('neighborfood-og.png') %>" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter card (uses same values as OG) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for?(:og_title) ?
+      yield(:og_title) :
+      'NeighborFood – Share and claim food in your neighborhood' %>">
+    <meta name="twitter:description" content="<%= content_for?(:og_description) ?
+      yield(:og_description) :
+      'Find home-cooked meals and groceries near you, claim portions and reduce food waste.' %>">
+    <meta name="twitter:image" content="<%= image_url('neighborfood-og.png') %>">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-    <body>
+  <body>
     <!-- Navbar -->
     <%= render "shared/navbar" %>
 
     <!-- Everything below the navbar -->
     <main class="nf-page-wrapper">
-      <!-- Flash messages -->
-
       <!-- Main page content -->
       <%= yield %>
     </main>
@@ -26,7 +64,9 @@
     <%= render "shared/tabbar" %>
 
     <%= render "shared/post_fab" %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+
+    <!-- Flash messages (unchanged placement) -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
   </body>
 </html>

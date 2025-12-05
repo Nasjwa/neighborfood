@@ -1,20 +1,22 @@
 Rails.application.routes.draw do
+  # --- Redirect naked domain to www (SEO canonical) ---
+  constraints(host: "neighborfoodapp.com") do
+    match "/(*path)", to: redirect { |params, req|
+      "https://www.neighborfoodapp.com/#{params[:path]}"
+    }, via: :all, status: 301
+  end
+
   devise_for :users
+
   root to: "foods#index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health check
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
-
 
   resources :foods, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :claims, only: [:new, :create]
     resources :reviews, only: [:new, :create]
-    resources :tags, only: [:index]
+    resources :tags,    only: [:index]
     resources :reviews, only: [:create, :destroy, :show]
   end
 
@@ -23,6 +25,6 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :edit, :update] do
     resources :reviews, only: [:show]
   end
-  get "user/:id/foods", to: "users#user_foods", as: :user_foods
 
+  get "user/:id/foods", to: "users#user_foods", as: :user_foods
 end
