@@ -10,15 +10,15 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- Mapbox -->
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
     <script>
-      // set token from a Rails ENV variable that you've set on Heroku
       mapboxgl.accessToken = "<%= ENV['MAPBOX_API_KEY'] %>";
     </script>
 
-    <!-- ✅ FIXED FAVICON -->
-    <!-- Explicitly load favicon.png so Rails does NOT try to load favicon.ico -->
+    <!-- Favicon -->
     <%= favicon_link_tag "favicon.png" %>
 
     <!-- Open Graph basic tags -->
@@ -43,8 +43,6 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= javascript_include_tag %>
-    <%= javascript_pack_tag %>
   </head>
 
   <body>

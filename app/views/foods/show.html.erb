@@ -42,29 +42,30 @@
       <h2 class="nf-food-section-title">Details</h2>
 
       <div class="nf-food-meta">
+
         <!-- KIND OF FOOD -->
         <div class="nf-food-meta-row">
-          <i class="fa fa-cutlery" aria-hidden="true"></i>
+          <i class="fa fa-cutlery"></i>
           <div>
             <span class="nf-food-meta-label">Kind of food</span>
             <span class="nf-food-meta-value"><%= @food.kind_of_food.humanize %></span>
           </div>
         </div>
 
-        <!-- COLLECTION TIME (WITH CLOCK ICON) -->
+        <!-- COLLECTION TIME -->
         <div class="nf-food-meta-row">
-          <i class="fa-regular fa-clock" aria-hidden="true"></i>
+          <i class="fa-regular fa-clock"></i>
           <div>
             <span class="nf-food-meta-label">Collection time</span>
             <span class="nf-food-meta-value">
-              <%= @food.start_time&.strftime("%H:%M") %> – <%= @food.end_time&.strftime("%H:%M") %>
+              <%= @food.start_time.strftime("%H:%M") %> – <%= @food.end_time.strftime("%H:%M") %>
             </span>
           </div>
         </div>
 
         <!-- COOKING / EXPIRE DATE -->
         <div class="nf-food-meta-row">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
+          <i class="fa fa-calendar"></i>
           <div>
             <span class="nf-food-meta-label">
               <%= @food.kind_of_food == "groceries" ? "Expire date" : "Cooking date" %>
@@ -79,9 +80,9 @@
           </div>
         </div>
 
-        <!-- PORTIONS YOU CAN GET (BETTER WORDING) -->
+        <!-- PORTIONS -->
         <div class="nf-food-meta-row">
-          <i class="fa fa-cutlery" aria-hidden="true"></i>
+          <i class="fa fa-cutlery"></i>
           <div>
             <span class="nf-food-meta-label">Portions</span>
             <span class="nf-food-meta-value">
@@ -92,7 +93,7 @@
 
         <!-- SHARED BY -->
         <div class="nf-food-meta-row">
-          <i class="fa fa-user" aria-hidden="true"></i>
+          <i class="fa fa-user"></i>
           <div>
             <span class="nf-food-meta-label">Shared by</span>
             <span class="nf-food-meta-value"><%= @food.user.first_name %></span>
@@ -101,15 +102,14 @@
 
         <!-- USER RATING -->
         <div class="nf-food-meta-row">
-          <i class="fa fa-star" aria-hidden="true"></i>
-
+          <i class="fa fa-star"></i>
           <div>
             <span class="nf-food-meta-label">User Rating</span>
 
             <% if @food.user.average_rating.present? %>
               <div class="rating-center">
                 <span class="rating-number"><%= @food.user.average_rating %></span>
-                <%= stars_for(@food.user.average_rating, precision: :half, show_number: false) %>
+                <%= stars_for(@food.user.average_rating, precision: :half) %>
               </div>
             <% else %>
               <span class="nf-food-meta-value">No rating yet</span>
@@ -117,20 +117,19 @@
           </div>
         </div>
 
-
-
         <!-- AREA -->
         <div class="nf-food-meta-row">
-          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          <i class="fa fa-map-marker"></i>
           <div>
             <span class="nf-food-meta-label">Area</span>
             <span class="nf-food-meta-value"><%= @food.user.post_code %></span>
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- SAFETY / INFO -->
+    <!-- SAFETY INFO -->
     <section class="nf-food-section nf-food-section--subtle">
       <p class="nf-food-info">
         ✅ Please collect on time.
@@ -141,36 +140,35 @@
     <!-- MAP -->
     <section class="nf-food-section">
       <h2 class="nf-food-section-title">Pickup area</h2>
-      <div
-        id="map"
-        class="nf-food-map"
-        data-controller="map"
-        data-map-api-key-value="<%= ENV.fetch('MAPBOX_API_KEY','') %>"
-        data-map-markers-value='<%= raw(@markers.to_json) %>'>
+      <div id="map"
+           class="nf-food-map"
+           data-controller="map"
+           data-map-api-key-value="<%= ENV.fetch('MAPBOX_API_KEY','') %>"
+           data-map-markers-value='<%= raw(@markers.to_json) %>'>
       </div>
-      <p class="nf-food-map-hint">
-        Exact address is shared once you claim this meal.
-      </p>
+      <p class="nf-food-map-hint">Exact address is shared once you claim this meal.</p>
     </section>
 
     <!-- CLAIM BUTTON -->
     <div class="nf-food-claim-wrap">
       <% if user_signed_in? && @food.claimed_by?(current_user) %>
-      <!-- claimed food -->
-      <span class="nf-chip nf-chip--disabled">
-        You have claimed this food
-      </span>
+
+        <span class="nf-chip nf-chip--disabled">You have claimed this food</span>
+
       <% else %>
-      <!-- not yet claimed food -->
         <% unless user_signed_in? %>
+
           <%= link_to "Claim",
                       new_user_session_path,
                       class: "nf-claim-btn" %>
+
         <% else %>
+
           <%= link_to "Claim",
-            new_food_claim_path(@food),
-            class: "nf-claim-btn",
-            data: { claim_modal_url: new_food_claim_path(@food) } %>
+                      new_food_claim_path(@food),
+                      class: "nf-claim-btn",
+                      data: { claim_modal_url: new_food_claim_path(@food) } %>
+
         <% end %>
       <% end %>
     </div>
@@ -186,7 +184,6 @@
 <!-- CLAIM MODAL -->
 <div id="claim-modal" class="claim-modal hidden">
   <div class="claim-modal-content">
-
     <div id="claim-wrapper" class="claim-area">
       <div id="claim-modal-body"></div>
     </div>
