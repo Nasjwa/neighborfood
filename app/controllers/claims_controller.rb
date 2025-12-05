@@ -14,13 +14,12 @@ class ClaimsController < ApplicationController
     @food = Food.find(params[:id])
     @available_times = available_times(@food)
 
-
     respond_to do |format|
       format.html
       format.turbo_stream do
         render partial: "claims/claiming_food",
-              formats: [:html],
-              locals: { food: @food, available_times: @available_times }
+               formats: [:html],
+               locals: { food: @food, available_times: @available_times }
       end
     end
   end
@@ -34,12 +33,11 @@ class ClaimsController < ApplicationController
       format.html
       format.turbo_stream do
         render partial: "claims/claiming_food",
-              formats: [:html],
-              locals: { food: @food, available_times: @available_times }
+               formats: [:html],
+               locals: { food: @food, available_times: @available_times }
       end
     end
   end
-
 
   def create
     @food = Food.find(params[:food_id])
@@ -54,7 +52,6 @@ class ClaimsController < ApplicationController
 
     selected_hour = params[:claim][:collect_time]
     date = @food.start_time.to_date
-
     collect_time = Time.zone.parse("#{date} #{selected_hour}")
 
     @claim = current_user.claims.build(
@@ -75,22 +72,16 @@ class ClaimsController < ApplicationController
   end
 
   def available_times(food)
-      Rails.logger.info "START: #{food.start_time}"
-  Rails.logger.info "END:   #{food.end_time}"
-
-    start = food.start_time.in_time_zone
+    start  = food.start_time.in_time_zone
     finish = food.end_time.in_time_zone
-
     return [] if start >= finish
 
     times = []
     t = start
-
     while t <= finish
       times << t
       t += 5.minutes
     end
-
     times
   end
 
@@ -99,7 +90,6 @@ class ClaimsController < ApplicationController
   def set_food
     @food = Food.find(params[:food_id]) if params[:food_id]
   end
-
 
   def claim_params
     params.require(:claim).permit(:collect_time)
