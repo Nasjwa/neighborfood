@@ -77,12 +77,20 @@ function initModals() {
 
   if (mapModal) {
     mapModal.addEventListener("click", (e) => {
+
       if (e.target === mapModal) {
         mapModal.classList.add("hidden");
       }
     });
   }
 }
+
+const observer = new ResizeObserver(() => {
+  window.myMap?.resize();
+});
+
+observer.observe(document.getElementById("map-modal"));
+
 
 
 // Ensures running with Turbo + DOM
