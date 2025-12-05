@@ -17,8 +17,6 @@
     <!-- Everything below the navbar -->
     <main class="nf-page-wrapper">
       <!-- Flash messages -->
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
 
       <!-- Main page content -->
       <%= yield %>
@@ -28,5 +26,7 @@
     <%= render "shared/tabbar" %>
 
     <%= render "shared/post_fab" %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
   </body>
 </html>
