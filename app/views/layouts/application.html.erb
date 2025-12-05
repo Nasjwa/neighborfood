@@ -3,49 +3,36 @@
   <head>
     <meta charset="utf-8">
 
-    <% default_title = "NeighborFood – Home-cooked meals, groceries and food sharing near you" %>
-
-    <title>
-      <%= content_for?(:title) ? yield(:title) : default_title %>
-    </title>
-
-    <!-- Some checkers also look for a meta title -->
-    <meta name="title" content="<%= content_for?(:title) ? yield(:title) : default_title %>">
+    <!-- Title: static and > 20 chars -->
+    <title>NeighborFood - Home-cooked meals and food sharing near you</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <!-- Favicon (PNG + ICO for maximum compatibility) -->
-    <link rel="icon" type="image/png" href="<%= image_url('favicon.png') %>">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- ✅ FIXED FAVICON -->
+    <!-- Explicitly load favicon.png so Rails does NOT try to load favicon.ico -->
+    <%= favicon_link_tag "favicon.png" %>
 
-    <!-- Open Graph basic -->
-    <meta property="og:site_name" content="NeighborFood" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="<%= request.original_url if defined?(request) %>" />
+    <!-- Open Graph basic tags -->
+    <meta property="og:site_name" content="NeighborFood">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url if defined?(request) %>">
 
-    <!-- Open Graph title/description (overridable with content_for) -->
-    <meta property="og:title" content="<%= content_for?(:og_title) ?
-      yield(:og_title) : default_title %>" />
+    <meta property="og:title" content="NeighborFood - Home-cooked meals and food sharing near you">
+    <meta property="og:description"
+          content="Find home-cooked meals and groceries near you, claim portions and reduce food waste with NeighborFood.">
 
-    <meta property="og:description" content="<%= content_for?(:og_description) ?
-      yield(:og_description) :
-      'Find home-cooked meals and groceries near you, claim portions and reduce food waste.' %>" />
+    <!-- og:image must be 1200x630 and absolute URL -->
+    <meta property="og:image" content="<%= image_url('neighborfood-og.png') %>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-    <!-- Open Graph image – must be 1200x630 -->
-    <meta property="og:image" content="<%= image_url('neighborfood-og.png') %>" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-
-    <!-- Twitter card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<%= content_for?(:og_title) ?
-      yield(:og_title) : default_title %>">
-    <meta name="twitter:description" content="<%= content_for?(:og_description) ?
-      yield(:og_description) :
-      'Find home-cooked meals and groceries near you, claim portions and reduce food waste.' %>">
+    <meta name="twitter:title" content="NeighborFood - Home-cooked meals and food sharing near you">
+    <meta name="twitter:description"
+          content="Find home-cooked meals and groceries near you, claim portions and reduce food waste with NeighborFood.">
     <meta name="twitter:image" content="<%= image_url('neighborfood-og.png') %>">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -53,21 +40,15 @@
   </head>
 
   <body>
-    <!-- Navbar -->
     <%= render "shared/navbar" %>
 
-    <!-- Everything below the navbar -->
     <main class="nf-page-wrapper">
-      <!-- Main page content -->
       <%= yield %>
     </main>
 
-    <!-- Mobile bottom nav (shown on every page, hidden on desktop via CSS) -->
     <%= render "shared/tabbar" %>
-
     <%= render "shared/post_fab" %>
 
-    <!-- Flash messages -->
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
   </body>
