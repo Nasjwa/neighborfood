@@ -21,6 +21,7 @@ Rails.application.configure do
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
+  config.serve_static_assets = true
 
   # config.asset_host = "neighborfoodapp.com"
 
