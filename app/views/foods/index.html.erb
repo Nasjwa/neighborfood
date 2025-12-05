@@ -1,13 +1,9 @@
-<div class="nf-home">
+<%# === SEO meta for home page === %>
+<% content_for :title, "NeighborFood – Home-cooked meals, groceries and food sharing near you" %>
+<% content_for :og_title, "NeighborFood – Find and share food in your neighborhood" %>
+<% content_for :og_description, "Discover cooked meals and groceries from neighbors near you. Claim portions, share extra food and reduce waste with NeighborFood." %>
 
-  <!-- Location bar -->
-  <!-- <div class="nf-location">
-    <button class="nf-loc-btn" type="button">
-      <span class="nf-loc-dot" aria-hidden="true"></span>
-      Use my location
-    </button>
-    <%= link_to("Change", root_path, class: "nf-loc-change") if user_signed_in? %>
-  </div> -->
+<div class="nf-home">
 
   <!-- Tag chips -->
   <div class="nf-chip-row nf-chip-row--scroll" tabindex="0" aria-label="Filter tags">
@@ -39,12 +35,22 @@
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Near you">
       <% if defined?(@nearby) && @nearby.present? %>
         <% @nearby.each do |food| %>
-          <div class="nf-snap"><%= render "foods/card", food: food %></div>
+          <div class="nf-snap">
+            <%= render "foods/card", food: food %>
+          </div>
         <% end %>
+
+      <% elsif params[:tags].present? %>
+        <!-- No nearby foods for this filter -->
+        <p class="nf-empty-message">
+          No foods near you match these filters yet.
+        </p>
+
       <% else %>
-        <% 6.times do %>
-          <div class="nf-snap"><%= render "foods/card", food: nil %></div>
-        <% end %>
+        <!-- No nearby foods at all -->
+        <p class="nf-empty-message">
+          No foods near you yet.
+        </p>
       <% end %>
     </div>
   </section>
@@ -62,12 +68,22 @@
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Cooked meals">
       <% if defined?(@cooked) && @cooked.present? %>
         <% @cooked.each do |food| %>
-          <div class="nf-snap"><%= render "foods/card", food: food %></div>
+          <div class="nf-snap">
+            <%= render "foods/card", food: food %>
+          </div>
         <% end %>
+
+      <% elsif params[:tags].present? %>
+        <!-- No cooked meals for this filter -->
+        <p class="nf-empty-message">
+          No cooked meals match these filters yet.
+        </p>
+
       <% else %>
-        <% 4.times do %>
-          <div class="nf-snap"><%= render "foods/card", food: nil %></div>
-        <% end %>
+        <!-- No cooked meals at all -->
+        <p class="nf-empty-message">
+          No cooked meals available yet.
+        </p>
       <% end %>
     </div>
   </section>
@@ -85,41 +101,48 @@
     <div class="nf-scroller" data-carousel-target="track" role="region" aria-label="Groceries">
       <% if defined?(@groceries) && @groceries.present? %>
         <% @groceries.each do |food| %>
-          <div class="nf-snap"><%= render "foods/card", food: food %></div>
+          <div class="nf-snap">
+            <%= render "foods/card", food: food %>
+          </div>
         <% end %>
+
+      <% elsif params[:tags].present? %>
+        <!-- No groceries for this filter -->
+        <p class="nf-empty-message">
+          No groceries match these filters yet.
+        </p>
+
       <% else %>
-        <% 4.times do %>
-          <div class="nf-snap"><%= render "foods/card", food: nil %></div>
-        <% end %>
+        <!-- No groceries at all -->
+        <p class="nf-empty-message">
+          No groceries available yet.
+        </p>
       <% end %>
     </div>
   </section>
 
-
   <!-- MAP MODAL -->
-<div id="map-modal" class="map-modal hidden">
-  <div class="map-modal-content">
-    <button id="close-map-modal" class="close-map-btn">✕</button>
+  <div id="map-modal" class="map-modal hidden">
+    <div class="map-modal-content">
+      <button id="close-map-modal" class="close-map-btn">✕</button>
 
-    <div id="map-wrapper" class="map-area">
-
-      <div id="modal-map"
-           style="width: 100%; height: 100%;"
-           data-controller="map"
-           data-map-markers-value="<%= @markers.to_json %>"
-           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      <div id="map-wrapper" class="map-area">
+        <div id="modal-map"
+             style="width: 100%; height: 100%;"
+             data-controller="map"
+             data-map-markers-value="<%= @markers.to_json %>"
+             data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
       </div>
     </div>
-
   </div>
-</div>
 
-<!-- CLAIM MODAL -->
-<div id="claim-modal" class="claim-modal hidden">
-  <div class="claim-modal-content">
-
-    <div id="claim-wrapper" class="claim-area">
-      <div id="claim-modal-body"></div>
+  <!-- CLAIM MODAL -->
+  <div id="claim-modal" class="claim-modal hidden">
+    <div class="claim-modal-content">
+      <div id="claim-wrapper" class="claim-area">
+        <div id="claim-modal-body"></div>
+      </div>
     </div>
   </div>
 </div>

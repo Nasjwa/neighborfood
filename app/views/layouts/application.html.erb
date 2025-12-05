@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Neighborfood</title>
+    <meta charset="utf-8">
+
+    <% default_title = "NeighborFood – Home-cooked meals, groceries and food sharing near you" %>
+
+    <title>
+      <%= content_for?(:title) ? yield(:title) : default_title %>
+    </title>
+
+    <!-- Some checkers also look for a meta title -->
+    <meta name="title" content="<%= content_for?(:title) ? yield(:title) : default_title %>">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
@@ -12,18 +23,47 @@
       mapboxgl.accessToken = "<%= ENV['MAPBOX_API_KEY'] %>";
     </script>
 
+    <!-- Favicon (PNG + ICO for maximum compatibility) -->
+    <link rel="icon" type="image/png" href="<%= image_url('favicon.png') %>">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <!-- Open Graph basic -->
+    <meta property="og:site_name" content="NeighborFood" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url if defined?(request) %>" />
+
+    <!-- Open Graph title/description (overridable with content_for) -->
+    <meta property="og:title" content="<%= content_for?(:og_title) ?
+      yield(:og_title) : default_title %>" />
+
+    <meta property="og:description" content="<%= content_for?(:og_description) ?
+      yield(:og_description) :
+      'Find home-cooked meals and groceries near you, claim portions and reduce food waste.' %>" />
+
+    <!-- Open Graph image – must be 1200x630 -->
+    <meta property="og:image" content="<%= image_url('neighborfood-og.png') %>" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for?(:og_title) ?
+      yield(:og_title) : default_title %>">
+    <meta name="twitter:description" content="<%= content_for?(:og_description) ?
+      yield(:og_description) :
+      'Find home-cooked meals and groceries near you, claim portions and reduce food waste.' %>">
+    <meta name="twitter:image" content="<%= image_url('neighborfood-og.png') %>">
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-    <body>
+  <body>
     <!-- Navbar -->
     <%= render "shared/navbar" %>
 
     <!-- Everything below the navbar -->
     <main class="nf-page-wrapper">
-      <!-- Flash messages -->
-
       <!-- Main page content -->
       <%= yield %>
     </main>
@@ -32,7 +72,9 @@
     <%= render "shared/tabbar" %>
 
     <%= render "shared/post_fab" %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+
+    <!-- Flash messages -->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
   </body>
 </html>
