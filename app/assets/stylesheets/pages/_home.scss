@@ -143,7 +143,7 @@
   box-shadow: var(--nf-shadow);
   display: flex;
   flex-direction: column;
-  
+
   /* fixed, uniform height for all cards */
   height: 100%;
   height: 400px;
@@ -214,7 +214,7 @@
   font-size: .85rem;
   color: var(--nf-ink-700);
   margin: 0;
-  
+
   display: -webkit-box;
   -webkit-line-clamp: 3;       /* max 3 lines of description */
   -webkit-box-orient: vertical;
@@ -447,7 +447,7 @@
     margin-bottom: 5px;
   }
 
-  
+
 }
 
 .map-modal {
@@ -560,7 +560,7 @@
   height: 100%;
   margin-top: 10px;
   border-radius: 15px;
-  overflow: auto; 
+  overflow: auto;
   padding: 10px;
 }
 
@@ -925,4 +925,11 @@ $chip-text-color: #123e20;
   .date-wrapper {
     overflow-x: clip;
   }
+}
+
+
+.nf-empty-message {
+  padding: 24px 12px;
+  font-size: 0.95rem;
+  color: var(--nf-ink-700);
 }
